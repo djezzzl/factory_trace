@@ -16,6 +16,6 @@ Gemfile.local
 /.idea
 
 # rails-example
-/rails-example/log
-/rails-example/tmp
-/rails-example/db/*.sqlite3
+/rails-rspec-example/log
+/rails-rspec-example/tmp
+/rails-rspec-example/db/*.sqlite3

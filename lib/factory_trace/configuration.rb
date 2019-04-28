@@ -3,8 +3,8 @@ module FactoryTrace
     attr_accessor :path, :enabled
 
     def initialize
-      @enabled = true
-      @path = nil
+      @enabled = ENV.key?('FB_TRACE') || ENV.key?('FB_TRACE_FILE')
+      @path = ENV['FB_TRACE_FILE']
     end
 
     def out

@@ -1,10 +1,13 @@
+# External dependencies
 require 'factory_bot'
-
+# Library
 require 'factory_trace/configuration'
 require 'factory_trace/version'
 require 'factory_trace/tracker'
 require 'factory_trace/check_unused'
 require 'factory_trace/printer'
+# Integrations
+require 'integrations/rspec'
 
 module FactoryTrace
   class << self
