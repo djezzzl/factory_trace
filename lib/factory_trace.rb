@@ -4,10 +4,10 @@ require 'factory_bot'
 require 'factory_trace/configuration'
 require 'factory_trace/version'
 require 'factory_trace/tracker'
-require 'factory_trace/check_unused'
+require 'factory_trace/find_unused'
 require 'factory_trace/printer'
 # Integrations
-require 'integrations/rspec'
+require 'integrations/rspec' if defined?(RSpec::Core)
 
 module FactoryTrace
   class << self
@@ -20,7 +20,7 @@ module FactoryTrace
     def stop
       return unless configuration.enabled
 
-      result = CheckUnused.new(tracker.storage).check!
+      result = FindUnused.new(tracker.storage).check!
 
       printer.print(result)
     end

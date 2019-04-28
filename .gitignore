@@ -9,6 +9,9 @@
 Gemfile.lock
 Gemfile.local
 
+# Ruby
+.ruby-version
+
 # rspec failure tracking
 .rspec_status
 

@@ -14,6 +14,8 @@ Example output (from [Rails RSpec Example](rails-rspec-example)):
 
 ```bash
 $ FB_TRACE=1 rspec
+total number of unique used factories & traits: 1
+total number of unique unused factories & traits: 3
 unused trait 'with_phone' of factory 'user'
 unused factory 'special_user'
 unused global trait 'with_email'
