@@ -8,11 +8,12 @@ inside your project in a good shape.
 
 ## What it does?
 
-Currently, it only help to find unused `factories` and `traits`.
+Currently, it helps to find unused `factories` and `traits`.
 
-Example output (from [Rails Example](rails-example)):
+Example output (from [Rails RSpec Example](rails-rspec-example)):
 
 ```bash
+$ FB_TRACE=1 rspec
 unused trait 'with_phone' of factory 'user'
 unused factory 'special_user'
 unused global trait 'with_email'
@@ -39,7 +40,18 @@ $ gem install factory_trace
 
 ## Usage
 
-Add this line where you want to start tracking usage of `FactoryBot` factories and traits:
+For now, the gem support [RSpec](https://github.com/rspec/rspec) out of the box. 
+You don't need to add any hooks. Just run the specs, e.g. 
+
+```bash
+# output to STDOUT
+FB_TRACE=1 rspec
+# OR output to any file
+FB_TRACE_FILE=log/factory_trace.txt rspec
+```
+
+For any other case, add the following line where you want to start 
+tracking usage of `FactoryBot` factories and traits:
 
 ```ruby
 FactoryTrace.start
@@ -51,30 +63,17 @@ Add this line where you want to stop tracking and get collected information:
 FactoryTrace.stop
 ```
 
-### RSpec
-
-Add the following to your [RSpec](https://github.com/rspec/rspec) configuration:
-
-```ruby
-RSpec.configure do |config|
-  config.before(:suite) { FactoryTrace.start }
-  config.after(:suite) { FactoryTrace.stop }
-end
-```
-
-Then run all your specs.
-
 ## Configuration
 
 You can configure `FactoryTrace`:
 
 ```ruby
 FactoryTrace.configure do |config|
-  # default is true
+  # default ENV.key?('FB_TRACE') || ENV.key?('FB_TRACE_FILE')
   config.enabled = true 
   
-  # default is nil
-  # when nil outputs to STDOUT instead 
+  # default is ENV['FB_TRACE_FILE']
+  # when nil outputs to STDOUT 
   config.path = 'log/factory_trace.txt' 
 end
 ```
