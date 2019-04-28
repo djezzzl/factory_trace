@@ -1,0 +1,21 @@
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+Gemfile.lock
+Gemfile.local
+
+# rspec failure tracking
+.rspec_status
+
+# IDEA
+/.idea
+
+# rails-example
+/rails-example/log
+/rails-example/tmp
+/rails-example/db/*.sqlite3
