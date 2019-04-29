@@ -5,6 +5,8 @@ RSpec.describe FactoryTrace::Printer do
     let(:output) { StringIO.new }
     let(:results) do
       [
+        {code: :used, value: 1},
+        {code: :unused, value: 3},
         {code: :unused, factory: find_factory(:admin), trait: find_trait(:admin, :with_email)},
         {code: :unused, factory: find_factory(:company)},
         {code: :unused, trait: find_global_trait(:with_address)}
@@ -15,9 +17,11 @@ RSpec.describe FactoryTrace::Printer do
       printer.print(results)
 
       expect(output.string).to eq(<<~TEXT)
-        unused trait 'with_email' of factory 'admin'
-        unused factory 'company'
-        unused global trait 'with_address'
+        \e[31mtotal number of unique used factories & traits: 1\e[0m
+        \e[31mtotal number of unique unused factories & traits: 3\e[0m
+        unused trait \e[34mwith_email\e[0m of factory \e[34madmin\e[0m
+        unused factory \e[34mcompany\e[0m
+        unused global trait \e[34mwith_address\e[0m
       TEXT
     end
   end

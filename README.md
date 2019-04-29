@@ -16,9 +16,9 @@ Example output (from [Rails RSpec Example](rails-rspec-example)):
 $ FB_TRACE=1 rspec
 total number of unique used factories & traits: 1
 total number of unique unused factories & traits: 3
-unused trait 'with_phone' of factory 'user'
-unused factory 'special_user'
-unused global trait 'with_email'
+unused trait with_phone of factory user
+unused factory special_user
+unused global trait with_email
 ```
 
 ## Installation
@@ -77,6 +77,9 @@ FactoryTrace.configure do |config|
   # default is ENV['FB_TRACE_FILE']
   # when nil outputs to STDOUT 
   config.path = 'log/factory_trace.txt' 
+  
+  # default is true when +path+ is nil
+  config.color = true
 end
 ```
 

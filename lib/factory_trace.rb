@@ -36,7 +36,7 @@ module FactoryTrace
     end
 
     def printer
-      @printer ||= Printer.new(configuration.out)
+      @printer ||= Printer.new(configuration.out, config: configuration)
     end
 
     def configuration
