@@ -8,6 +8,9 @@ module FactoryTrace
 
     # @return [Array<Hash>]
     def check!
+      # This is required to exclude parent traits from +defined_traits+
+      FactoryBot.reload
+
       data = prepare(initial_data)
 
       output = []
