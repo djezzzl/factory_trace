@@ -1,3 +1,8 @@
+### [0.2.1] - 2019/04/30
+
+Improvements:
+- Support of partial execution
+
 ### [0.1.2] - 2019/04/30
 
 Improvements:
