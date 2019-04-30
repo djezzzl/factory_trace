@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift("#{__dir__}/../lib")
+require 'factory_trace'
+
+fail "You should pass at least one file with traced information.\nYou can generate it using only_trace mode." if ARGV.empty?
+
+config = FactoryTrace.configuration
+data = FactoryTrace::TraceReader.read_from_files(*ARGV)
+data = FactoryTrace::FindUnused.call(data)
+code = data.size > 2 ? 1 : 0
+
+FactoryTrace::ReportWriter.new(config.out, config: config).write(data)
+exit(code)

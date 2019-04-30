@@ -13,6 +13,8 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
 
   spec.files         = Dir['lib/**/*']
+  spec.bindir = 'exe'
+  spec.executables = ['factory_trace']
   spec.require_paths = ['lib']
 
   spec.add_dependency 'factory_bot', '>= 4.0'

@@ -1,18 +1,13 @@
 module FactoryTrace
-  class Printer
+  class ReportWriter < Writer
     COLORS = {
       blue: "\e[34m",
       green: "\e[32m",
       red: "\e[31m"
     }.freeze
 
-    def initialize(io, config: Configuration.new)
-      @io = io
-      @config = config
-    end
-
     # @param [Array<Hash>] results
-    def print(results)
+    def write(results)
       total_color = results.size == 2 ? :green : :red
 
       results.each do |result|
@@ -42,7 +37,5 @@ module FactoryTrace
 
       "#{COLORS[color]}#{msg}\e[0m"
     end
-
-    attr_reader :io, :config
   end
 end

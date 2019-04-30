@@ -1,12 +1,12 @@
 RSpec.describe FactoryTrace::FindUnused do
-  subject(:checker) { described_class.new(data) }
+  subject(:checker) { described_class.call(data) }
 
   describe 'check!' do
     context 'when all factories are not used' do
       let(:data) { {} }
 
       it 'returns everything' do
-        expect(checker.check!).to eq([
+        expect(checker).to eq([
           {code: :used, value: 0},
           {code: :unused, value: 4},
           {code: :unused, factory: find_factory(:user)},
@@ -21,7 +21,7 @@ RSpec.describe FactoryTrace::FindUnused do
       let(:data) { {user: Set.new} }
 
       it 'returns except used and for used returns all traits' do
-        expect(checker.check!).to eq([
+        expect(checker).to eq([
           {code: :used, value: 1},
           {code: :unused, value: 4},
           {code: :unused, factory: find_factory(:user), trait: find_trait(:user, :with_phone)},
@@ -36,7 +36,7 @@ RSpec.describe FactoryTrace::FindUnused do
       let(:data) { {user: Set.new([:with_phone])} }
 
       it 'returns except used and for used returns all traits' do
-        expect(checker.check!).to eq([
+        expect(checker).to eq([
           {code: :used, value: 2},
           {code: :unused, value: 3},
           {code: :unused, factory: find_factory(:admin)},
@@ -50,7 +50,7 @@ RSpec.describe FactoryTrace::FindUnused do
       let(:data) { {user: [], admin: []} }
 
       it 'returns except used and returns parents trait only with parent factory' do
-        expect(checker.check!).to eq([
+        expect(checker).to eq([
           {code: :used, value: 2},
           {code: :unused, value: 4},
           {code: :unused, factory: find_factory(:user), trait: find_trait(:user, :with_phone)},
@@ -65,7 +65,7 @@ RSpec.describe FactoryTrace::FindUnused do
       let(:data) { {user: Set.new([:with_address])} }
 
       it 'returns except used and global trait' do
-        expect(checker.check!).to eq([
+        expect(checker).to eq([
           {code: :used, value: 2},
           {code: :unused, value: 3},
           {code: :unused, factory: find_factory(:user), trait: find_trait(:user, :with_phone)},
@@ -79,7 +79,7 @@ RSpec.describe FactoryTrace::FindUnused do
       let(:data) { {admin: Set.new([:with_phone])} }
 
       it 'returns except that factory and parent trait' do
-        expect(checker.check!).to eq([
+        expect(checker).to eq([
           {code: :used, value: 2},
           {code: :unused, value: 3},
           {code: :unused, factory: find_factory(:admin), trait: find_trait(:admin, :with_email)},
@@ -93,7 +93,7 @@ RSpec.describe FactoryTrace::FindUnused do
       let(:data) { {admin: Set.new([:with_phone, :with_email]), company: Set.new([:with_address])} }
 
       it 'returns nothing' do
-        expect(checker.check!).to eq([
+        expect(checker).to eq([
           {code: :used, value: 5},
           {code: :unused, value: 0},
         ])
