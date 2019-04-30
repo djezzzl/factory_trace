@@ -1,3 +1,11 @@
+### [0.1.2] - 2019/04/30
+
+Improvements:
+- Add colors to console output
+
+Fixes:
+- Hide parent traits from child factories
+
 ### [0.1.1] - 2019/04/28
 
 Improvements:
