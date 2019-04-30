@@ -1,13 +1,8 @@
 module FactoryTrace
   class FindUnused
-
-    # @param [Hash<Symbol, Set<Symbol>>]
-    def initialize(data)
-      @initial_data = data
-    end
-
+    # @param [Hash<Symbol, Set<Symbol>>] initial_data
     # @return [Array<Hash>]
-    def check!
+    def self.call(initial_data)
       # This is required to exclude parent traits from +defined_traits+
       FactoryBot.reload
 
@@ -39,9 +34,8 @@ module FactoryTrace
     # Return new structure where each trait is moved to its own factory
     #
     # @param [Hash<Symbol, Set<Symbol>>]
-    #
     # @return [Hash<String, Set<String>>]
-    def prepare(data)
+    def self.prepare(data)
       # +_traits+ is for global traits
       output = {'_traits' => Set.new, '_total_used' => count_total(data)}
 
@@ -75,10 +69,8 @@ module FactoryTrace
     end
 
     # @param [Hash<Symbol, Set<Symbol>>]
-    def count_total(data)
+    def self.count_total(data)
       data.reduce(0) { |result, (_factory, traits)| result + 1 + traits.size }
     end
-
-    attr_reader :initial_data
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'some spec' do
+RSpec.describe 'first spec' do
   it 'tests' do
     build(:user)
   end

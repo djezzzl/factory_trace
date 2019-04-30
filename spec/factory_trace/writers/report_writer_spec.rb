@@ -1,4 +1,4 @@
-RSpec.describe FactoryTrace::Printer do
+RSpec.describe FactoryTrace::ReportWriter do
   subject(:printer) { described_class.new(output) }
 
   describe '#print' do
@@ -14,7 +14,7 @@ RSpec.describe FactoryTrace::Printer do
     end
 
     it 'prints the result' do
-      printer.print(results)
+      printer.write(results)
 
       expect(output.string).to eq(<<~TEXT)
         \e[31mtotal number of unique used factories & traits: 1\e[0m

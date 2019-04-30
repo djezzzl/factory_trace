@@ -42,7 +42,7 @@ $ gem install factory_trace
 
 ## Usage
 
-For now, the gem support [RSpec](https://github.com/rspec/rspec) out of the box. 
+For now, the gem supports [RSpec](https://github.com/rspec/rspec) out of the box. 
 You don't need to add any hooks. Just run the specs, e.g. 
 
 ```bash
@@ -65,6 +65,22 @@ Add this line where you want to stop tracking and get collected information:
 FactoryTrace.stop
 ```
 
+### Partial execution
+
+Imagine, you run your specs in parts (as many as you need) and then want to track total usage of 
+factories and traits. For that, we have a `trace_only` mode. You can try following commands [here](rails-rspec-example).
+
+```bash
+# one part
+FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result1.txt bundle exec rspec spec/first_spec.rb
+# another part
+FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result2.txt bundle exec rspec spec/second_spec.rb
+# finally output the usage to the console
+bundle exec factory_trace fb_trace_result1.txt fb_trace_result2.txt
+# or to the file
+FB_TRACE_FILE=fb_report.txt bundle exec factory_trace fb_trace_result1.txt fb_trace_result2.txt
+```
+
 ## Configuration
 
 You can configure `FactoryTrace`:
@@ -80,6 +96,10 @@ FactoryTrace.configure do |config|
   
   # default is true when +path+ is nil
   config.color = true
+  
+  # default is ENV['FB_TRACE'] || :full 
+  # can be :full or :trace_only 
+  config.mode = :full
 end
 ```
 

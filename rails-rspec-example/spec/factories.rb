@@ -6,6 +6,10 @@ FactoryBot.define do
   end
 
   factory :special_user, parent: :user
+
+  factory :admin, parent: :user do
+    trait :with_address
+  end
 end
 
 FactoryBot.define do
