@@ -7,9 +7,9 @@ RSpec.describe FactoryTrace::ReportWriter do
       [
         {code: :used, value: 1},
         {code: :unused, value: 3},
-        {code: :unused, factory: find_factory(:admin), trait: find_trait(:admin, :with_email)},
-        {code: :unused, factory: find_factory(:company)},
-        {code: :unused, trait: find_global_trait(:with_address)}
+        {code: :unused, factory_name: :admin, trait_name: :with_email},
+        {code: :unused, factory_name: :company},
+        {code: :unused, trait_name: :with_address}
       ]
     end
 

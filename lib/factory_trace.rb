@@ -4,7 +4,10 @@ require 'factory_bot'
 require 'factory_trace/configuration'
 require 'factory_trace/version'
 require 'factory_trace/tracker'
+
 require 'factory_trace/find_unused'
+require 'factory_trace/storage_handler'
+
 require 'factory_trace/readers/trace_reader'
 require 'factory_trace/writers/writer'
 require 'factory_trace/writers/report_writer'
@@ -23,6 +26,9 @@ module FactoryTrace
     def stop
       return unless configuration.enabled
 
+      # This is required to exclude parent traits from +defined_traits+
+      FactoryBot.reload
+
       writer.write(results)
     end
 
@@ -38,10 +44,14 @@ module FactoryTrace
 
     def results
       if configuration.mode?(:full)
-        FindUnused.call(tracker.storage)
+        FindUnused.call(preprocessed)
       elsif configuration.mode?(:trace_only)
-        tracker.storage
+        preprocessed
       end
+    end
+
+    def preprocessed
+      @preprocessed ||= StorageHandler.prepare(tracker.storage)
     end
 
     def tracker
