@@ -1,5 +1,5 @@
 RSpec.describe FactoryTrace::FindUnused do
-  subject(:checker) { described_class.call(data) }
+  subject(:checker) { described_class.call(FactoryTrace::StorageHandler.prepare(data)) }
 
   describe 'check!' do
     context 'when all factories are not used' do
@@ -9,10 +9,10 @@ RSpec.describe FactoryTrace::FindUnused do
         expect(checker).to eq([
           {code: :used, value: 0},
           {code: :unused, value: 4},
-          {code: :unused, factory: find_factory(:user)},
-          {code: :unused, factory: find_factory(:admin)},
-          {code: :unused, factory: find_factory(:company)},
-          {code: :unused, trait: find_global_trait(:with_address)}
+          {code: :unused, trait_name: 'with_address'},
+          {code: :unused, factory_name: 'user'},
+          {code: :unused, factory_name: 'admin'},
+          {code: :unused, factory_name: 'company'}
         ])
       end
     end
@@ -24,10 +24,10 @@ RSpec.describe FactoryTrace::FindUnused do
         expect(checker).to eq([
           {code: :used, value: 1},
           {code: :unused, value: 4},
-          {code: :unused, factory: find_factory(:user), trait: find_trait(:user, :with_phone)},
-          {code: :unused, factory: find_factory(:admin)},
-          {code: :unused, factory: find_factory(:company)},
-          {code: :unused, trait: find_global_trait(:with_address)}
+          {code: :unused, trait_name: 'with_address'},
+          {code: :unused, factory_name: 'user', trait_name: 'with_phone'},
+          {code: :unused, factory_name: 'admin'},
+          {code: :unused, factory_name: 'company'}
         ])
       end
     end
@@ -39,9 +39,9 @@ RSpec.describe FactoryTrace::FindUnused do
         expect(checker).to eq([
           {code: :used, value: 2},
           {code: :unused, value: 3},
-          {code: :unused, factory: find_factory(:admin)},
-          {code: :unused, factory: find_factory(:company)},
-          {code: :unused, trait: find_global_trait(:with_address)}
+          {code: :unused, trait_name: 'with_address'},
+          {code: :unused, factory_name: 'admin'},
+          {code: :unused, factory_name: 'company'}
         ])
       end
     end
@@ -53,10 +53,10 @@ RSpec.describe FactoryTrace::FindUnused do
         expect(checker).to eq([
           {code: :used, value: 2},
           {code: :unused, value: 4},
-          {code: :unused, factory: find_factory(:user), trait: find_trait(:user, :with_phone)},
-          {code: :unused, factory: find_factory(:admin), trait: find_trait(:admin, :with_email)},
-          {code: :unused, factory: find_factory(:company)},
-          {code: :unused, trait: find_global_trait(:with_address)}
+          {code: :unused, trait_name: 'with_address'},
+          {code: :unused, factory_name: 'user', trait_name: 'with_phone'},
+          {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
+          {code: :unused, factory_name: 'company'}
         ])
       end
     end
@@ -68,9 +68,9 @@ RSpec.describe FactoryTrace::FindUnused do
         expect(checker).to eq([
           {code: :used, value: 2},
           {code: :unused, value: 3},
-          {code: :unused, factory: find_factory(:user), trait: find_trait(:user, :with_phone)},
-          {code: :unused, factory: find_factory(:admin)},
-          {code: :unused, factory: find_factory(:company)}
+          {code: :unused, factory_name: 'user', trait_name: 'with_phone'},
+          {code: :unused, factory_name: 'admin'},
+          {code: :unused, factory_name: 'company'}
         ])
       end
     end
@@ -80,11 +80,11 @@ RSpec.describe FactoryTrace::FindUnused do
 
       it 'returns except that factory and parent trait' do
         expect(checker).to eq([
-          {code: :used, value: 2},
+          {code: :used, value: 3},
           {code: :unused, value: 3},
-          {code: :unused, factory: find_factory(:admin), trait: find_trait(:admin, :with_email)},
-          {code: :unused, factory: find_factory(:company)},
-          {code: :unused, trait: find_global_trait(:with_address)}
+          {code: :unused, trait_name: 'with_address'},
+          {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
+          {code: :unused, factory_name: 'company'}
         ])
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe FactoryTrace::FindUnused do
 
       it 'returns nothing' do
         expect(checker).to eq([
-          {code: :used, value: 5},
+          {code: :used, value: 6},
           {code: :unused, value: 0},
         ])
       end

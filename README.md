@@ -14,11 +14,10 @@ Example output (from [Rails RSpec Example](rails-rspec-example)):
 
 ```bash
 $ FB_TRACE=1 rspec
-total number of unique used factories & traits: 1
-total number of unique unused factories & traits: 3
-unused trait with_phone of factory user
-unused factory special_user
+total number of unique used factories & traits: 3
+total number of unique unused factories & traits: 2
 unused global trait with_email
+unused factory admin
 ```
 
 ## Installation
@@ -80,6 +79,8 @@ bundle exec factory_trace fb_trace_result1.txt fb_trace_result2.txt
 # or to the file
 FB_TRACE_FILE=fb_report.txt bundle exec factory_trace fb_trace_result1.txt fb_trace_result2.txt
 ```
+
+**Note**: `bundle exec factory_trace` won't load your project. Thus it runs fast and easier to configure it on CI.
 
 ## Configuration
 

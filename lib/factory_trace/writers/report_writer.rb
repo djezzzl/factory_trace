@@ -23,12 +23,12 @@ module FactoryTrace
       case
       when result[:value]
         colorize(total_color, "total number of unique #{result[:code]} factories & traits: #{result[:value]}")
-      when result[:factory] && result[:trait]
-        "#{result[:code]} trait #{colorize(:blue, result[:trait].name)} of factory #{colorize(:blue, result[:factory].name)}"
-      when result[:factory]
-        "#{result[:code]} factory #{colorize(:blue, result[:factory].name)}"
+      when result[:factory_name] && result[:trait_name]
+        "#{result[:code]} trait #{colorize(:blue, result[:trait_name])} of factory #{colorize(:blue, result[:factory_name])}"
+      when result[:factory_name]
+        "#{result[:code]} factory #{colorize(:blue, result[:factory_name])}"
       else
-        "#{result[:code]} global trait #{colorize(:blue, result[:trait].name)}"
+        "#{result[:code]} global trait #{colorize(:blue, result[:trait_name])}"
       end
     end
 
