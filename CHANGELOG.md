@@ -1,3 +1,8 @@
+### [0.2.2] - 2019/05/05
+
+Improvements:
+- Make executable to be independent from project setup
+
 ### [0.2.1] - 2019/04/30
 
 Improvements:
