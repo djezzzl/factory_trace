@@ -12,7 +12,7 @@ module FactoryTrace
         total_color = results.size == 2 ? :green : :red
 
         results.each do |result|
-          configuration.out.puts(convert(result, total_color: total_color))
+          io.puts(convert(result, total_color: total_color))
         end
       end
 
