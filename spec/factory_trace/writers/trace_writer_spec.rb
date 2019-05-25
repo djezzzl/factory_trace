@@ -1,36 +1,54 @@
-RSpec.describe FactoryTrace::TraceWriter do
+RSpec.describe FactoryTrace::Writers::TraceWriter do
   subject(:printer) { described_class.new(output) }
 
   describe '#print' do
     let(:output) { StringIO.new }
-    let(:all) do
-      {
-        user: Set.new([:with_phone]),
-        admin: Set.new([:with_email]),
-        company: Set.new([:with_address, :with_phone])
-      }
+    let(:defined) do
+      FactoryTrace::Structures::Collection.new(
+        {
+          'user' => FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'])
+        },
+        {
+          'with_address' => FactoryTrace::Structures::Trait.new('with_address', nil)
+        }
+      )
     end
 
     let(:used) do
-      {
-        user: Set.new([:with_phone]),
-        admin: Set.new([]),
-        company: Set.new([:with_address, :with_phone])
-      }
+      FactoryTrace::Structures::Collection.new({}, {})
     end
 
     it 'prints the result' do
-      printer.write([all, used])
+      printer.write(defined, used)
 
       expect(output.string).to eq(<<~TEXT)
-        -all-
-        user,with_phone
-        admin,with_email
-        company,with_address,with_phone
-        -used-
-        user,with_phone
-        admin,
-        company,with_address,with_phone
+      {
+        "defined": {
+          "factories": [
+            {
+              "name": "user",
+              "parent_name": null,
+              "trait_names": [
+                "with_phone"
+              ]
+            }
+          ],
+          "traits": [
+            {
+              "name": "with_address",
+              "owner_name": null
+            }
+          ]
+        },
+        "used": {
+          "factories": [
+
+          ],
+          "traits": [
+
+          ]
+        }
+      }
       TEXT
     end
   end
