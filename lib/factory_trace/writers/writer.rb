@@ -1,9 +1,10 @@
 module FactoryTrace
   module Writers
     class Writer
-      attr_reader :configuration
+      attr_reader :io, :configuration
 
-      def initialize(configuration)
+      def initialize(io, configuration = Configuration.new)
+        @io = io
         @configuration = configuration
       end
     end
