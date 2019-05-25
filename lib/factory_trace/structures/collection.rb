@@ -30,6 +30,13 @@ module FactoryTrace
         }
       end
 
+      # Total number of factories and traits
+      #
+      # @return [Integer]
+      def total
+        traits.size + factories.size + factories.values.sum { |factory| factory.trait_names.size }
+      end
+
       # @return [Boolean]
       def ==(collection)
         return false unless collection.is_a?(FactoryTrace::Structures::Collection)
