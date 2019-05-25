@@ -25,8 +25,8 @@ module FactoryTrace
       # @return [Hash]
       def to_h
         {
-          factories: factories.map(&:to_h),
-          traits: traits.map(&:to_h)
+          factories: convert(factories),
+          traits: convert(traits)
         }
       end
 
@@ -52,6 +52,11 @@ module FactoryTrace
       # @return [FactoryTrace::Structures::Factory, FactoryTrace::Structures::Trait] element
       def store(hash, element)
         hash[element.name] = element
+      end
+
+      # @return [Hash]
+      def convert(hash)
+        hash.each_value.map(&:to_h)
       end
     end
   end
