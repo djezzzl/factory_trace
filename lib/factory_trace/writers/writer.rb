@@ -1,23 +1,11 @@
 module FactoryTrace
-  class Writer
-    def self.factory(io, config: Configuration.new)
-      writer =
-        if config.mode?(:full)
-          ReportWriter
-        elsif config.mode?(:trace_only)
-          TraceWriter
-        end
+  module Writers
+    class Writer
+      attr_reader :configuration
 
-      writer.new(io, config: config)
+      def initialize(configuration)
+        @configuration = configuration
+      end
     end
-
-    def initialize(io, config: Configuration.new)
-      @io = io
-      @config = config
-    end
-
-    private
-
-    attr_reader :io, :config
   end
 end
