@@ -1,5 +1,3 @@
-require 'set'
-
 module FactoryTrace
   class Tracker
     attr_reader :storage
@@ -10,8 +8,8 @@ module FactoryTrace
 
     def track!
       ActiveSupport::Notifications.subscribe('factory_bot.run_factory') do |_name, _start, _finish, _id, payload|
-        name = payload[:name]
-        traits = payload[:traits]
+        name = payload[:name].to_s
+        traits = payload[:traits].map(&:to_s)
 
         storage[name] ||= Set.new
         storage[name] |= traits

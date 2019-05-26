@@ -1,4 +1,4 @@
-RSpec.describe FactoryTrace::ReportWriter do
+RSpec.describe FactoryTrace::Writers::ReportWriter do
   subject(:printer) { described_class.new(output) }
 
   describe '#print' do

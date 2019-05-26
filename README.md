@@ -14,10 +14,13 @@ Example output (from [Rails RSpec Example](rails-rspec-example)):
 
 ```bash
 $ FB_TRACE=1 rspec
-total number of unique used factories & traits: 3
-total number of unique unused factories & traits: 2
-unused global trait with_email
+total number of unique used factories & traits: 2
+total number of unique used only indirectly factories & traits: 1
+total number of unique unused factories & traits: 3
+used only indirectly factory user as parent for special_user
 unused factory admin
+unused trait with_address of factory admin
+unused global trait with_email
 ```
 
 ## Installation
@@ -71,16 +74,16 @@ factories and traits. For that, we have a `trace_only` mode. You can try followi
 
 ```bash
 # one part
-FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result1.txt bundle exec rspec spec/first_spec.rb
+FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result1.json bundle exec rspec spec/first_spec.rb
 # another part
-FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result2.txt bundle exec rspec spec/second_spec.rb
-# finally output the usage to the console
-bundle exec factory_trace fb_trace_result1.txt fb_trace_result2.txt
+FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result2.json bundle exec rspec spec/second_spec.rb
+# output the usage to the console
+bundle exec factory_trace fb_trace_result1.json fb_trace_result2.json
 # or to the file
-FB_TRACE_FILE=fb_report.txt bundle exec factory_trace fb_trace_result1.txt fb_trace_result2.txt
+FB_TRACE_FILE=fb_report.txt bundle exec factory_trace fb_trace_result1.json fb_trace_result2.json
 ```
 
-**Note**: `bundle exec factory_trace` won't load your project. Thus it runs fast and easier to configure it on CI.
+**Note**: `bundle exec factory_trace` won't load your project. Thus it runs fast and it's easier to configure it on CI.
 
 ## Configuration
 

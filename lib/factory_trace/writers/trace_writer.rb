@@ -1,20 +1,10 @@
 module FactoryTrace
-  class TraceWriter < Writer
-    # @param [Array<Hash>] results
-    def write(results)
-      io.puts('-all-')
-      output(results[0])
-      io.puts('-used-')
-      output(results[1])
-    end
-
-    private
-
-    # @param [Hash<Symbol, Set<Hash>>] data
-    def output(data)
-      data.each do |key, set|
-        line = [key, set.to_a.join(',')].join(',')
-        io.puts(line)
+  module Writers
+    class TraceWriter < Writer
+      # @param [FactoryTrace::Structures::Collection] defined
+      # @param [FactoryTrace::Structures::Collection] used
+      def write(defined, used)
+        io.puts(JSON.pretty_generate(defined: defined.to_h, used: used.to_h))
       end
     end
   end

@@ -7,19 +7,19 @@ RSpec.describe FactoryTrace::Tracker do
     it 'collects used factories without traits' do
       build(:user)
 
-      expect(tracker.storage).to eq(user: Set.new)
+      expect(tracker.storage).to eq('user' => Set.new)
     end
 
     it 'collects used factories with traits' do
       build(:user, :with_phone)
 
-      expect(tracker.storage).to eq(user: Set.new([:with_phone]))
+      expect(tracker.storage).to eq('user' => Set.new(['with_phone']))
     end
 
     it 'collects used factories with global traits' do
       build(:user, :with_address)
 
-      expect(tracker.storage).to eq(user: Set.new([:with_address]))
+      expect(tracker.storage).to eq('user' => Set.new(['with_address']))
     end
 
     it 'collects all used factories' do
@@ -27,7 +27,7 @@ RSpec.describe FactoryTrace::Tracker do
       build(:admin, :with_phone, :with_email)
       build(:company, :with_address)
 
-      expect(tracker.storage).to eq(user: Set.new, admin: Set.new([:with_phone, :with_email]), company: Set.new([:with_address]))
+      expect(tracker.storage).to eq('user' => Set.new, 'admin' => Set.new(['with_phone', 'with_email']), 'company' => Set.new(['with_address']))
     end
   end
 end

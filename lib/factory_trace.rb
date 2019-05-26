@@ -1,12 +1,21 @@
 # External dependencies
 require 'factory_bot'
+require 'json'
+require 'set'
 # Library
 require 'factory_trace/configuration'
 require 'factory_trace/version'
+require 'factory_trace/helpers/converter'
 require 'factory_trace/tracker'
 
-require 'factory_trace/find_unused'
-require 'factory_trace/storage_handler'
+require 'factory_trace/structures/factory'
+require 'factory_trace/structures/trait'
+require 'factory_trace/structures/collection'
+
+require 'factory_trace/preprocessors/extract_defined'
+require 'factory_trace/preprocessors/extract_used'
+
+require 'factory_trace/processors/find_unused'
 
 require 'factory_trace/readers/trace_reader'
 require 'factory_trace/writers/writer'
@@ -29,7 +38,11 @@ module FactoryTrace
       # This is required to exclude parent traits from +defined_traits+
       FactoryBot.reload
 
-      writer.write(results)
+      if configuration.mode?(:full)
+        Writers::ReportWriter.new(configuration.out, configuration).write(Processors::FindUnused.call(defined, used))
+      elsif configuration.mode?(:trace_only)
+        Writers::TraceWriter.new(configuration.out, configuration).write(defined, used)
+      end
     end
 
     def configure
@@ -42,24 +55,16 @@ module FactoryTrace
 
     private
 
-    def results
-      if configuration.mode?(:full)
-        FindUnused.call(preprocessed)
-      elsif configuration.mode?(:trace_only)
-        preprocessed
-      end
+    def used
+      @used ||= Preprocessors::ExtractUsed.call(tracker.storage)
     end
 
-    def preprocessed
-      @preprocessed ||= StorageHandler.prepare(tracker.storage)
+    def defined
+      @defined ||= Preprocessors::ExtractDefined.call
     end
 
     def tracker
       @tracker ||= Tracker.new
-    end
-
-    def writer
-      @writer ||= Writer.factory(configuration.out, config: configuration)
     end
   end
 end
