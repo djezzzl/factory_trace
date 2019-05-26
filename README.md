@@ -71,16 +71,16 @@ factories and traits. For that, we have a `trace_only` mode. You can try followi
 
 ```bash
 # one part
-FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result1.txt bundle exec rspec spec/first_spec.rb
+FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result1.json bundle exec rspec spec/first_spec.rb
 # another part
-FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result2.txt bundle exec rspec spec/second_spec.rb
-# finally output the usage to the console
-bundle exec factory_trace fb_trace_result1.txt fb_trace_result2.txt
+FB_TRACE=trace_only FB_TRACE_FILE=fb_trace_result2.json bundle exec rspec spec/second_spec.rb
+# output the usage to the console
+bundle exec factory_trace fb_trace_result1.json fb_trace_result2.json
 # or to the file
-FB_TRACE_FILE=fb_report.txt bundle exec factory_trace fb_trace_result1.txt fb_trace_result2.txt
+FB_TRACE_FILE=fb_report.txt bundle exec factory_trace fb_trace_result1.json fb_trace_result2.json
 ```
 
-**Note**: `bundle exec factory_trace` won't load your project. Thus it runs fast and easier to configure it on CI.
+**Note**: `bundle exec factory_trace` won't load your project. Thus it runs fast and it's easier to configure it on CI.
 
 ## Configuration
 

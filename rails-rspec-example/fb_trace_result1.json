@@ -1,0 +1,47 @@
+{
+  "defined": {
+    "factories": [
+      {
+        "name": "user",
+        "parent_name": null,
+        "trait_names": [
+          "with_phone"
+        ]
+      },
+      {
+        "name": "special_user",
+        "parent_name": "user",
+        "trait_names": [
+
+        ]
+      },
+      {
+        "name": "admin",
+        "parent_name": "user",
+        "trait_names": [
+          "with_address"
+        ]
+      }
+    ],
+    "traits": [
+      {
+        "name": "with_email",
+        "owner_name": null
+      }
+    ]
+  },
+  "used": {
+    "factories": [
+      {
+        "name": "user",
+        "parent_name": null,
+        "trait_names": [
+
+        ]
+      }
+    ],
+    "traits": [
+
+    ]
+  }
+}
