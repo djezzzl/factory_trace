@@ -22,6 +22,25 @@ module FactoryTrace
         end
       end
 
+      # Merge passed collection into self
+      #
+      # @param [FactoryTrace::Structures::Collection]
+      #
+      # @return [FactoryTrace::Structures::Collection]
+      def merge!(collection)
+        collection.factories.each_value do |factory|
+          if factories[factory.name]
+            factories[factory.name].merge!(factory)
+          else
+            add(FactoryTrace::Structures::Factory.new(factory.name, factory.parent_name, factory.trait_names))
+          end
+        end
+
+        collection.traits.each_value do |trait|
+          add(FactoryTrace::Structures::Trait.new(trait.name, trait.owner_name)) unless traits[trait.name]
+        end
+      end
+
       # @return [Hash]
       def to_h
         {

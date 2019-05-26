@@ -1,9 +1,0 @@
--all-
-_traits,with_email
-user,with_phone
-special_user,
-admin,with_address
--used-
-_traits,
-special_user,
-user,with_phone

@@ -1,52 +1,59 @@
-require 'set'
-
 module FactoryTrace
-  class TraceReader
-    # Read the data from files and merge it
-    # First hash - all factories
-    # Second hash - used factories
-    #
-    # @return [Array<Hash>]
-    def self.read_from_files(*file_names, config: Configuration.new)
-      file_names.reduce([{}, {}]) do |array, file_name|
-        reader = new(File.open(file_name, 'r'), config: config)
-        new = reader.read
-        array.each_with_index.map do |hash, index|
-          hash.merge(new[index]) { |_key, v1, v2| v1 | v2 }
+  module Readers
+    class TraceReader
+      attr_reader :io, :configuration
+
+      # Read the data from files and merge it
+      #
+      # @return [Hash<Symbol, FactoryTrace::Structures::Collection>]
+      def self.read_from_files(*file_names, configuration: Configuration.new)
+        result = {defined: FactoryTrace::Structures::Collection.new, used: FactoryTrace::Structures::Collection.new}
+
+        file_names.each do |file_name|
+          File.open(file_name, 'r') do |file|
+            data = new(file, configuration: configuration).read
+
+            result.each do |key, collection|
+              collection.merge!(data[key])
+            end
+          end
         end
-      end
-    end
 
-    def initialize(io, config: Configuration.new)
-      @io = io
-      @config = config
-    end
-
-    # Read the data from file
-    # First hash - all factories
-    # Second hash - used factories
-    #
-    # @return [Array<Hash>]
-    def read
-      data = [{}, {}]
-      point = -1
-
-      io.each_line do |line|
-        next point += 1 if line.match?(/-all-|-used-/)
-
-        factory, *traits = line.strip.split(',')
-
-        if factory
-          data[point][factory] ||= Set.new
-          data[point][factory] |= traits
-        end
+        result
       end
 
-      data
+      def initialize(io, configuration: Configuration.new)
+        @io = io
+        @configuration = configuration
+      end
+
+      # Read the data from file
+      #
+      # @return [Hash<Symbol, FactoryTrace::Structures::Collection>]
+      def read
+        hash = JSON.parse(io.read)
+
+        {
+          defined: parse_collection(hash['defined']),
+          used: parse_collection(hash['used'])
+        }
+      end
+
+      private
+
+      def parse_collection(hash)
+        collection = FactoryTrace::Structures::Collection.new
+
+        hash['factories'].each do |h|
+          collection.add(FactoryTrace::Structures::Factory.new(h['name'], h['parent_name'], h['trait_names']))
+        end
+
+        hash['traits'].each do |h|
+          collection.add(FactoryTrace::Structures::Trait.new(h['name'], h['owner_name']))
+        end
+
+        collection
+      end
     end
-
-    private
-
-    attr_reader :io, :config
   end
 end

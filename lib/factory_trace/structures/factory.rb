@@ -21,6 +21,15 @@ module FactoryTrace
         }
       end
 
+      # Merge passed factory into self
+      #
+      # @param [FactoryTrace::Structures::Factory]
+      #
+      # @return [FactoryTrace::Structures::Factory]
+      def merge!(factory)
+        @trait_names = (trait_names + factory.trait_names).uniq
+      end
+
       # @return [Boolean]
       def ==(factory)
         return false unless factory.is_a?(FactoryTrace::Structures::Factory)
