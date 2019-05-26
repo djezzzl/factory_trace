@@ -9,11 +9,17 @@ module FactoryTrace
       # @return [Array<Hash>]
       def self.call(defined, used)
         used_inherited_traits = used_inherited_traits(defined, used)
+        used_child_factories = used_child_factories(defined, used)
+
         output = []
 
         defined.factories.each_value do |factory|
           unless used.factories[factory.name]
-            output << {code: :unused, factory_name: factory.name}
+            if used_child_factories[factory.name]
+              output << {code: :used_indirectly, factory_name: factory.name, child_factories_names: used_child_factories[factory.name]}
+            else
+              output << {code: :unused, factory_name: factory.name}
+            end
           end
 
           factory.trait_names.each do |trait_name|
@@ -30,9 +36,12 @@ module FactoryTrace
           end
         end
 
-        unused_count = output.size
+        unused_count = output.count { |result| result[:code] == :unused }
+        used_indirectly_count = output.count { |result| result[:code] == :used_indirectly }
+
         output.unshift(code: :unused, value: unused_count)
-        output.unshift(code: :used, value: defined.total - unused_count)
+        output.unshift(code: :used_indirectly, value: used_indirectly_count)
+        output.unshift(code: :used, value: defined.total - unused_count - used_indirectly_count)
 
         output
       end
@@ -80,6 +89,29 @@ module FactoryTrace
         end
 
         collection
+      end
+
+      # Returns a hash:
+      # - key is factory name
+      # - value is factory names which where used and are children of the factory
+      #
+      # @param [FactoryTrace::Structures::Collection] defined
+      # @param [FactoryTrace::Structures::Collection] used
+      #
+      # @return [Hash<String, Array<String>]
+      def self.used_child_factories(defined, used)
+        hash = {}
+
+        used.factories.each_value do |factory|
+          parent_name = defined.factories[factory.name].parent_name
+
+          if parent_name
+            hash[parent_name] ||= []
+            hash[parent_name] << factory.name
+          end
+        end
+
+        hash
       end
     end
   end

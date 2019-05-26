@@ -6,9 +6,9 @@ require 'factory_trace'
 fail "You should pass at least one file with traced information.\nYou can generate it using only_trace mode." if ARGV.empty?
 
 config = FactoryTrace.configuration
-data = FactoryTrace::Readers::TraceReader.read_from_files(*ARGV)
-data = FactoryTrace::Processors::FindUnused.call(data[:defined], data[:used])
-code = data.size > 2 ? 1 : 0
+hash = FactoryTrace::Readers::TraceReader.read_from_files(*ARGV)
+reports = FactoryTrace::Processors::FindUnused.call(hash[:defined], hash[:used])
+code = reports.any? { |report| report[:code] == :unused } ? 1 : 0
 
-FactoryTrace::Writers::ReportWriter.new(config.out, config).write(data)
+FactoryTrace::Writers::ReportWriter.new(config.out, config).write(reports)
 exit(code)

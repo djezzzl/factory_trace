@@ -33,7 +33,7 @@
   "used": {
     "factories": [
       {
-        "name": "user",
+        "name": "special_user",
         "parent_name": null,
         "trait_names": [
 
