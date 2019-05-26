@@ -2,32 +2,48 @@
   "defined": {
     "factories": [
       {
-        "name": "user",
+        "names": [
+          "user"
+        ],
+        "traits": [
+          {
+            "name": "with_phone",
+            "declaration_names": [
+
+            ]
+          }
+        ],
         "parent_name": null,
-        "trait_names": [
-          "with_phone"
-        ],
-        "alias_names": [
+        "declaration_names": [
 
         ]
       },
       {
-        "name": "special_user",
-        "parent_name": "user",
-        "trait_names": [
+        "names": [
+          "special_user"
+        ],
+        "traits": [
 
         ],
-        "alias_names": [
+        "parent_name": "user",
+        "declaration_names": [
 
         ]
       },
       {
-        "name": "admin",
-        "parent_name": "user",
-        "trait_names": [
-          "with_address"
+        "names": [
+          "admin"
         ],
-        "alias_names": [
+        "traits": [
+          {
+            "name": "with_address",
+            "declaration_names": [
+
+            ]
+          }
+        ],
+        "parent_name": "user",
+        "declaration_names": [
 
         ]
       }
@@ -35,19 +51,23 @@
     "traits": [
       {
         "name": "with_email",
-        "owner_name": null
+        "declaration_names": [
+
+        ]
       }
     ]
   },
   "used": {
     "factories": [
       {
-        "name": "special_user",
-        "parent_name": null,
-        "trait_names": [
+        "names": [
+          "special_user"
+        ],
+        "traits": [
 
         ],
-        "alias_names": [
+        "parent_name": null,
+        "declaration_names": [
 
         ]
       }

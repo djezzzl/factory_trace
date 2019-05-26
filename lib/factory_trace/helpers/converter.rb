@@ -4,13 +4,12 @@ module FactoryTrace
       module_function
 
       # @param [FactoryBot::Trait] trait
-      # @param [FactoryBot::Factory] owner
       #
       # @return [FactoryTrace::Structures::Trait]
-      def trait(trait, owner = nil)
+      def trait(trait)
         FactoryTrace::Structures::Trait.new(
           trait.name.to_s,
-          owner && owner.name.to_s
+          declaration_names: trait.definition.declarations.grep(FactoryBot::Declaration::Implicit).map(&:name).map(&:to_s)
         )
       end
 
@@ -19,10 +18,10 @@ module FactoryTrace
       # @return [FactoryTrace::Structures::Factory]
       def factory(factory)
         FactoryTrace::Structures::Factory.new(
-          factory.name.to_s,
-          factory.send(:parent).respond_to?(:name) ? factory.send(:parent).name.to_s : nil,
-          factory.defined_traits.map(&:name).map(&:to_s),
-          factory.names.map(&:to_s) - [factory.name.to_s]
+          factory.names.map(&:to_s),
+          factory.defined_traits.map(&method(:trait)),
+          parent_name: factory.send(:parent).respond_to?(:name) ? factory.send(:parent).name.to_s : nil,
+          declaration_names: factory.definition.declarations.grep(FactoryBot::Declaration::Implicit).map(&:name).map(&:to_s)
         )
       end
     end

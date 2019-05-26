@@ -13,8 +13,8 @@ module FactoryTrace
           File.open(file_name, 'r') do |file|
             data = new(file, configuration: configuration).read
 
-            result.each do |key, collection|
-              collection.merge!(data[key])
+            [:defined, :used].each do |key|
+              result[key].merge!(data[key])
             end
           end
         end
@@ -41,15 +41,28 @@ module FactoryTrace
 
       private
 
+      def parse_trait(hash)
+        FactoryTrace::Structures::Trait.new(hash['name'], declaration_names: hash['declaration_names'])
+      end
+
+      def parse_factory(hash)
+        FactoryTrace::Structures::Factory.new(
+          hash['names'],
+          hash['traits'].map(&method(:parse_trait)),
+          parent_name: hash['parent_name'],
+          declaration_names: hash['declaration_names']
+        )
+      end
+
       def parse_collection(hash)
         collection = FactoryTrace::Structures::Collection.new
 
         hash['factories'].each do |h|
-          collection.add(FactoryTrace::Structures::Factory.new(h['name'], h['parent_name'], h['trait_names'], h['alias_names']))
+          collection.add(parse_factory(h))
         end
 
         hash['traits'].each do |h|
-          collection.add(FactoryTrace::Structures::Trait.new(h['name'], h['owner_name']))
+          collection.add(parse_trait(h))
         end
 
         collection

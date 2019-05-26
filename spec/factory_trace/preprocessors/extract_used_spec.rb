@@ -5,10 +5,14 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractUsed do
     specify do
       collection = FactoryTrace::Structures::Collection.new(
         [
-          FactoryTrace::Structures::Factory.new('admin', nil, ['with_address'], [])
+          FactoryTrace::Structures::Factory.new(
+            ['admin'],
+            [FactoryTrace::Structures::Trait.new('with_address')]
+          )
         ],
         []
       )
+
       expect(subject).to eq(collection)
     end
   end

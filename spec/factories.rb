@@ -3,7 +3,7 @@ class User
 end
 
 class Company
-  attr_accessor :address
+  attr_accessor :address, :manager
 end
 
 class Article
@@ -26,9 +26,22 @@ FactoryBot.define do
     trait :with_email do
       email { 'email' }
     end
+
+    trait :combination do
+      with_email
+      with_phone
+    end
   end
 
-  factory :company
+  factory :manager, parent: :admin do
+    with_phone
+  end
+
+  factory :company do
+    trait :with_manager do
+      manager
+    end
+  end
 
   factory :article, aliases: %i[post]
 

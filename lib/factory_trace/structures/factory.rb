@@ -1,46 +1,48 @@
 module FactoryTrace
   module Structures
     class Factory
-      attr_reader :name, :parent_name, :trait_names, :alias_names
+      include Helpers::Statusable
 
-      # @param [String] name
-      # @param [String, nil] parent_name
-      # @param [Array<String>] trait_names
-      # @param [Array<String>] alias_names
-      def initialize(name, parent_name, trait_names, alias_names)
-        @name = name
+      attr_reader :names, :parent_name, :traits, :declaration_names
+
+      # @param [Array<String>] names
+      # @param [Array<FactoryTrace::Structure::Trait>] traits
+      # @param [String|nil] parent_name
+      # @param [Array<String>] declaration_names
+      def initialize(names, traits, parent_name: nil, declaration_names: [])
+        @names = names
+        @traits = traits
         @parent_name = parent_name
-        @trait_names = trait_names
-        @alias_names = alias_names
+        @declaration_names = declaration_names
       end
 
-      # @return [Hash<Symbol, String>]
+      # @return [Hash<Symbol, Object>]
       def to_h
         {
-          name: name,
+          names: names,
+          traits: traits.map(&:to_h),
           parent_name: parent_name,
-          trait_names: trait_names,
-          alias_names: alias_names
+          declaration_names: declaration_names
         }
       end
 
       # Merge passed factory into self
       #
       # @param [FactoryTrace::Structures::Factory]
-      #
-      # @return [FactoryTrace::Structures::Factory]
       def merge!(factory)
-        @trait_names = (trait_names + factory.trait_names).uniq
+        factory.traits.each do |trait|
+          traits << trait unless traits.any? { |t| t.name == trait.name }
+        end
       end
 
       # @return [Boolean]
       def ==(factory)
         return false unless factory.is_a?(FactoryTrace::Structures::Factory)
 
-        name == factory.name &&
+        names == factory.names &&
+          traits == factory.traits &&
           parent_name == factory.parent_name &&
-          trait_names == factory.trait_names &&
-          alias_names == factory.alias_names
+          declaration_names == factory.declaration_names
       end
     end
   end

@@ -1,20 +1,22 @@
 module FactoryTrace
   module Structures
     class Trait
-      attr_reader :name, :owner_name
+      include Helpers::Statusable
+
+      attr_reader :name, :declaration_names
 
       # @param [String] name
-      # @param [String, nil] owner_name
-      def initialize(name, owner_name)
+      # @param [Array<String>] declaration_names
+      def initialize(name, declaration_names: [])
         @name = name
-        @owner_name = owner_name
+        @declaration_names = declaration_names
       end
 
-      # @return [Hash<Symbol, String>]
+      # @return [Hash<Symbol, Object>]
       def to_h
         {
           name: name,
-          owner_name: owner_name
+          declaration_names: declaration_names
         }
       end
 
@@ -22,7 +24,7 @@ module FactoryTrace
       def ==(trait)
         return false unless trait.is_a?(FactoryTrace::Structures::Trait)
 
-        name == trait.name && owner_name == trait.owner_name
+        name == trait.name && declaration_names == trait.declaration_names
       end
     end
   end

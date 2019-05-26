@@ -40,8 +40,8 @@ module FactoryTrace
           colorize(total_color, "total number of unique #{humanize_code(result[:code])} factories & traits: #{result[:value]}")
         when result[:factory_name] && result[:trait_name]
           "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{colorize(:blue, result[:factory_name])}"
-        when result[:factory_name] && result[:child_factories_names]
-          "#{humanize_code(result[:code])} factory #{colorize(:blue, result[:factory_name])} as parent for #{list(result[:child_factories_names])}"
+        when result[:factory_name] && result[:factories_names]
+          "#{humanize_code(result[:code])} factory #{colorize(:blue, result[:factory_name])} as parent for #{list(result[:factories_names])}"
         when result[:factory_name]
           "#{humanize_code(result[:code])} factory #{colorize(:blue, result[:factory_name])}"
         else
