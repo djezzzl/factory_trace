@@ -1,3 +1,8 @@
+### [0.2.3] - 2019/05/26
+
+Improvements:
+- Report when factories are being used indirectly only (as parent of their children)
+
 ### [0.2.2] - 2019/05/05
 
 Improvements:
