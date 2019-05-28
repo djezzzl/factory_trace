@@ -103,8 +103,15 @@ module FactoryTrace
         hash = {}
 
         used.factories.each_value do |factory|
-          parent_name = defined.factories[factory.name].parent_name
+          defined_factory = defined.factories[factory.name]
 
+          unless defined_factory
+            defined_factory = defined.factories.select do |_, f|
+              f.alias_names.include? factory.name
+            end.values.first
+          end
+
+          parent_name = defined_factory.parent_name
           if parent_name
             hash[parent_name] ||= []
             hash[parent_name] << factory.name

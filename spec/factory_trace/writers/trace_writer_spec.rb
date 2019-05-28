@@ -27,6 +27,9 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
           "factories": [
             {
               "name": "user",
+              "alias_names": [
+
+              ],
               "parent_name": null,
               "trait_names": [
                 "with_phone"
