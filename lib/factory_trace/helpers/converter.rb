@@ -22,7 +22,7 @@ module FactoryTrace
           factory.name.to_s,
           factory.send(:parent).respond_to?(:name) ? factory.send(:parent).name.to_s : nil,
           factory.defined_traits.map(&:name).map(&:to_s),
-          factory.instance_eval('@aliases').map(&:to_s)
+          (factory.names - [factory.name]).map(&:to_s)
         )
       end
     end

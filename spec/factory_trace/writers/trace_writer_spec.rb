@@ -6,7 +6,7 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
     let(:defined) do
       FactoryTrace::Structures::Collection.new(
         {
-          'user' => FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'])
+          'user' => FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'], ['author'])
         },
         {
           'with_address' => FactoryTrace::Structures::Trait.new('with_address', nil)
@@ -28,7 +28,7 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
             {
               "name": "user",
               "alias_names": [
-
+                "author"
               ],
               "parent_name": null,
               "trait_names": [
