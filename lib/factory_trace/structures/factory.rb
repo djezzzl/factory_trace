@@ -36,7 +36,7 @@ module FactoryTrace
       def ==(factory)
         return false unless factory.is_a?(FactoryTrace::Structures::Factory)
 
-        (name == factory.name || (alias_names & factory.alias_names).present?) &&
+        (name == factory.name || alias_names == factory.alias_names) &&
           parent_name == factory.parent_name &&
           trait_names == factory.trait_names
       end
