@@ -1,5 +1,7 @@
 class User
   attr_accessor :name, :phone, :email, :address
+
+  def save! ; end
 end
 
 class Company
