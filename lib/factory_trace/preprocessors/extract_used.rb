@@ -9,8 +9,11 @@ module FactoryTrace
       def self.call(trace)
         collection = FactoryTrace::Structures::Collection.new
 
-        trace.each do |factory_name, trait_names|
-          collection.add(FactoryTrace::Structures::Factory.new(factory_name, nil, trait_names.to_a))
+        trace.each do |factory_name, factory_data|
+          traits = factory_data[:traits].to_a
+          alias_names = factory_data[:alias_names].to_a
+
+          collection.add(FactoryTrace::Structures::Factory.new(factory_name, nil, traits, alias_names))
         end
 
         collection

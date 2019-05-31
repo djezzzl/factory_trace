@@ -6,6 +6,14 @@ class Company
   attr_accessor :address
 end
 
+class Article
+  attr_accessor :title, :user
+end
+
+class Comment
+  attr_accessor :article, :user, :body
+end
+
 FactoryBot.define do
   factory :user do
     name { 'name' }
@@ -19,6 +27,19 @@ FactoryBot.define do
     trait :with_email do
       email { 'email' }
     end
+  end
+
+  factory :article, aliases: %i[post] do
+    user
+
+    title { 'title' }
+  end
+
+  factory :comment do
+    user
+    post
+
+    body { 'comment body' }
   end
 
   factory :company

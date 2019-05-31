@@ -1,6 +1,6 @@
 RSpec.describe FactoryTrace::Preprocessors::ExtractUsed do
   describe '.call' do
-    subject { described_class.call({'admin' => Set.new(['with_address'])}) }
+    subject { described_class.call({'admin' => { traits: Set.new(['with_address']), alias_names: Set.new }}) }
 
     specify do
       collection = FactoryTrace::Structures::Collection.new(
