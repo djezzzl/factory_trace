@@ -45,7 +45,7 @@ module FactoryTrace
         collection = FactoryTrace::Structures::Collection.new
 
         hash['factories'].each do |h|
-          collection.add(FactoryTrace::Structures::Factory.new(h['name'], h['parent_name'], h['trait_names']))
+          collection.add(FactoryTrace::Structures::Factory.new(h['name'], h['parent_name'], h['trait_names'], h['alias_names']))
         end
 
         hash['traits'].each do |h|
