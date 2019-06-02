@@ -1,7 +1,5 @@
 RSpec.describe FactoryTrace::Helpers::Converter do
   describe '.trait' do
-
-
     context 'when has no owner' do
       subject { described_class.trait(trait) }
 
@@ -21,6 +19,16 @@ RSpec.describe FactoryTrace::Helpers::Converter do
       specify do
         expect(subject).to eq(FactoryTrace::Structures::Trait.new('with_phone', 'user'))
       end
+    end
+  end
+
+  describe '.factory' do
+    subject { described_class.factory(factory) }
+
+    let(:factory) { find_factory('article') }
+
+    specify do
+      expect(subject).to eq(FactoryTrace::Structures::Factory.new('article', nil, [], ['post']))
     end
   end
 end

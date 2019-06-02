@@ -1,15 +1,17 @@
 module FactoryTrace
   module Structures
     class Factory
-      attr_reader :name, :parent_name, :trait_names
+      attr_reader :name, :parent_name, :trait_names, :alias_names
 
       # @param [String] name
       # @param [String, nil] parent_name
       # @param [Array<String>] trait_names
-      def initialize(name, parent_name, trait_names)
+      # @param [Array<String>] alias_names
+      def initialize(name, parent_name, trait_names, alias_names)
         @name = name
         @parent_name = parent_name
         @trait_names = trait_names
+        @alias_names = alias_names
       end
 
       # @return [Hash<Symbol, String>]
@@ -17,7 +19,8 @@ module FactoryTrace
         {
           name: name,
           parent_name: parent_name,
-          trait_names: trait_names
+          trait_names: trait_names,
+          alias_names: alias_names
         }
       end
 
@@ -34,7 +37,10 @@ module FactoryTrace
       def ==(factory)
         return false unless factory.is_a?(FactoryTrace::Structures::Factory)
 
-        name == factory.name && parent_name == factory.parent_name && trait_names == factory.trait_names
+        name == factory.name &&
+          parent_name == factory.parent_name &&
+          trait_names == factory.trait_names &&
+          alias_names == factory.alias_names
       end
     end
   end
