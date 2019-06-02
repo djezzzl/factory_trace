@@ -14,14 +14,16 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
               "parent_name": null,
               "trait_names": [
                 "with_phone"
-              ]
+              ],
+              "alias_names": []
             },
             {
               "name": "admin",
               "parent_name": "user",
               "trait_names": [
                 "with_email"
-              ]
+              ],
+              "alias_names": []
             }
           ],
           "traits": [
@@ -38,7 +40,8 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
               "parent_name": null,
               "trait_names": [
                 "with_address"
-              ]
+              ],
+              "alias_names": []
             }
           ],
           "traits": [
@@ -59,14 +62,16 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
               "parent_name": null,
               "trait_names": [
                 "with_phone"
-              ]
+              ],
+              "alias_names": []
             },
             {
               "name": "admin",
               "parent_name": "user",
               "trait_names": [
                 "with_email"
-              ]
+              ],
+              "alias_names": []
             }
           ],
           "traits": [
@@ -83,7 +88,8 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
               "parent_name": null,
               "trait_names": [
                 "with_phone"
-              ]
+              ],
+              "alias_names": []
             }
           ],
           "traits": [
@@ -107,19 +113,19 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
     it 'reads' do
       result = {
         defined: FactoryTrace::Structures::Collection.new(
-          {
-            'user' => FactoryTrace::Structures::Factory.new('user', nil, ['with_phone']),
-            'admin' => FactoryTrace::Structures::Factory.new('admin', 'user', ['with_email']),
-          },
-          {
-            'with_address' => FactoryTrace::Structures::Trait.new('with_address', nil)
-          }
+          [
+            FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'], []),
+            FactoryTrace::Structures::Factory.new('admin', 'user', ['with_email'], []),
+          ],
+          [
+            FactoryTrace::Structures::Trait.new('with_address', nil)
+          ]
         ),
         used: FactoryTrace::Structures::Collection.new(
-          {
-            'user' => FactoryTrace::Structures::Factory.new('user', nil, ['with_address']),
-            'admin' => FactoryTrace::Structures::Factory.new('admin', nil, ['with_phone'])
-          }
+          [
+            FactoryTrace::Structures::Factory.new('user', nil, ['with_address'], []),
+            FactoryTrace::Structures::Factory.new('admin', nil, ['with_phone'], [])
+          ]
         )
       }
 
@@ -138,7 +144,8 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
               "parent_name": null,
               "trait_names": [
                 "with_phone"
-              ]
+              ],
+              "alias_names": []
             }
           ],
           "traits": [
@@ -163,12 +170,12 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
     it 'reads' do
       result = {
         defined: FactoryTrace::Structures::Collection.new(
-          {
-            'user' => FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'])
-          },
-          {
-            'with_address' => FactoryTrace::Structures::Trait.new('with_address', nil)
-          }
+          [
+            FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'], [])
+          ],
+          [
+            FactoryTrace::Structures::Trait.new('with_address', nil)
+          ]
         ),
         used: FactoryTrace::Structures::Collection.new
       }

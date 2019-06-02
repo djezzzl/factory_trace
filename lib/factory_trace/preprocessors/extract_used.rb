@@ -10,7 +10,7 @@ module FactoryTrace
         collection = FactoryTrace::Structures::Collection.new
 
         trace.each do |factory_name, trait_names|
-          collection.add(FactoryTrace::Structures::Factory.new(factory_name, nil, trait_names.to_a))
+          collection.add(FactoryTrace::Structures::Factory.new(factory_name, nil, trait_names.to_a, []))
         end
 
         collection

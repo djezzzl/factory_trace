@@ -3,9 +3,9 @@ module FactoryTrace
     class Collection
       attr_reader :factories, :traits
 
-      # @param [Hash<String, FactoryTrace::Structures::Factory>]
-      # @param [Hash<String, FactoryTrace::Structures::Trait>]
-      def initialize(factories = {}, traits = {})
+      # @param [Array<String, FactoryTrace::Structures::Factory>]
+      # @param [Array<String, FactoryTrace::Structures::Trait>]
+      def initialize(factories = [], traits = [])
         @factories = factories
         @traits = traits
       end
@@ -15,8 +15,36 @@ module FactoryTrace
       # @return [FactoryTrace::Structures::Factory, FactoryTrace::Structures::Trait]
       def add(element)
         case element
-        when FactoryTrace::Structures::Factory then store(factories, element)
-        when FactoryTrace::Structures::Trait then store(traits, element)
+        when FactoryTrace::Structures::Factory then factories << element
+        when FactoryTrace::Structures::Trait then traits << element
+        else
+          fail "Unknown element: #{element.inspect}"
+        end
+
+        element
+      end
+
+      # @param [Array<String>] names
+      #
+      # @return [FactoryTrace::Structures::Factory|nil]
+      def find_factory_by_names(*names)
+        factories.find { |factory| names.include?(factory.name) || (names & factory.alias_names).size > 0 }
+      end
+
+      # @param [Array<String>] names
+      #
+      # @return [FactoryTrace::Structures::Trait|nil]
+      def find_trait_by_names(*names)
+        traits.find { |trait| names.include?(trait.name) }
+      end
+
+      # @param [FactoryTrace::Structures::Factory|FactoryTrace::Structures::Trait]
+      #
+      # @return [FactoryTrace::Structures::Factory|FactoryTrace::Structures::Trait]
+      def find(element)
+        case element
+        when FactoryTrace::Structures::Factory then find_factory_by_names(element.name, *element.alias_names)
+        when FactoryTrace::Structures::Trait then find_trait_by_names(element.name)
         else
           fail "Unknown element: #{element.inspect}"
         end
@@ -28,24 +56,24 @@ module FactoryTrace
       #
       # @return [FactoryTrace::Structures::Collection]
       def merge!(collection)
-        collection.factories.each_value do |factory|
-          if factories[factory.name]
-            factories[factory.name].merge!(factory)
+        collection.factories.each do |factory|
+          if (persisted = find(factory))
+            persisted.merge!(factory)
           else
-            add(FactoryTrace::Structures::Factory.new(factory.name, factory.parent_name, factory.trait_names))
+            add(FactoryTrace::Structures::Factory.new(factory.name, factory.parent_name, factory.trait_names, factory.alias_names))
           end
         end
 
-        collection.traits.each_value do |trait|
-          add(FactoryTrace::Structures::Trait.new(trait.name, trait.owner_name)) unless traits[trait.name]
+        collection.traits.each do |trait|
+          add(FactoryTrace::Structures::Trait.new(trait.name, trait.owner_name)) unless find(trait)
         end
       end
 
       # @return [Hash]
       def to_h
         {
-          factories: convert(factories),
-          traits: convert(traits)
+          factories: factories.map(&:to_h),
+          traits: traits.map(&:to_h)
         }
       end
 
@@ -53,7 +81,7 @@ module FactoryTrace
       #
       # @return [Integer]
       def total
-        traits.size + factories.size + factories.values.sum { |factory| factory.trait_names.size }
+        traits.size + factories.size + factories.sum { |factory| factory.trait_names.size }
       end
 
       # @return [Boolean]
@@ -61,21 +89,6 @@ module FactoryTrace
         return false unless collection.is_a?(FactoryTrace::Structures::Collection)
 
         factories == collection.factories && traits == collection.traits
-      end
-
-      private
-
-      # @param [Hash] hash
-      # @param [FactoryTrace::Structures::Factory, FactoryTrace::Structures::Trait] element
-      #
-      # @return [FactoryTrace::Structures::Factory, FactoryTrace::Structures::Trait] element
-      def store(hash, element)
-        hash[element.name] = element
-      end
-
-      # @return [Hash]
-      def convert(hash)
-        hash.each_value.map(&:to_h)
       end
     end
   end
