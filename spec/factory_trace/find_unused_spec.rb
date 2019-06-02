@@ -5,49 +5,74 @@ RSpec.describe FactoryTrace::Processors::FindUnused do
     context 'when all factories are not used' do
       let(:data) { {} }
 
-      it 'returns everything' do
+      specify do
         expect(checker).to eq([
           {code: :used, value: 0},
           {code: :used_indirectly, value: 0},
-          {code: :unused, value: 6},
+          {code: :unused, value: 8},
           {code: :unused, factory_name: 'user'},
           {code: :unused, factory_name: 'user', trait_name: 'with_phone'},
           {code: :unused, factory_name: 'admin'},
           {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
           {code: :unused, factory_name: 'company'},
+          {code: :unused, factory_name: 'article'},
+          {code: :unused, factory_name: 'comment'},
           {code: :unused, trait_name: 'with_address'},
         ])
       end
     end
 
-    context 'when a factory was used' do
-      let(:data) { {'user' => Set.new} }
+    context 'when a factory used through alias' do
+      let(:data) { {'post' => Set.new} }
 
-      it 'returns except used and for used returns all traits' do
+      specify do
         expect(checker).to eq([
           {code: :used, value: 1},
           {code: :used_indirectly, value: 0},
-          {code: :unused, value: 5},
+          {code: :unused, value: 7},
+          {code: :unused, factory_name: 'user'},
           {code: :unused, factory_name: 'user', trait_name: 'with_phone'},
           {code: :unused, factory_name: 'admin'},
           {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
           {code: :unused, factory_name: 'company'},
+          {code: :unused, factory_name: 'comment'},
           {code: :unused, trait_name: 'with_address'}
         ])
       end
     end
 
-    context 'when a factory was used with its trait' do
-      let(:data) { {'user' => Set.new(['with_phone'])} }
+    context 'when a factory was used without its traits' do
+      let(:data) { {'user' => Set.new} }
 
-      it 'returns except used and for used returns all traits' do
+      specify do
         expect(checker).to eq([
-          {code: :used, value: 2},
+          {code: :used, value: 1},
           {code: :used_indirectly, value: 0},
-          {code: :unused, value: 4},
+          {code: :unused, value: 7},
+          {code: :unused, factory_name: 'user', trait_name: 'with_phone'},
           {code: :unused, factory_name: 'admin'},
           {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
           {code: :unused, factory_name: 'company'},
+          {code: :unused, factory_name: 'article'},
+          {code: :unused, factory_name: 'comment'},
+          {code: :unused, trait_name: 'with_address'}
+        ])
+      end
+    end
+
+    context 'when a factory was used with its traits' do
+      let(:data) { {'user' => Set.new(['with_phone'])} }
+
+      specify do
+        expect(checker).to eq([
+          {code: :used, value: 2},
+          {code: :used_indirectly, value: 0},
+          {code: :unused, value: 6},
+          {code: :unused, factory_name: 'admin'},
+          {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
+          {code: :unused, factory_name: 'company'},
+          {code: :unused, factory_name: 'article'},
+          {code: :unused, factory_name: 'comment'},
           {code: :unused, trait_name: 'with_address'}
         ])
       end
@@ -56,15 +81,17 @@ RSpec.describe FactoryTrace::Processors::FindUnused do
     context 'when a child factory was used' do
       let(:data) { {'admin' => []} }
 
-      it 'returns except used and returns parent as used indirectly' do
+      specify do
         expect(checker).to eq([
           {code: :used, value: 1},
           {code: :used_indirectly, value: 1},
-          {code: :unused, value: 4},
+          {code: :unused, value: 6},
           {code: :used_indirectly, factory_name: 'user', child_factories_names: ['admin']},
           {code: :unused, factory_name: 'user', trait_name: 'with_phone'},
           {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
           {code: :unused, factory_name: 'company'},
+          {code: :unused, factory_name: 'article'},
+          {code: :unused, factory_name: 'comment'},
           {code: :unused, trait_name: 'with_address'}
         ])
       end
@@ -73,15 +100,17 @@ RSpec.describe FactoryTrace::Processors::FindUnused do
     context 'when a global trait was used' do
       let(:data) { {'user' => Set.new(['with_address'])} }
 
-      it 'returns except used and global trait' do
+      specify do
         expect(checker).to eq([
           {code: :used, value: 2},
           {code: :used_indirectly, value: 0},
-          {code: :unused, value: 4},
+          {code: :unused, value: 6},
           {code: :unused, factory_name: 'user', trait_name: 'with_phone'},
           {code: :unused, factory_name: 'admin'},
           {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
-          {code: :unused, factory_name: 'company'}
+          {code: :unused, factory_name: 'company'},
+          {code: :unused, factory_name: 'article'},
+          {code: :unused, factory_name: 'comment'}
         ])
       end
     end
@@ -89,25 +118,27 @@ RSpec.describe FactoryTrace::Processors::FindUnused do
     context 'when a parent trait was used' do
       let(:data) { {'admin' => Set.new(['with_phone'])} }
 
-      it 'returns except that factory and parent trait' do
+      specify do
         expect(checker).to eq([
           {code: :used, value: 2},
           {code: :used_indirectly, value: 1},
-          {code: :unused, value: 3},
+          {code: :unused, value: 5},
           {code: :used_indirectly, factory_name: 'user', child_factories_names: ['admin']},
           {code: :unused, factory_name: 'admin', trait_name: 'with_email'},
           {code: :unused, factory_name: 'company'},
+          {code: :unused, factory_name: 'article'},
+          {code: :unused, factory_name: 'comment'},
           {code: :unused, trait_name: 'with_address'}
         ])
       end
     end
 
-    context 'when almost everything were used' do
-      let(:data) { {'admin' => Set.new(['with_phone', 'with_email']), 'company' => Set.new(['with_address'])} }
+    context 'when everything were used' do
+      let(:data) { {'admin' => Set.new(['with_phone', 'with_email']), 'company' => Set.new(['with_address']), 'article' => Set.new, 'comment' => Set.new()} }
 
-      it 'returns except parent factory' do
+      specify do
         expect(checker).to eq([
-          {code: :used, value: 5},
+          {code: :used, value: 7},
           {code: :used_indirectly, value: 1},
           {code: :unused, value: 0},
           {code: :used_indirectly, factory_name: 'user', child_factories_names: ['admin']}

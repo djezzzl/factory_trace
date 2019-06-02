@@ -13,8 +13,8 @@ module FactoryTrace
 
         output = []
 
-        defined.factories.each_value do |factory|
-          unless used.factories[factory.name]
+        defined.factories.each do |factory|
+          unless used.find(factory)
             if used_child_factories[factory.name]
               output << {code: :used_indirectly, factory_name: factory.name, child_factories_names: used_child_factories[factory.name]}
             else
@@ -23,14 +23,14 @@ module FactoryTrace
           end
 
           factory.trait_names.each do |trait_name|
-            unless trait_used?(used, factory.name, trait_name) || trait_used?(used_inherited_traits, factory.name, trait_name)
+            unless trait_used?(used, factory, trait_name) || trait_used?(used_inherited_traits, factory, trait_name)
               output << {code: :unused, factory_name: factory.name, trait_name: trait_name}
             end
           end
         end
 
-        defined.traits.each_value do |trait|
-          unless used_inherited_traits.traits[trait.name]
+        defined.traits.each do |trait|
+          unless used_inherited_traits.find(trait)
             output << {code: :unused, trait_name: trait.name}
             next
           end
@@ -51,12 +51,13 @@ module FactoryTrace
       # Checks if factory of the collection contains a trait
       #
       # @param [FactoryTrace::Structures::Collection] collection
-      # @param [String] factory_name
+      # @param [FactoryTrace::Structures::Factory] factory
       # @param [String] trait_name
       #
       # @return [Boolean]
-      def self.trait_used?(collection, factory_name, trait_name)
-        collection.factories[factory_name] && collection.factories[factory_name].trait_names.include?(trait_name)
+      def self.trait_used?(collection, factory, trait_name)
+        factory = collection.find(factory)
+        factory && factory.trait_names.include?(trait_name)
       end
 
       # Returns a new collection where traits which were used moved to their owner factory
@@ -68,18 +69,18 @@ module FactoryTrace
       def self.used_inherited_traits(defined, used)
         collection = FactoryTrace::Structures::Collection.new
 
-        used.factories.each_value do |factory|
+        used.factories.each do |factory|
           factory.trait_names.each do |trait_name|
             possible_owner_name = factory.name
 
             while possible_owner_name
-              break if defined.factories[possible_owner_name].trait_names.include?(trait_name)
-              possible_owner_name = defined.factories[possible_owner_name].parent_name
+              break if defined.find_factory_by_names(possible_owner_name).trait_names.include?(trait_name)
+              possible_owner_name = defined.find_factory_by_names(possible_owner_name).parent_name
             end
 
             if possible_owner_name
-              factory = collection.factories[possible_owner_name]
-              factory ||= collection.add(FactoryTrace::Structures::Factory.new(possible_owner_name, nil, []))
+              factory = collection.find_factory_by_names(possible_owner_name)
+              factory ||= collection.add(FactoryTrace::Structures::Factory.new(possible_owner_name, nil, [], []))
 
               factory.trait_names << trait_name unless factory.trait_names.include?(trait_name)
             else
@@ -102,8 +103,8 @@ module FactoryTrace
       def self.used_child_factories(defined, used)
         hash = {}
 
-        used.factories.each_value do |factory|
-          parent_name = defined.factories[factory.name].parent_name
+        used.factories.each do |factory|
+          parent_name = defined.find(factory).parent_name
 
           if parent_name
             hash[parent_name] ||= []
