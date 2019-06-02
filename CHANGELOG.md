@@ -1,3 +1,8 @@
+### [0.2.4] - 2019/06/02
+
+Fixes:
+- Support of alias names for factories
+
 ### [0.2.3] - 2019/05/26
 
 Improvements:
