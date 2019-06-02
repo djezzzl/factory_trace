@@ -5,12 +5,12 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
     let(:output) { StringIO.new }
     let(:defined) do
       FactoryTrace::Structures::Collection.new(
-        {
-          'user' => FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'])
-        },
-        {
-          'with_address' => FactoryTrace::Structures::Trait.new('with_address', nil)
-        }
+        [
+          FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'], [])
+        ],
+        [
+          FactoryTrace::Structures::Trait.new('with_address', nil)
+        ]
       )
     end
 
@@ -30,6 +30,9 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
               "parent_name": null,
               "trait_names": [
                 "with_phone"
+              ],
+              "alias_names": [
+
               ]
             }
           ],
