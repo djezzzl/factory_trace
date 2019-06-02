@@ -6,12 +6,18 @@
         "parent_name": null,
         "trait_names": [
           "with_phone"
+        ],
+        "alias_names": [
+
         ]
       },
       {
         "name": "special_user",
         "parent_name": "user",
         "trait_names": [
+
+        ],
+        "alias_names": [
 
         ]
       },
@@ -20,6 +26,9 @@
         "parent_name": "user",
         "trait_names": [
           "with_address"
+        ],
+        "alias_names": [
+
         ]
       }
     ],
@@ -36,6 +45,9 @@
         "name": "special_user",
         "parent_name": null,
         "trait_names": [
+
+        ],
+        "alias_names": [
 
         ]
       }
