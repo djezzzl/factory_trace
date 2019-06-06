@@ -1,0 +1,64 @@
+version: 2.1
+jobs:
+  ver4-10-0:
+    docker:
+      - image: circleci/ruby:2.5.5
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          FB_VERSION: "= 4.10.0"
+
+    steps:
+      - checkout
+
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      - run:
+          name: Bundle Install
+          command: bundle install
+
+      - run:
+          name: Run rspec in parallel
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+      - store_test_results:
+          path: test_results
+
+  ver5-0:
+    docker:
+      - image: circleci/ruby:2.6.3
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          FB_VERSION: "~> 5.0"
+
+    steps:
+      - checkout
+
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      - run:
+          name: Bundle Install
+          command: bundle install
+
+      - run:
+          name: Run rspec in parallel
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+workflows:
+  version: 2
+  factory-trace:
+    jobs:
+      - ver4-10-0
+      - ver5-0
