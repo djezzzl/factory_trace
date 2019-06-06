@@ -10,15 +10,13 @@ module FactoryTrace
         @traits = traits
       end
 
-      # @param [FactoryTrace::Structures::Factory, FactoryTrace::Structures::Trait] element
+      # @param [FactoryTrace::Structures::Factory|FactoryTrace::Structures::Trait] element
       #
-      # @return [FactoryTrace::Structures::Factory, FactoryTrace::Structures::Trait]
+      # @return [FactoryTrace::Structures::Factory|FactoryTrace::Structures::Trait]
       def add(element)
         case element
         when FactoryTrace::Structures::Factory then factories << element
         when FactoryTrace::Structures::Trait then traits << element
-        else
-          fail "Unknown element: #{element.inspect}"
         end
 
         element
@@ -27,46 +25,15 @@ module FactoryTrace
       # @param [Array<String>] names
       #
       # @return [FactoryTrace::Structures::Factory|nil]
-      def find_factory_by_names(*names)
-        factories.find { |factory| names.include?(factory.name) || (names & factory.alias_names).size > 0 }
+      def find_factory_by_names(names)
+        factories.find { |factory| (names & factory.names).size > 0 }
       end
 
-      # @param [Array<String>] names
+      # @param [String] name
       #
       # @return [FactoryTrace::Structures::Trait|nil]
-      def find_trait_by_names(*names)
-        traits.find { |trait| names.include?(trait.name) }
-      end
-
-      # @param [FactoryTrace::Structures::Factory|FactoryTrace::Structures::Trait]
-      #
-      # @return [FactoryTrace::Structures::Factory|FactoryTrace::Structures::Trait]
-      def find(element)
-        case element
-        when FactoryTrace::Structures::Factory then find_factory_by_names(element.name, *element.alias_names)
-        when FactoryTrace::Structures::Trait then find_trait_by_names(element.name)
-        else
-          fail "Unknown element: #{element.inspect}"
-        end
-      end
-
-      # Merge passed collection into self
-      #
-      # @param [FactoryTrace::Structures::Collection]
-      #
-      # @return [FactoryTrace::Structures::Collection]
-      def merge!(collection)
-        collection.factories.each do |factory|
-          if (persisted = find(factory))
-            persisted.merge!(factory)
-          else
-            add(FactoryTrace::Structures::Factory.new(factory.name, factory.parent_name, factory.trait_names, factory.alias_names))
-          end
-        end
-
-        collection.traits.each do |trait|
-          add(FactoryTrace::Structures::Trait.new(trait.name, trait.owner_name)) unless find(trait)
-        end
+      def find_trait_by_name(name)
+        traits.find { |trait| name == trait.name }
       end
 
       # @return [Hash]
@@ -77,11 +44,28 @@ module FactoryTrace
         }
       end
 
+      # Merge passed collection into self
+      #
+      # @param [FactoryTrace::Structures::Collection]
+      def merge!(collection)
+        collection.factories.each do |factory|
+          if (persisted = find_factory_by_names(factory.names))
+            persisted.merge!(factory)
+          else
+            add(factory)
+          end
+        end
+
+        collection.traits.each do |trait|
+          add(trait) unless find_trait_by_name(trait.name)
+        end
+      end
+
       # Total number of factories and traits
       #
       # @return [Integer]
       def total
-        traits.size + factories.size + factories.sum { |factory| factory.trait_names.size }
+        traits.size + factories.size + factories.sum { |factory| factory.traits.size }
       end
 
       # @return [Boolean]

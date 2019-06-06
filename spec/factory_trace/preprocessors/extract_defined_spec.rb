@@ -5,14 +5,32 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractDefined do
     specify do
       collection = FactoryTrace::Structures::Collection.new(
         [
-          FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'], []),
-          FactoryTrace::Structures::Factory.new('admin', 'user', ['with_email'], []),
-          FactoryTrace::Structures::Factory.new('company', nil, [], []),
-          FactoryTrace::Structures::Factory.new('article', nil, [], ['post']),
-          FactoryTrace::Structures::Factory.new('comment', nil, [], []),
+          FactoryTrace::Structures::Factory.new(
+            ['user'],
+            [
+              FactoryTrace::Structures::Trait.new('with_phone')
+            ]
+          ),
+          FactoryTrace::Structures::Factory.new(
+            ['admin'],
+            [
+              FactoryTrace::Structures::Trait.new('with_email'),
+              FactoryTrace::Structures::Trait.new('combination', declaration_names: ['with_email', 'with_phone'])
+            ],
+            parent_name: 'user'
+          ),
+          FactoryTrace::Structures::Factory.new(['manager'], [], parent_name: 'admin', declaration_names: ['with_phone']),
+          FactoryTrace::Structures::Factory.new(
+            ['company'],
+            [
+              FactoryTrace::Structures::Trait.new('with_manager', declaration_names: ['manager'])
+            ]
+          ),
+          FactoryTrace::Structures::Factory.new(['article', 'post'], []),
+          FactoryTrace::Structures::Factory.new(['comment'], [], declaration_names: ['post']),
         ],
         [
-          FactoryTrace::Structures::Trait.new('with_address', nil)
+          FactoryTrace::Structures::Trait.new('with_address')
         ]
       )
 

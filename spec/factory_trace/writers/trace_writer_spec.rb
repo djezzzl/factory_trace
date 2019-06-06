@@ -6,10 +6,23 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
     let(:defined) do
       FactoryTrace::Structures::Collection.new(
         [
-          FactoryTrace::Structures::Factory.new('user', nil, ['with_phone'], [])
+          FactoryTrace::Structures::Factory.new(
+            ['user'],
+            [
+              FactoryTrace::Structures::Trait.new('with_phone')
+            ]
+          ),
+          FactoryTrace::Structures::Factory.new(
+            ['admin'],
+            [
+              FactoryTrace::Structures::Trait.new('with_email'),
+              FactoryTrace::Structures::Trait.new('combination', declaration_names: ['with_email', 'with_phone'])
+            ],
+            parent_name: 'user'
+          )
         ],
         [
-          FactoryTrace::Structures::Trait.new('with_address', nil)
+          FactoryTrace::Structures::Trait.new('with_address')
         ]
       )
     end
@@ -26,29 +39,62 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
         "defined": {
           "factories": [
             {
-              "name": "user",
-              "parent_name": null,
-              "trait_names": [
-                "with_phone"
+              "names": [
+                "user"
               ],
-              "alias_names": [
-
+              "traits": [
+                {
+                  "name": "with_phone",
+                  "declaration_names": [
+      
+                  ]
+                }
+              ],
+              "parent_name": null,
+              "declaration_names": [
+      
+              ]
+            },
+            {
+              "names": [
+                "admin"
+              ],
+              "traits": [
+                {
+                  "name": "with_email",
+                  "declaration_names": [
+      
+                  ]
+                },
+                {
+                  "name": "combination",
+                  "declaration_names": [
+                    "with_email",
+                    "with_phone"
+                  ]
+                }
+              ],
+              "parent_name": "user",
+              "declaration_names": [
+      
               ]
             }
           ],
           "traits": [
             {
               "name": "with_address",
-              "owner_name": null
+              "declaration_names": [
+      
+              ]
             }
           ]
         },
         "used": {
           "factories": [
-
+      
           ],
           "traits": [
-
+      
           ]
         }
       }

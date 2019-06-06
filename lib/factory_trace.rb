@@ -6,6 +6,7 @@ require 'set'
 require 'factory_trace/configuration'
 require 'factory_trace/version'
 require 'factory_trace/helpers/converter'
+require 'factory_trace/helpers/statusable'
 require 'factory_trace/tracker'
 
 require 'factory_trace/structures/factory'
