@@ -1,6 +1,6 @@
 # FactoryTrace
 
-[![Build Status](https://travis-ci.org/djezzzl/factory_trace.svg?branch=master)](https://travis-ci.org/djezzzl/factory_trace)
+[![CircleCI](https://circleci.com/gh/djezzzl/factory_trace/tree/master.svg?style=svg)](https://circleci.com/gh/djezzzl/factory_trace/tree/master)
 [![Gem Version](https://badge.fury.io/rb/factory_trace.svg)](https://badge.fury.io/rb/factory_trace)
 
 The main goal of the project is to provide an easy way to maintain [FactoryBot](https://github.com/thoughtbot/factory_bot) 
