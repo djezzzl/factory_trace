@@ -1,3 +1,8 @@
+### [0.3.0] - 2019/06/06
+
+Fixes:
+- Catch possible indirect usage
+
 ### [0.2.4] - 2019/06/02
 
 Fixes:
