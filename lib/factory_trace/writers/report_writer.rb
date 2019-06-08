@@ -11,19 +11,11 @@ module FactoryTrace
       CODES = {
         used: 'used',
         unused: 'unused',
-        used_indirectly: 'used only indirectly'
       }.freeze
 
       # @param [Array<Hash>] results
       def write(results)
-        total_color =
-          if results.any? { |result| result[:code] == :unused }
-            :red
-          elsif results.any? { |result| result[:code] == :used_indirectly }
-            :yellow
-          else
-            :green
-          end
+        total_color = results.any? { |result| result[:code] == :unused && !result.key?(:value) } ? :red : :green
 
         results.each do |result|
           io.puts(convert(result, total_color: total_color))
@@ -38,12 +30,10 @@ module FactoryTrace
         case
         when result[:value]
           colorize(total_color, "total number of unique #{humanize_code(result[:code])} factories & traits: #{result[:value]}")
-        when result[:factory_name] && result[:trait_name]
-          "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{colorize(:blue, result[:factory_name])}"
-        when result[:factory_name] && result[:factories_names]
-          "#{humanize_code(result[:code])} factory #{colorize(:blue, result[:factory_name])} as parent for #{list(result[:factories_names])}"
-        when result[:factory_name]
-          "#{humanize_code(result[:code])} factory #{colorize(:blue, result[:factory_name])}"
+        when result[:factory_names] && result[:trait_name]
+          "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{list(result[:factory_names])}"
+        when result[:factory_names]
+          "#{humanize_code(result[:code])} factory #{list(result[:factory_names])}"
         else
           "#{humanize_code(result[:code])} global trait #{colorize(:blue, result[:trait_name])}"
         end
@@ -59,8 +49,8 @@ module FactoryTrace
         CODES[code]
       end
 
-      def list(elements)
-        elements.map { |element| colorize(:blue, element) }.join(', ')
+      def list(elements, color: :blue)
+        elements.map { |element| colorize(color, element) }.join(', ')
       end
     end
   end

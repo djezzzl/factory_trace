@@ -16,8 +16,8 @@ Example output (from [Rails RSpec Example](rails-rspec-example)):
 $ FB_TRACE=1 rspec
 total number of unique used factories & traits: 3
 total number of unique unused factories & traits: 3
-unused global trait 
-unused global trait with_address
+unused factory admin
+unused trait with_address of factory admin
 unused global trait with_email
 ```
 
