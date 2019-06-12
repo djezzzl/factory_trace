@@ -97,11 +97,11 @@ module FactoryTrace
       # @param [Symbol] status
       def self.mark_declarations(declaration_names, factory, collection, status:)
         declaration_names.each do |declaration_name|
-          if (declaration_factory = collection.find_factory_by_names([declaration_name]))
-            mark_factory(declaration_factory, collection, status: status)
-          elsif (declaration_factory, declaration_trait = defined_trait_by_name(collection, factory, declaration_name))
-            mark_trait(declaration_trait, declaration_factory, collection, status: status)
-          end
+          declaration_factory = collection.find_factory_by_names([declaration_name])
+          next mark_factory(declaration_factory, collection, status: status) if declaration_factory
+
+          declaration_factory, declaration_trait = defined_trait_by_name(collection, factory, declaration_name)
+          mark_trait(declaration_trait, declaration_factory, collection, status: status) if declaration_trait
         end
       end
     end
