@@ -1,3 +1,8 @@
+### [0.3.2] - 2019/06/12
+
+Fixes:
+- Fix a bug with marking declarations
+
 ### [0.3.1] - 2019/06/08
 
 Fixes:
