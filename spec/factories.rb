@@ -20,6 +20,8 @@ FactoryBot.define do
     trait :with_phone do
       phone { 'phone' }
     end
+
+    factory :user_with_defaults, traits: %i[with_address with_phone]
   end
 
   factory :admin, parent: :user do
