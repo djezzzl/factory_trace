@@ -12,6 +12,12 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractDefined do
             ]
           ),
           FactoryTrace::Structures::Factory.new(
+            ['user_with_defaults'],
+            [],
+            declaration_names: ['with_address', 'with_phone'],
+            parent_name: 'user'
+          ),
+          FactoryTrace::Structures::Factory.new(
             ['admin'],
             [
               FactoryTrace::Structures::Trait.new('with_email'),
