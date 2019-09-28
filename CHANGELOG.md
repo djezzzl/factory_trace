@@ -1,3 +1,8 @@
+### [0.3.3] - 2019/09/28
+
+Fixes:
+- Fix a bug when we ignore default traits for factories
+
 ### [0.3.2] - 2019/06/12
 
 Fixes:
