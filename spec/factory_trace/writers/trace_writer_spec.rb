@@ -18,7 +18,8 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
               FactoryTrace::Structures::Trait.new('with_email'),
               FactoryTrace::Structures::Trait.new('combination', declaration_names: ['with_email', 'with_phone'])
             ],
-            parent_name: 'user'
+            parent_name: 'user',
+            definition_path: 'path/to/file:10'
           )
         ],
         [
@@ -47,13 +48,15 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
                   "name": "with_phone",
                   "declaration_names": [
       
-                  ]
+                  ],
+                  "definition_path": null
                 }
               ],
               "parent_name": null,
               "declaration_names": [
       
-              ]
+              ],
+              "definition_path": null
             },
             {
               "names": [
@@ -64,20 +67,23 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
                   "name": "with_email",
                   "declaration_names": [
       
-                  ]
+                  ],
+                  "definition_path": null
                 },
                 {
                   "name": "combination",
                   "declaration_names": [
                     "with_email",
                     "with_phone"
-                  ]
+                  ],
+                  "definition_path": null
                 }
               ],
               "parent_name": "user",
               "declaration_names": [
       
-              ]
+              ],
+              "definition_path": "path/to/file:10"
             }
           ],
           "traits": [
@@ -85,7 +91,8 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
               "name": "with_address",
               "declaration_names": [
       
-              ]
+              ],
+              "definition_path": null
             }
           ]
         },

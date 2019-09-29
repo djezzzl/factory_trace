@@ -9,7 +9,8 @@ module FactoryTrace
       def trait(trait)
         FactoryTrace::Structures::Trait.new(
           trait.name.to_s,
-          declaration_names: extract_declarations(trait)
+          declaration_names: extract_declarations(trait),
+          definition_path: (trait.definition_path if trait.respond_to?(:definition_path))
         )
       end
 
@@ -21,7 +22,8 @@ module FactoryTrace
           factory.names.map(&:to_s),
           factory.defined_traits.map(&method(:trait)),
           parent_name: factory.send(:parent).respond_to?(:name) ? factory.send(:parent).name.to_s : nil,
-          declaration_names: extract_declarations(factory)
+          declaration_names: extract_declarations(factory),
+          definition_path: (factory.definition_path if factory.respond_to?(:definition_path))
         )
       end
 

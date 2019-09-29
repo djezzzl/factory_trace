@@ -16,9 +16,9 @@ Example output (from [Rails RSpec Example](rails-rspec-example)):
 $ FB_TRACE=1 rspec
 total number of unique used factories & traits: 3
 total number of unique unused factories & traits: 3
-unused factory admin
-unused trait with_address of factory admin
-unused global trait with_email
+unused factory admin => /Users/djezzzl/RubymineProjects/factory_trace/rails-rspec-example/spec/factories.rb:10
+unused trait with_address of factory admin => /Users/djezzzl/RubymineProjects/factory_trace/rails-rspec-example/spec/factories.rb:11
+unused global trait with_email => /Users/djezzzl/RubymineProjects/factory_trace/rails-rspec-example/spec/factories.rb:16
 ```
 
 ## Installation
@@ -102,8 +102,17 @@ FactoryTrace.configure do |config|
   # default is ENV['FB_TRACE'] || :full 
   # can be :full or :trace_only 
   config.mode = :full
+  
+  # used to trace definitions places 
+  # default is true
+  # can be true or false  
+  config.trace_definition = true 
 end
 ```
+
+**Tip**: if you have some errors try to disable `trace_definition`. That functionality does
+many monkey patches to `FactoryBot`. I will appreciate sharing an error stack trace so I can
+fix it.
 
 ## Development
 

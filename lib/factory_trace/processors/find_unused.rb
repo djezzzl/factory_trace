@@ -13,15 +13,15 @@ module FactoryTrace
         output = []
 
         defined.factories.each do |factory|
-          output << {code: :unused, factory_names: factory.names} unless factory.status
+          output << append_definition_path({code: :unused, factory_names: factory.names}, factory) unless factory.status
 
           factory.traits.each do |trait|
-            output << {code: :unused, factory_names: factory.names, trait_name: trait.name} unless trait.status
+            output << append_definition_path({code: :unused, factory_names: factory.names, trait_name: trait.name}, trait) unless trait.status
           end
         end
 
         defined.traits.each do |trait|
-          output << {code: :unused, trait_name: trait.name} unless trait.status
+          output << append_definition_path({code: :unused, trait_name: trait.name}, trait) unless trait.status
         end
 
         output.unshift(code: :unused, value: output.size)
@@ -103,6 +103,15 @@ module FactoryTrace
           declaration_factory, declaration_trait = defined_trait_by_name(collection, factory, declaration_name)
           mark_trait(declaration_trait, declaration_factory, collection, status: status) if declaration_trait
         end
+      end
+
+      # @param [Hash]
+      # @param [FactoryTrace::Structures::Factory|FactoryTrace::Structures::Trait]
+      #
+      # @return [Hash]
+      def self.append_definition_path(hash, object)
+        hash[:definition_path] = object.definition_path if object.definition_path
+        hash
       end
     end
   end
