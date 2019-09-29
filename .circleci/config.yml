@@ -7,7 +7,7 @@ jobs:
           BUNDLE_PATH: vendor/bundle
           FB_VERSION: "= 4.10.0"
 
-    steps:
+    steps: &steps
       - checkout
 
       - run:
@@ -29,36 +29,48 @@ jobs:
       - store_test_results:
           path: test_results
 
-  ver5-0:
+  ver4-11-1:
+    docker:
+      - image: circleci/ruby:2.5.5
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          FB_VERSION: "= 4.11.1"
+
+    steps: *steps
+
+  ver5-0-1:
     docker:
       - image: circleci/ruby:2.6.3
         environment:
           BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "~> 5.0"
+          FB_VERSION: "= 5.0.1"
 
-    steps:
-      - checkout
+    steps: *steps
 
-      - run:
-          name: Which bundler?
-          command: bundle -v
+  ver5-0-2:
+    docker:
+      - image: circleci/ruby:2.6.3
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          FB_VERSION: "= 5.0.2"
 
-      - run:
-          name: Bundle Install
-          command: bundle install
+    steps: *steps
 
-      - run:
-          name: Run rspec in parallel
-          command: |
-            bundle exec rspec --profile 10 \
-                              --format RspecJunitFormatter \
-                              --out test_results/rspec.xml \
-                              --format progress \
-                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+  ver5-1-latest:
+    docker:
+      - image: circleci/ruby:2.6.3
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          FB_VERSION: "~> 5.1"
+
+    steps: *steps
 
 workflows:
   version: 2
   factory-trace:
     jobs:
       - ver4-10-0
-      - ver5-0
+      - ver4-11-1
+      - ver5-0-1
+      - ver5-0-2
+      - ver5-1-latest
