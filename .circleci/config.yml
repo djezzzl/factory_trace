@@ -19,6 +19,10 @@ jobs:
           command: bundle install
 
       - run:
+          name: Integration test
+          command: ruby spec/factory_trace/integration_tests/runner.rb
+
+      - run:
           name: Run rspec in parallel
           command: |
             bundle exec rspec --profile 10 \
