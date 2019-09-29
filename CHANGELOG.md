@@ -1,3 +1,7 @@
+### [0.4.0] - 2019/09/28
+Features:
+- Provide the path where factory or trait was defined
+
 ### [0.3.3] - 2019/09/28
 
 Fixes:
