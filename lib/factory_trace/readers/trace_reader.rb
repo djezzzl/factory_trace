@@ -42,7 +42,7 @@ module FactoryTrace
       private
 
       def parse_trait(hash)
-        FactoryTrace::Structures::Trait.new(hash['name'], declaration_names: hash['declaration_names'])
+        FactoryTrace::Structures::Trait.new(hash['name'], declaration_names: hash['declaration_names'], definition_path: hash['definition_path'])
       end
 
       def parse_factory(hash)
@@ -50,7 +50,8 @@ module FactoryTrace
           hash['names'],
           hash['traits'].map(&method(:parse_trait)),
           parent_name: hash['parent_name'],
-          declaration_names: hash['declaration_names']
+          declaration_names: hash['declaration_names'],
+          definition_path: hash['definition_path']
         )
       end
 

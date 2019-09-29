@@ -3,17 +3,19 @@ module FactoryTrace
     class Factory
       include Helpers::Statusable
 
-      attr_reader :names, :parent_name, :traits, :declaration_names
+      attr_reader :names, :parent_name, :traits, :declaration_names, :definition_path
 
       # @param [Array<String>] names
       # @param [Array<FactoryTrace::Structure::Trait>] traits
       # @param [String|nil] parent_name
       # @param [Array<String>] declaration_names
-      def initialize(names, traits, parent_name: nil, declaration_names: [])
+      # @param [String] definition_path
+      def initialize(names, traits, parent_name: nil, declaration_names: [], definition_path: nil)
         @names = names
         @traits = traits
         @parent_name = parent_name
         @declaration_names = declaration_names
+        @definition_path = definition_path
       end
 
       # @return [Hash<Symbol, Object>]
@@ -22,7 +24,8 @@ module FactoryTrace
           names: names,
           traits: traits.map(&:to_h),
           parent_name: parent_name,
-          declaration_names: declaration_names
+          declaration_names: declaration_names,
+          definition_path: definition_path
         }
       end
 
@@ -42,7 +45,8 @@ module FactoryTrace
         names == factory.names &&
           traits == factory.traits &&
           parent_name == factory.parent_name &&
-          declaration_names == factory.declaration_names
+          declaration_names == factory.declaration_names &&
+          definition_path == factory.definition_path
       end
     end
   end

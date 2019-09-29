@@ -6,6 +6,6 @@ RSpec.describe FactoryTrace::Structures::Trait do
   describe '#to_h' do
     subject { trait.to_h }
 
-    it { is_expected.to eq({name: 'something', declaration_names: []}) }
+    it { is_expected.to eq({name: 'something', declaration_names: [], definition_path: nil}) }
   end
 end

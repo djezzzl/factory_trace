@@ -1,12 +1,17 @@
 module FactoryTrace
   class Configuration
-    attr_accessor :path, :enabled, :color, :mode
+    attr_accessor :path, :enabled, :color, :mode, :trace_definition
 
     def initialize
       @enabled = ENV.key?('FB_TRACE') || ENV.key?('FB_TRACE_FILE')
       @path = ENV['FB_TRACE_FILE']
       @color = path.nil?
       @mode = extract_mode(ENV['FB_TRACE']) || :full
+      @trace_definition = true
+    end
+
+    def trace_definition?
+      @trace_definition
     end
 
     def out

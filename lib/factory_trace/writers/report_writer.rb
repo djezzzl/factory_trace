@@ -31,11 +31,11 @@ module FactoryTrace
         when result[:value]
           colorize(total_color, "total number of unique #{humanize_code(result[:code])} factories & traits: #{result[:value]}")
         when result[:factory_names] && result[:trait_name]
-          "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{list(result[:factory_names])}"
+          append_definition_path(result) { "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{list(result[:factory_names])}" }
         when result[:factory_names]
-          "#{humanize_code(result[:code])} factory #{list(result[:factory_names])}"
+          append_definition_path(result) { "#{humanize_code(result[:code])} factory #{list(result[:factory_names])}" }
         else
-          "#{humanize_code(result[:code])} global trait #{colorize(:blue, result[:trait_name])}"
+          append_definition_path(result) { "#{humanize_code(result[:code])} global trait #{colorize(:blue, result[:trait_name])}" }
         end
       end
 
@@ -43,6 +43,13 @@ module FactoryTrace
         return msg unless configuration.color
 
         "#{COLORS[color]}#{msg}\e[0m"
+      end
+
+      def append_definition_path(result)
+        msg = yield
+        return msg unless configuration.trace_definition? && result[:definition_path]
+
+        "#{msg} => #{result[:definition_path]}"
       end
 
       def humanize_code(code)
