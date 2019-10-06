@@ -1,3 +1,9 @@
+### [0.4.1] - 2019/10/06
+
+Features:
+- Make paths relative not absolute
+- Remove deprecation warnings
+
 ### [0.4.0] - 2019/09/28
 Features:
 - Provide the path where factory or trait was defined

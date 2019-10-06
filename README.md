@@ -16,9 +16,9 @@ Example output (from [Rails RSpec Example](rails-rspec-example)):
 $ FB_TRACE=1 rspec
 total number of unique used factories & traits: 3
 total number of unique unused factories & traits: 3
-unused factory admin => /Users/djezzzl/RubymineProjects/factory_trace/rails-rspec-example/spec/factories.rb:10
-unused trait with_address of factory admin => /Users/djezzzl/RubymineProjects/factory_trace/rails-rspec-example/spec/factories.rb:11
-unused global trait with_email => /Users/djezzzl/RubymineProjects/factory_trace/rails-rspec-example/spec/factories.rb:16
+unused factory admin => spec/factories.rb:10
+unused trait with_address of factory admin => spec/factories.rb:11
+unused global trait with_email => spec/factories.rb:16
 ```
 
 ## Installation
