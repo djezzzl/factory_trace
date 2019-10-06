@@ -6,7 +6,11 @@ module FactoryTrace
       # @return [String] file and line where the original method was called
       def location
         location = caller_locations[1]
-        "#{location.absolute_path}:#{location.lineno}"
+
+        base = Pathname.new(Dir.pwd)
+        method = Pathname.new(location.path)
+
+        "#{method.relative_path_from(base)}:#{location.lineno}"
       end
     end
   end
