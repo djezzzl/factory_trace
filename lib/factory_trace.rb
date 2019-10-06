@@ -2,6 +2,7 @@
 require 'factory_bot'
 require 'json'
 require 'set'
+require 'pathname'
 # Library
 require 'factory_trace/configuration'
 require 'factory_trace/version'
