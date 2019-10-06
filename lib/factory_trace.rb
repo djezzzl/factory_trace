@@ -24,6 +24,7 @@ require 'factory_trace/writers/writer'
 require 'factory_trace/writers/report_writer'
 require 'factory_trace/writers/trace_writer'
 
+require 'factory_trace/monkey_patches/monkey_patches'
 require 'factory_trace/monkey_patches/factory'
 require 'factory_trace/monkey_patches/trait'
 require 'factory_trace/monkey_patches/definition_proxy'

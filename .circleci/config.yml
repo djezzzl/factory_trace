@@ -60,6 +60,15 @@ jobs:
 
     steps: *steps
 
+  ver5-1-0:
+    docker:
+      - image: circleci/ruby:2.6.3
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          FB_VERSION: "= 5.1.0"
+
+    steps: *steps
+
   ver5-1-latest:
     docker:
       - image: circleci/ruby:2.6.3
@@ -77,4 +86,5 @@ workflows:
       - ver4-11-1
       - ver5-0-1
       - ver5-0-2
+      - ver5-1-0
       - ver5-1-latest
