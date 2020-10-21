@@ -37,6 +37,7 @@ module FactoryTrace
       def self.mark_as_used(defined, used)
         used.factories.each do |used_factory|
           defined_factory = defined.find_factory_by_names(used_factory.names)
+          next unless defined_factory
           mark_factory(defined_factory, defined, status: :used)
 
           used_factory.traits.each do |used_trait|
@@ -71,6 +72,7 @@ module FactoryTrace
       # @param [FactoryTrace::Structures::Collection] collection
       # @param [Symbol] status
       def self.mark_factory(factory, collection, status:)
+        return unless factory
         return if factory.has_prioritized_status?(status)
 
         factory.status = status
