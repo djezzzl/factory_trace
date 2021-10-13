@@ -83,6 +83,7 @@ workflows:
                 # "6.1",
                 # "6.2"
               ]
+          name: rspec-ruby-<< matrix.ruby-version >>/fb-<< matrix.fb-version >>
 
   nightly:
     triggers:
