@@ -98,6 +98,8 @@ workflows:
                 fb-version: "6.0"
               - ruby-version: "3.0"
                 fb-version: "6.1"
+              - ruby-version: "3.0"
+                fb-version: "6.2"
               - ruby-version: "latest"
                 fb-version: "4.10"
               - ruby-version: "latest"
@@ -112,6 +114,8 @@ workflows:
                 fb-version: "6.0"
               - ruby-version: "latest"
                 fb-version: "6.1"
+              - ruby-version: "latest"
+                fb-version: "6.2"
           name: rspec-ruby-<< matrix.ruby-version >>/fb-<< matrix.fb-version >>
 
   nightly:
