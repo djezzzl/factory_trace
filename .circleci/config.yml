@@ -1,11 +1,7 @@
 version: 2.1
 
-aliases:
-  working_directory: &working_directory
-    working_directory: ~/factory_trace
-
 executors:
-  default:
+  ruby:
     description: The official CircleCI Ruby Docker image
     parameters:
       tag:
@@ -17,11 +13,11 @@ executors:
     environment:
       - BUNDLE_JOBS: 4
       - BUNDLE_RETRY: 3
-    <<: *working_directory
+    working_directory: ~/factory_trace
 
 jobs:
   checkout:
-    executor: default
+    executor: ruby
     steps:
       - checkout
       - persist_to_workspace:
@@ -29,30 +25,34 @@ jobs:
           paths:
             - .
 
-  rspec:
+  build:
     parameters:
       ruby-version:
         type: string
       fb-version:
         type: string
     executor:
-      name: default
+      name: ruby
       tag: << parameters.ruby-version >>
-    docker:
-      - image: circleci/ruby:<< parameters.ruby-version >>
+    environment:
+      FB_VERSION: << parameters.fb-version >>
     steps:
       - attach_workspace:
           at: ~/factory_trace
-      - run: |
-          FB_VERSION=<< parameters.fb-version >> bundle install
-      - run: |
-          FB_VERSION=<< parameters.fb-version >> ruby spec/factory_trace/integration_tests/runner.rb
-      - run: |
-          FB_VERSION=<< parameters.fb-version >> bundle exec rspec --profile 10 \
-                                                                   --format RspecJunitFormatter \
-                                                                   --out test_results/rspec.xml \
-                                                                   --format progress \
-                                                                   $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+      - run:
+          name: Install the gems specified by the Gemfile
+          command: bundle install
+      - run:
+          name: Run E2E
+          command: ruby spec/factory_trace/integration_tests/runner.rb
+      - run:
+          name: Run RSpec
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
       - store_test_results:
           path: test_results
 
@@ -61,7 +61,7 @@ workflows:
   default: &default
     jobs:
       - checkout
-      - rspec:
+      - build:
           requires:
             - checkout
           matrix:
@@ -116,7 +116,7 @@ workflows:
                 fb-version: "6.1"
               - ruby-version: "latest"
                 fb-version: "6.2"
-          name: rspec-ruby-<< matrix.ruby-version >>/fb-<< matrix.fb-version >>
+          name: build-ruby-<< matrix.ruby-version >>/fb-<< matrix.fb-version >>
 
   nightly:
     triggers:
