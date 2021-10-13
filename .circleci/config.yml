@@ -1,90 +1,95 @@
 version: 2.1
-jobs:
-  ver4-10-0:
+
+aliases:
+  working_directory: &working_directory
+    working_directory: ~/factory_trace
+
+executors:
+  default:
+    description: The official CircleCI Ruby Docker image
+    parameters:
+      tag:
+        description: The circleci/ruby Docker image version tag
+        type: string
+        default: latest
     docker:
-      - image: circleci/ruby:2.5.5
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 4.10.0"
+      - image: circleci/ruby:<< parameters.tag >>
+    environment:
+      - BUNDLE_JOBS: 4
+      - BUNDLE_RETRY: 3
+    <<: *working_directory
 
-    steps: &steps
+jobs:
+  checkout:
+    executor: default
+    steps:
       - checkout
+      - persist_to_workspace:
+          root: ~/factory_trace
+          paths:
+            - .
 
-      - run:
-          name: Which bundler?
-          command: bundle -v
-
-      - run:
-          name: Bundle Install
-          command: bundle install
-
-      - run:
-          name: Integration test
-          command: ruby spec/factory_trace/integration_tests/runner.rb
-
-      - run:
-          name: Run rspec in parallel
-          command: |
-            bundle exec rspec --profile 10 \
-                              --format RspecJunitFormatter \
-                              --out test_results/rspec.xml \
-                              --format progress \
-                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+  rspec:
+    parameters:
+      ruby-version:
+        type: string
+      fb-version:
+        type: string
+    executor:
+      name: default
+      tag: << parameters.ruby-version >>
+    docker:
+      - image: circleci/ruby:<< parameters.ruby-version >>
+    steps:
+      - attach_workspace:
+          at: ~/factory_trace
+      - run: |
+          FB_VERSION=<< parameters.fb-version >> bundle install
+      - run: |
+          FB_VERSION=<< parameters.fb-version >> ruby spec/factory_trace/integration_tests/runner.rb
+      - run: |
+          FB_VERSION=<< parameters.fb-version >> bundle exec rspec --profile 10 \
+                                                                   --format RspecJunitFormatter \
+                                                                   --out test_results/rspec.xml \
+                                                                   --format progress \
+                                                                   $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
       - store_test_results:
           path: test_results
 
-  ver4-11-1:
-    docker:
-      - image: circleci/ruby:2.5.5
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 4.11.1"
-
-    steps: *steps
-
-  ver5-0-1:
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 5.0.1"
-
-    steps: *steps
-
-  ver5-0-2:
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 5.0.2"
-
-    steps: *steps
-
-  ver5-1-0:
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 5.1.0"
-
-    steps: *steps
-
-  ver5-1-latest:
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "~> 5.1"
-
-    steps: *steps
-
 workflows:
   version: 2
-  factory-trace:
+  default: &default
     jobs:
-      - ver4-10-0
-      - ver4-11-1
-      - ver5-0-1
-      - ver5-0-2
-      - ver5-1-0
-      - ver5-1-latest
+      - checkout
+      - rspec:
+          requires:
+            - checkout
+          matrix:
+            parameters:
+              ruby-version: [
+                "2.5",
+                "2.6",
+                "2.7",
+                "3.0",
+                "latest"
+              ]
+              fb-version: [
+                "4.10",
+                "4.11",
+                "5.0",
+                "5.1",
+                "5.2"
+                # "6.0",
+                # "6.1",
+                # "6.2"
+              ]
+
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    <<: *default
