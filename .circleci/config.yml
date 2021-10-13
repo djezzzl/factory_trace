@@ -83,6 +83,27 @@ workflows:
                 # "6.1",
                 # "6.2"
               ]
+            exclude:
+              - ruby-version: "3.0"
+                fb-version: "4.10"
+              - ruby-version: "3.0"
+                fb-version: "4.11"
+              - ruby-version: "3.0"
+                fb-version: "5.0"
+              - ruby-version: "3.0"
+                fb-version: "5.1"
+              - ruby-version: "3.0"
+                fb-version: "5.2"
+              - ruby-version: "latest"
+                fb-version: "4.10"
+              - ruby-version: "latest"
+                fb-version: "4.11"
+              - ruby-version: "latest"
+                fb-version: "5.0"
+              - ruby-version: "latest"
+                fb-version: "5.1"
+              - ruby-version: "latest"
+                fb-version: "5.2"
           name: rspec-ruby-<< matrix.ruby-version >>/fb-<< matrix.fb-version >>
 
   nightly:
