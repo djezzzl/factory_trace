@@ -78,6 +78,15 @@ jobs:
 
     steps: *steps
 
+  ver6-2-latest:
+    docker:
+      - image: circleci/ruby:2.6.3
+        environment:
+          BUNDLE_PATH: vendor/bundle
+          FB_VERSION: "~> 6.2"
+
+    steps: *steps
+
 workflows:
   version: 2
   factory-trace:
@@ -88,3 +97,4 @@ workflows:
       - ver5-0-2
       - ver5-1-0
       - ver5-1-latest
+      - ver6-2-latest
