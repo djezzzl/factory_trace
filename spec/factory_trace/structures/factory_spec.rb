@@ -1,5 +1,5 @@
 RSpec.describe FactoryTrace::Structures::Factory do
-  subject(:factory) { described_class.new(names, traits, opts) }
+  subject(:factory) { described_class.new(names, traits, **opts) }
 
   let(:names) { ['user', 'person'] }
   let(:traits) { [FactoryTrace::Structures::Trait.new('special')] }
