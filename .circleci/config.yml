@@ -29,16 +29,17 @@ jobs:
     parameters:
       ruby-version:
         type: string
-      fb-version:
+      gemfile:
         type: string
     executor:
       name: ruby
       tag: << parameters.ruby-version >>
-    environment:
-      FB_VERSION: << parameters.fb-version >>
     steps:
       - attach_workspace:
           at: ~/factory_trace
+      - run:
+          name: Use << parameters.gemfile >> as the Gemfile
+          command: bundle config --global gemfile << parameters.gemfile >>
       - run:
           name: Install the gems specified by the Gemfile
           command: bundle install
@@ -73,50 +74,17 @@ workflows:
                 "3.0",
                 "latest"
               ]
-              fb-version: [
-                "4.10",
-                "4.11",
-                "5.0",
-                "5.1",
-                "5.2",
-                "6.0",
-                "6.1",
-                "6.2"
+              gemfile: [
+                "gemfiles/fb_4_10.gemfile",
+                "gemfiles/fb_4_11.gemfile",
+                "gemfiles/fb_5_0.gemfile",
+                "gemfiles/fb_5_1.gemfile",
+                "gemfiles/fb_5_2.gemfile",
+                "gemfiles/fb_6_0.gemfile",
+                "gemfiles/fb_6_1.gemfile",
+                "gemfiles/fb_6_2.gemfile"
               ]
-            exclude:
-              - ruby-version: "3.0"
-                fb-version: "4.10"
-              - ruby-version: "3.0"
-                fb-version: "4.11"
-              - ruby-version: "3.0"
-                fb-version: "5.0"
-              - ruby-version: "3.0"
-                fb-version: "5.1"
-              - ruby-version: "3.0"
-                fb-version: "5.2"
-              - ruby-version: "3.0"
-                fb-version: "6.0"
-              - ruby-version: "3.0"
-                fb-version: "6.1"
-              - ruby-version: "3.0"
-                fb-version: "6.2"
-              - ruby-version: "latest"
-                fb-version: "4.10"
-              - ruby-version: "latest"
-                fb-version: "4.11"
-              - ruby-version: "latest"
-                fb-version: "5.0"
-              - ruby-version: "latest"
-                fb-version: "5.1"
-              - ruby-version: "latest"
-                fb-version: "5.2"
-              - ruby-version: "latest"
-                fb-version: "6.0"
-              - ruby-version: "latest"
-                fb-version: "6.1"
-              - ruby-version: "latest"
-                fb-version: "6.2"
-          name: build-ruby-<< matrix.ruby-version >>/fb-<< matrix.fb-version >>
+          name: build-ruby-<< matrix.ruby-version >>/fb-<< matrix.gemfile >>
 
   nightly:
     triggers:
