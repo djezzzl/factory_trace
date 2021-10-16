@@ -1,0 +1,18 @@
+require:
+  - standard/cop/block_single_line_braces
+  - rubocop-rake
+  - rubocop-rspec
+
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  Exclude:
+    - "bin/*"
+    - "rails-rspec-example/**/*"
+  TargetRubyVersion: 2.5
+
+############### Style ###############
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
