@@ -1,29 +1,52 @@
 version: 2.1
-jobs:
-  ver4-10-0:
+
+executors:
+  ruby:
+    description: The official CircleCI Ruby Docker image
+    parameters:
+      tag:
+        description: The circleci/ruby Docker image version tag
+        type: string
+        default: latest
     docker:
-      - image: circleci/ruby:2.5.5
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 4.10.0"
+      - image: circleci/ruby:<< parameters.tag >>
+    environment:
+      - BUNDLE_JOBS: 4
+      - BUNDLE_RETRY: 3
+    working_directory: ~/factory_trace
 
-    steps: &steps
+jobs:
+  checkout:
+    executor: ruby
+    steps:
       - checkout
+      - persist_to_workspace:
+          root: ~/factory_trace
+          paths:
+            - .
 
+  build:
+    parameters:
+      ruby-version:
+        type: string
+      fb-version:
+        type: string
+    executor:
+      name: ruby
+      tag: << parameters.ruby-version >>
+    environment:
+      FB_VERSION: << parameters.fb-version >>
+    steps:
+      - attach_workspace:
+          at: ~/factory_trace
       - run:
-          name: Which bundler?
-          command: bundle -v
-
-      - run:
-          name: Bundle Install
+          name: Install the gems specified by the Gemfile
           command: bundle install
-
       - run:
-          name: Integration test
+          name: Run E2E
           command: ruby spec/factory_trace/integration_tests/runner.rb
-
       - run:
-          name: Run rspec in parallel
+          name: Run RSpec
           command: |
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
@@ -33,58 +56,74 @@ jobs:
       - store_test_results:
           path: test_results
 
-  ver4-11-1:
-    docker:
-      - image: circleci/ruby:2.5.5
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 4.11.1"
-
-    steps: *steps
-
-  ver5-0-1:
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 5.0.1"
-
-    steps: *steps
-
-  ver5-0-2:
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 5.0.2"
-
-    steps: *steps
-
-  ver5-1-0:
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "= 5.1.0"
-
-    steps: *steps
-
-  ver5-1-latest:
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLE_PATH: vendor/bundle
-          FB_VERSION: "~> 5.1"
-
-    steps: *steps
-
 workflows:
   version: 2
-  factory-trace:
+  default: &default
     jobs:
-      - ver4-10-0
-      - ver4-11-1
-      - ver5-0-1
-      - ver5-0-2
-      - ver5-1-0
-      - ver5-1-latest
+      - checkout
+      - build:
+          requires:
+            - checkout
+          matrix:
+            parameters:
+              ruby-version: [
+                "2.5",
+                "2.6",
+                "2.7",
+                "3.0",
+                "latest"
+              ]
+              fb-version: [
+                "4.10",
+                "4.11",
+                "5.0",
+                "5.1",
+                "5.2",
+                "6.0",
+                "6.1",
+                "6.2"
+              ]
+            exclude:
+              - ruby-version: "3.0"
+                fb-version: "4.10"
+              - ruby-version: "3.0"
+                fb-version: "4.11"
+              - ruby-version: "3.0"
+                fb-version: "5.0"
+              - ruby-version: "3.0"
+                fb-version: "5.1"
+              - ruby-version: "3.0"
+                fb-version: "5.2"
+              - ruby-version: "3.0"
+                fb-version: "6.0"
+              - ruby-version: "3.0"
+                fb-version: "6.1"
+              - ruby-version: "3.0"
+                fb-version: "6.2"
+              - ruby-version: "latest"
+                fb-version: "4.10"
+              - ruby-version: "latest"
+                fb-version: "4.11"
+              - ruby-version: "latest"
+                fb-version: "5.0"
+              - ruby-version: "latest"
+                fb-version: "5.1"
+              - ruby-version: "latest"
+                fb-version: "5.2"
+              - ruby-version: "latest"
+                fb-version: "6.0"
+              - ruby-version: "latest"
+                fb-version: "6.1"
+              - ruby-version: "latest"
+                fb-version: "6.2"
+          name: build-ruby-<< matrix.ruby-version >>/fb-<< matrix.fb-version >>
+
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    <<: *default

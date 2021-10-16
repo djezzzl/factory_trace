@@ -29,6 +29,6 @@ RSpec.configure do |config|
   end
 
   def find_global_trait(name)
-    FactoryBot.traits[name.to_s]
+    FactoryTrace::MonkeyPatches::REGISTER.traits[name.to_s]
   end
 end
