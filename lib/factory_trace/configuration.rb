@@ -15,7 +15,7 @@ module FactoryTrace
     end
 
     def out
-      return STDOUT unless path
+      return $stdout unless path
 
       File.open(path, "w")
     end
