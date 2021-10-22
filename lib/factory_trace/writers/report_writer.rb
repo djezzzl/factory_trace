@@ -27,12 +27,11 @@ module FactoryTrace
       # @param [Hash<Symbol, Object>] result
       # @param [Symbol] total_color
       def convert(result, total_color:)
-        case
-        when result[:value]
+        if result[:value]
           colorize(total_color, "total number of unique #{humanize_code(result[:code])} factories & traits: #{result[:value]}")
-        when result[:factory_names] && result[:trait_name]
+        elsif result[:factory_names] && result[:trait_name]
           append_definition_path(result) { "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{list(result[:factory_names])}" }
-        when result[:factory_names]
+        elsif result[:factory_names]
           append_definition_path(result) { "#{humanize_code(result[:code])} factory #{list(result[:factory_names])}" }
         else
           append_definition_path(result) { "#{humanize_code(result[:code])} global trait #{colorize(:blue, result[:trait_name])}" }
