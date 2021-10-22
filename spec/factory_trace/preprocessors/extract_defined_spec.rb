@@ -33,7 +33,7 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractDefined do
             ]
           ),
           FactoryTrace::Structures::Factory.new(["article", "post"], []),
-          FactoryTrace::Structures::Factory.new(["comment"], [], declaration_names: ["post"]),
+          FactoryTrace::Structures::Factory.new(["comment"], [], declaration_names: ["post"])
         ],
         [
           FactoryTrace::Structures::Trait.new("with_address")

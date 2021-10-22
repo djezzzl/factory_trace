@@ -182,7 +182,7 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
                 FactoryTrace::Structures::Trait.new("combination", declaration_names: ["with_email", "with_phone"])
               ],
               parent_name: "user"
-            ),
+            )
           ],
           [
             FactoryTrace::Structures::Trait.new("with_address")

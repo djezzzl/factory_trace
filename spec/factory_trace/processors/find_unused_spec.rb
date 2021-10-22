@@ -252,7 +252,7 @@ RSpec.describe FactoryTrace::Processors::FindUnused do
           {code: :unused, factory_names: ["company"]},
           {code: :unused, factory_names: ["company"], trait_name: "with_manager"},
           {code: :unused, factory_names: ["article", "post"]},
-          {code: :unused, factory_names: ["comment"]},
+          {code: :unused, factory_names: ["comment"]}
         ])
       end
     end
