@@ -4,17 +4,17 @@ RSpec.describe FactoryTrace::Structures::Collection do
   let(:factories) { [] }
   let(:traits) { [] }
 
-  describe '#to_h' do
+  describe "#to_h" do
     subject { collection.to_h }
 
     it { is_expected.to eq({factories: [], traits: []}) }
   end
 
-  describe '#add' do
+  describe "#add" do
     subject { collection.add(element) }
 
-    context 'when element is a factory' do
-      let(:element) { FactoryTrace::Structures::Factory.new(['name'], []) }
+    context "when element is a factory" do
+      let(:element) { FactoryTrace::Structures::Factory.new(["name"], []) }
 
       specify do
         expect(subject).to eq(element)
@@ -22,8 +22,8 @@ RSpec.describe FactoryTrace::Structures::Collection do
       end
     end
 
-    context 'when element is a trait' do
-      let(:element) { FactoryTrace::Structures::Trait.new('name') }
+    context "when element is a trait" do
+      let(:element) { FactoryTrace::Structures::Trait.new("name") }
 
       specify do
         expect(subject).to eq(element)
@@ -32,7 +32,7 @@ RSpec.describe FactoryTrace::Structures::Collection do
     end
   end
 
-  describe '#total' do
+  describe "#total" do
     subject { collection.total }
 
     it { is_expected.to eq(0) }

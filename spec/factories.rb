@@ -15,10 +15,10 @@ end
 
 FactoryBot.define do
   factory :user do
-    name { 'name' }
+    name { "name" }
 
     trait :with_phone do
-      phone { 'phone' }
+      phone { "phone" }
     end
 
     factory :user_with_defaults, traits: %i[with_address with_phone]
@@ -26,7 +26,7 @@ FactoryBot.define do
 
   factory :admin, parent: :user do
     trait :with_email do
-      email { 'email' }
+      email { "email" }
     end
 
     trait :combination do
@@ -52,6 +52,6 @@ FactoryBot.define do
   end
 
   trait :with_address do
-    address { 'address' }
+    address { "address" }
   end
 end

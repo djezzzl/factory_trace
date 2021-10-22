@@ -1,42 +1,42 @@
 RSpec.describe FactoryTrace::Preprocessors::ExtractDefined do
-  describe '.call' do
+  describe ".call" do
     subject { described_class.call }
 
     specify do
       collection = FactoryTrace::Structures::Collection.new(
         [
           FactoryTrace::Structures::Factory.new(
-            ['user'],
+            ["user"],
             [
-              FactoryTrace::Structures::Trait.new('with_phone')
+              FactoryTrace::Structures::Trait.new("with_phone")
             ]
           ),
           FactoryTrace::Structures::Factory.new(
-            ['user_with_defaults'],
+            ["user_with_defaults"],
             [],
-            declaration_names: ['with_address', 'with_phone'],
-            parent_name: 'user'
+            declaration_names: ["with_address", "with_phone"],
+            parent_name: "user"
           ),
           FactoryTrace::Structures::Factory.new(
-            ['admin'],
+            ["admin"],
             [
-              FactoryTrace::Structures::Trait.new('with_email'),
-              FactoryTrace::Structures::Trait.new('combination', declaration_names: ['with_email', 'with_phone'])
+              FactoryTrace::Structures::Trait.new("with_email"),
+              FactoryTrace::Structures::Trait.new("combination", declaration_names: ["with_email", "with_phone"])
             ],
-            parent_name: 'user'
+            parent_name: "user"
           ),
-          FactoryTrace::Structures::Factory.new(['manager'], [], parent_name: 'admin', declaration_names: ['with_phone']),
+          FactoryTrace::Structures::Factory.new(["manager"], [], parent_name: "admin", declaration_names: ["with_phone"]),
           FactoryTrace::Structures::Factory.new(
-            ['company'],
+            ["company"],
             [
-              FactoryTrace::Structures::Trait.new('with_manager', declaration_names: ['manager'])
+              FactoryTrace::Structures::Trait.new("with_manager", declaration_names: ["manager"])
             ]
           ),
-          FactoryTrace::Structures::Factory.new(['article', 'post'], []),
-          FactoryTrace::Structures::Factory.new(['comment'], [], declaration_names: ['post']),
+          FactoryTrace::Structures::Factory.new(["article", "post"], []),
+          FactoryTrace::Structures::Factory.new(["comment"], [], declaration_names: ["post"]),
         ],
         [
-          FactoryTrace::Structures::Trait.new('with_address')
+          FactoryTrace::Structures::Trait.new("with_address")
         ]
       )
 

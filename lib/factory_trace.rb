@@ -1,38 +1,38 @@
 # External dependencies
-require 'factory_bot'
-require 'json'
-require 'set'
-require 'pathname'
+require "factory_bot"
+require "json"
+require "set"
+require "pathname"
 # Library
-require 'factory_trace/configuration'
-require 'factory_trace/version'
-require 'factory_trace/helpers/converter'
-require 'factory_trace/helpers/statusable'
-require 'factory_trace/helpers/caller'
-require 'factory_trace/tracker'
+require "factory_trace/configuration"
+require "factory_trace/version"
+require "factory_trace/helpers/converter"
+require "factory_trace/helpers/statusable"
+require "factory_trace/helpers/caller"
+require "factory_trace/tracker"
 
-require 'factory_trace/structures/factory'
-require 'factory_trace/structures/trait'
-require 'factory_trace/structures/collection'
+require "factory_trace/structures/factory"
+require "factory_trace/structures/trait"
+require "factory_trace/structures/collection"
 
-require 'factory_trace/preprocessors/extract_defined'
-require 'factory_trace/preprocessors/extract_used'
+require "factory_trace/preprocessors/extract_defined"
+require "factory_trace/preprocessors/extract_used"
 
-require 'factory_trace/processors/find_unused'
+require "factory_trace/processors/find_unused"
 
-require 'factory_trace/readers/trace_reader'
-require 'factory_trace/writers/writer'
-require 'factory_trace/writers/report_writer'
-require 'factory_trace/writers/trace_writer'
+require "factory_trace/readers/trace_reader"
+require "factory_trace/writers/writer"
+require "factory_trace/writers/report_writer"
+require "factory_trace/writers/trace_writer"
 
-require 'factory_trace/monkey_patches/monkey_patches'
-require 'factory_trace/monkey_patches/factory'
-require 'factory_trace/monkey_patches/trait'
-require 'factory_trace/monkey_patches/definition_proxy'
-require 'factory_trace/monkey_patches/dsl'
+require "factory_trace/monkey_patches/monkey_patches"
+require "factory_trace/monkey_patches/factory"
+require "factory_trace/monkey_patches/trait"
+require "factory_trace/monkey_patches/definition_proxy"
+require "factory_trace/monkey_patches/dsl"
 
 # Integrations
-require 'integrations/rspec' if defined?(RSpec::Core)
+require "integrations/rspec" if defined?(RSpec::Core)
 
 module FactoryTrace
   class << self

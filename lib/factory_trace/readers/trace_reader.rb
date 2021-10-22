@@ -10,7 +10,7 @@ module FactoryTrace
         result = {defined: FactoryTrace::Structures::Collection.new, used: FactoryTrace::Structures::Collection.new}
 
         file_names.each do |file_name|
-          File.open(file_name, 'r') do |file|
+          File.open(file_name, "r") do |file|
             data = new(file, configuration: configuration).read
 
             [:defined, :used].each do |key|
@@ -34,35 +34,35 @@ module FactoryTrace
         hash = JSON.parse(io.read)
 
         {
-          defined: parse_collection(hash['defined']),
-          used: parse_collection(hash['used'])
+          defined: parse_collection(hash["defined"]),
+          used: parse_collection(hash["used"])
         }
       end
 
       private
 
       def parse_trait(hash)
-        FactoryTrace::Structures::Trait.new(hash['name'], declaration_names: hash['declaration_names'], definition_path: hash['definition_path'])
+        FactoryTrace::Structures::Trait.new(hash["name"], declaration_names: hash["declaration_names"], definition_path: hash["definition_path"])
       end
 
       def parse_factory(hash)
         FactoryTrace::Structures::Factory.new(
-          hash['names'],
-          hash['traits'].map(&method(:parse_trait)),
-          parent_name: hash['parent_name'],
-          declaration_names: hash['declaration_names'],
-          definition_path: hash['definition_path']
+          hash["names"],
+          hash["traits"].map(&method(:parse_trait)),
+          parent_name: hash["parent_name"],
+          declaration_names: hash["declaration_names"],
+          definition_path: hash["definition_path"]
         )
       end
 
       def parse_collection(hash)
         collection = FactoryTrace::Structures::Collection.new
 
-        hash['factories'].each do |h|
+        hash["factories"].each do |h|
           collection.add(parse_factory(h))
         end
 
-        hash['traits'].each do |h|
+        hash["traits"].each do |h|
           collection.add(parse_trait(h))
         end
 

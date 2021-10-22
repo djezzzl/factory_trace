@@ -9,8 +9,8 @@ module FactoryTrace
       }.freeze
 
       CODES = {
-        used: 'used',
-        unused: 'unused',
+        used: "used",
+        unused: "unused",
       }.freeze
 
       # @param [Array<Hash>] results
@@ -57,7 +57,7 @@ module FactoryTrace
       end
 
       def list(elements, color: :blue)
-        elements.map { |element| colorize(color, element) }.join(', ')
+        elements.map { |element| colorize(color, element) }.join(", ")
       end
     end
   end
