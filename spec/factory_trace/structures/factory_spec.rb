@@ -10,12 +10,12 @@ RSpec.describe FactoryTrace::Structures::Factory do
 
     specify do
       expect(subject).to eq({
-                              names: ['user', 'person'],
-                              traits: [{name: 'special', declaration_names: [], definition_path: nil}],
-                              parent_name: nil,
-                              declaration_names: [],
-                              definition_path: nil
-                            })
+        names: ['user', 'person'],
+        traits: [{name: 'special', declaration_names: [], definition_path: nil}],
+        parent_name: nil,
+        declaration_names: [],
+        definition_path: nil
+      })
     end
   end
 end

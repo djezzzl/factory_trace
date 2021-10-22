@@ -36,75 +36,75 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
       printer.write(defined, used)
 
       expect(output.string).to eq(<<~TEXT)
-      {
-        "defined": {
-          "factories": [
-            {
-              "names": [
-                "user"
-              ],
-              "traits": [
-                {
-                  "name": "with_phone",
-                  "declaration_names": [
-      
-                  ],
-                  "definition_path": null
-                }
-              ],
-              "parent_name": null,
-              "declaration_names": [
-      
-              ],
-              "definition_path": null
-            },
-            {
-              "names": [
-                "admin"
-              ],
-              "traits": [
-                {
-                  "name": "with_email",
-                  "declaration_names": [
-      
-                  ],
-                  "definition_path": null
-                },
-                {
-                  "name": "combination",
-                  "declaration_names": [
-                    "with_email",
-                    "with_phone"
-                  ],
-                  "definition_path": null
-                }
-              ],
-              "parent_name": "user",
-              "declaration_names": [
-      
-              ],
-              "definition_path": "path/to/file:10"
-            }
-          ],
-          "traits": [
-            {
-              "name": "with_address",
-              "declaration_names": [
-      
-              ],
-              "definition_path": null
-            }
-          ]
-        },
-        "used": {
-          "factories": [
-      
-          ],
-          "traits": [
-      
-          ]
+        {
+          "defined": {
+            "factories": [
+              {
+                "names": [
+                  "user"
+                ],
+                "traits": [
+                  {
+                    "name": "with_phone",
+                    "declaration_names": [
+        
+                    ],
+                    "definition_path": null
+                  }
+                ],
+                "parent_name": null,
+                "declaration_names": [
+        
+                ],
+                "definition_path": null
+              },
+              {
+                "names": [
+                  "admin"
+                ],
+                "traits": [
+                  {
+                    "name": "with_email",
+                    "declaration_names": [
+        
+                    ],
+                    "definition_path": null
+                  },
+                  {
+                    "name": "combination",
+                    "declaration_names": [
+                      "with_email",
+                      "with_phone"
+                    ],
+                    "definition_path": null
+                  }
+                ],
+                "parent_name": "user",
+                "declaration_names": [
+        
+                ],
+                "definition_path": "path/to/file:10"
+              }
+            ],
+            "traits": [
+              {
+                "name": "with_address",
+                "declaration_names": [
+        
+                ],
+                "definition_path": null
+              }
+            ]
+          },
+          "used": {
+            "factories": [
+        
+            ],
+            "traits": [
+        
+            ]
+          }
         }
-      }
       TEXT
     end
   end

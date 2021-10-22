@@ -63,7 +63,6 @@ module FactoryTrace
           end
         end
 
-
         [nil, defined.find_trait_by_name(trait_name)]
       end
 

@@ -4,156 +4,156 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
   describe '.read_from_files' do
     let(:input1) do
       <<~TEXT
-      {
-        "defined": {
-          "factories": [
-            {
-              "names": [
-                "user"
-              ],
-              "traits": [
-                {
-                  "name": "with_phone",
-                  "declaration_names": []
-                }
-              ],
-              "parent_name": null,
-              "declaration_names": []
-            },
-            {
-              "names": [
-                "admin"
-              ],
-              "traits": [
-                {
-                  "name": "with_email",
-                  "declaration_names": []
-                },
-                {
-                  "name": "combination",
-                  "declaration_names": [
-                    "with_email",
-                    "with_phone"
-                  ]
-                }
-              ],
-              "parent_name": "user",
-              "declaration_names": []
-            }
-          ],
-          "traits": [
-            {
-              "name": "with_address",
-              "declaration_names": []
-            }
-          ]
-        },
-        "used": {
-          "factories": [
-            {
-              "names": [
-                "user"
-              ],
-              "traits": [
-                {
-                  "name": "with_phone",
-                  "declaration_names": []
-                }
-              ],
-              "parent_name": null,
-              "declaration_names": []
-            },
-            {
-              "names": [
-                "admin"
-              ],
-              "traits": [
-                {
-                  "name": "with_email",
-                  "declaration_names": []
-                }
-              ],
-              "parent_name": null,
-              "declaration_names": []
-            }
-          ],
-          "traits": []
+        {
+          "defined": {
+            "factories": [
+              {
+                "names": [
+                  "user"
+                ],
+                "traits": [
+                  {
+                    "name": "with_phone",
+                    "declaration_names": []
+                  }
+                ],
+                "parent_name": null,
+                "declaration_names": []
+              },
+              {
+                "names": [
+                  "admin"
+                ],
+                "traits": [
+                  {
+                    "name": "with_email",
+                    "declaration_names": []
+                  },
+                  {
+                    "name": "combination",
+                    "declaration_names": [
+                      "with_email",
+                      "with_phone"
+                    ]
+                  }
+                ],
+                "parent_name": "user",
+                "declaration_names": []
+              }
+            ],
+            "traits": [
+              {
+                "name": "with_address",
+                "declaration_names": []
+              }
+            ]
+          },
+          "used": {
+            "factories": [
+              {
+                "names": [
+                  "user"
+                ],
+                "traits": [
+                  {
+                    "name": "with_phone",
+                    "declaration_names": []
+                  }
+                ],
+                "parent_name": null,
+                "declaration_names": []
+              },
+              {
+                "names": [
+                  "admin"
+                ],
+                "traits": [
+                  {
+                    "name": "with_email",
+                    "declaration_names": []
+                  }
+                ],
+                "parent_name": null,
+                "declaration_names": []
+              }
+            ],
+            "traits": []
+          }
         }
-      }
       TEXT
     end
 
     let(:input2) do
       <<~TEXT
-      {
-        "defined": {
-          "factories": [
-            {
-              "names": [
-                "user"
-              ],
-              "traits": [
-                {
-                  "name": "with_phone",
-                  "declaration_names": []
-                }
-              ],
-              "parent_name": null,
-              "declaration_names": []
-            },
-            {
-              "names": [
-                "admin"
-              ],
-              "traits": [
-                {
-                  "name": "with_email",
-                  "declaration_names": []
-                },
-                {
-                  "name": "combination",
-                  "declaration_names": [
-                    "with_email",
-                    "with_phone"
-                  ]
-                }
-              ],
-              "parent_name": "user",
-              "declaration_names": []
-            }
-          ],
-          "traits": [
-            {
-              "name": "with_address",
-              "declaration_names": []
-            }
-          ]
-        },
-        "used": {
-          "factories": [
-            {
-              "names": [
-                "user"
-              ],
-              "traits": [
-                {
-                  "name": "with_address",
-                  "declaration_names": []
-                }
-              ],
-              "parent_name": null,
-              "declaration_names": []
-            },
-            {
-              "names": ["admin"],
-              "traits": [],
-              "parent_name": null,
-              "declaration_names": []
-            }
-          ],
-          "traits": []
+        {
+          "defined": {
+            "factories": [
+              {
+                "names": [
+                  "user"
+                ],
+                "traits": [
+                  {
+                    "name": "with_phone",
+                    "declaration_names": []
+                  }
+                ],
+                "parent_name": null,
+                "declaration_names": []
+              },
+              {
+                "names": [
+                  "admin"
+                ],
+                "traits": [
+                  {
+                    "name": "with_email",
+                    "declaration_names": []
+                  },
+                  {
+                    "name": "combination",
+                    "declaration_names": [
+                      "with_email",
+                      "with_phone"
+                    ]
+                  }
+                ],
+                "parent_name": "user",
+                "declaration_names": []
+              }
+            ],
+            "traits": [
+              {
+                "name": "with_address",
+                "declaration_names": []
+              }
+            ]
+          },
+          "used": {
+            "factories": [
+              {
+                "names": [
+                  "user"
+                ],
+                "traits": [
+                  {
+                    "name": "with_address",
+                    "declaration_names": []
+                  }
+                ],
+                "parent_name": null,
+                "declaration_names": []
+              },
+              {
+                "names": ["admin"],
+                "traits": [],
+                "parent_name": null,
+                "declaration_names": []
+              }
+            ],
+            "traits": []
+          }
         }
-      }
       TEXT
     end
 
@@ -212,40 +212,40 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
   describe '#read' do
     let(:input) do
       StringIO.new <<~TEXT
-      {
-        "defined": {
-          "factories": [
-            {
-              "names": ["user"],
-              "traits": [
-                {
-                  "name": "with_phone",
-                  "declaration_names": []
-                },
-                {
-                  "name": "combination",
-                  "declaration_names": [
-                    "with_email",
-                    "with_phone"
-                  ]
-                }
-              ],
-              "parent_name": null,
-              "declaration_names": []
-            }
-          ],
-          "traits": [
-            {
-              "name": "with_address",
-              "declaration_names": []
-            }
-          ]
-        },
-        "used": {
-          "factories": [],
-          "traits": []
+        {
+          "defined": {
+            "factories": [
+              {
+                "names": ["user"],
+                "traits": [
+                  {
+                    "name": "with_phone",
+                    "declaration_names": []
+                  },
+                  {
+                    "name": "combination",
+                    "declaration_names": [
+                      "with_email",
+                      "with_phone"
+                    ]
+                  }
+                ],
+                "parent_name": null,
+                "declaration_names": []
+              }
+            ],
+            "traits": [
+              {
+                "name": "with_address",
+                "declaration_names": []
+              }
+            ]
+          },
+          "used": {
+            "factories": [],
+            "traits": []
+          }
         }
-      }
       TEXT
     end
 

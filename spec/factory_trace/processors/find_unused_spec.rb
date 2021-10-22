@@ -182,7 +182,7 @@ RSpec.describe FactoryTrace::Processors::FindUnused do
     end
 
     context 'when trait is used indirectly through factory' do
-      let(:data) { {'manager' => Set.new } }
+      let(:data) { {'manager' => Set.new} }
 
       specify do
         expect(checker).to eq([
