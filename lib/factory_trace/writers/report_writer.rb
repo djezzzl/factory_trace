@@ -10,7 +10,7 @@ module FactoryTrace
 
       CODES = {
         used: "used",
-        unused: "unused",
+        unused: "unused"
       }.freeze
 
       # @param [Array<Hash>] results
