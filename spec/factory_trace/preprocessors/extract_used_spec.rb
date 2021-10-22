@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Preprocessors::ExtractUsed do
   describe ".call" do
     subject { described_class.call({"admin" => Set.new(["with_address"])}) }

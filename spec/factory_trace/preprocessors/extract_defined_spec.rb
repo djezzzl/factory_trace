@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Preprocessors::ExtractDefined do
   describe ".call" do
     subject { described_class.call }

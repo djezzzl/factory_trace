@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FactoryTrace
   class Configuration
     attr_accessor :path, :enabled, :color, :mode, :trace_definition

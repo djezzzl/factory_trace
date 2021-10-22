@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FactoryTrace
   class Tracker
     attr_reader :storage

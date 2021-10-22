@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FactoryTrace
   module Writers
     class TraceWriter < Writer

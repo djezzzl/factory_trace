@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Writers::ReportWriter do
   subject(:printer) { described_class.new(output) }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Processors::FindUnused do
   subject(:checker) { described_class.call(FactoryTrace::Preprocessors::ExtractDefined.call, FactoryTrace::Preprocessors::ExtractUsed.call(data)) }
 

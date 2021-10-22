@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Readers::TraceReader do
   subject(:reader) { described_class.new(input) }
 

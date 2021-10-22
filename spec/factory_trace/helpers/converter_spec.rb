@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Helpers::Converter do
   describe ".trait" do
     subject { described_class.trait(trait) }

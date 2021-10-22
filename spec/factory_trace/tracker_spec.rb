@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Tracker do
   subject(:tracker) { described_class.new }
 

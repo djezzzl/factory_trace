@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # External dependencies
 require "factory_bot"
 require "json"

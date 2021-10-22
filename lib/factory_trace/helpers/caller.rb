@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FactoryTrace
   module Helpers
     module Caller

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Structures::Factory do
   subject(:factory) { described_class.new(names, traits, **opts) }
 
