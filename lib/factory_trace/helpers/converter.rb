@@ -34,7 +34,7 @@ module FactoryTrace
       # @return [Array<String>]
       def extract_declarations(structure)
         (structure.definition.declarations.grep(FactoryBot::Declaration::Implicit).map(&:name).map(&:to_s) +
-          structure.definition.instance_variable_get(:'@base_traits').map(&:to_s)).uniq
+          structure.definition.instance_variable_get(:@base_traits).map(&:to_s)).uniq
       end
     end
   end
