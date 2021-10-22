@@ -27,7 +27,7 @@ module FactoryTrace
     private
 
     def extract_mode(value)
-      matcher = value && value.match(/full|trace_only/)
+      matcher = value&.match(/full|trace_only/)
       matcher && matcher[0].to_sym
     end
   end
