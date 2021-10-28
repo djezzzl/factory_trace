@@ -8,7 +8,7 @@ module FactoryTrace
           caller_location = options.delete(:caller_location) || Helpers::Caller.location
           factory = FactoryBot::Factory.new(name, caller_location, options)
           proxy = FactoryBot::DefinitionProxy.new(factory.definition)
-          proxy.instance_eval(&block) if block_given?
+          proxy.instance_eval(&block) if block
 
           REGISTER.register_factory(factory)
 
