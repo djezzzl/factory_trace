@@ -7,7 +7,7 @@ gemspec
 local_gemfile = "Gemfile.local"
 
 if File.exist?(local_gemfile)
-  eval(File.read(local_gemfile))
+  eval_gemfile(local_gemfile)
 else
   gem "factory_bot", "~> 6.0"
 end
