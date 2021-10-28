@@ -8,7 +8,6 @@ inherit_gem:
 
 AllCops:
   Exclude:
-    - "bin/*"
     - "rails-rspec-example/**/*"
   TargetRubyVersion: 2.5
 
