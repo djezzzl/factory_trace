@@ -11,3 +11,5 @@ if File.exist?(local_gemfile)
 else
   gem "factory_bot", "~> 6.0"
 end
+
+eval_gemfile("gemfiles/rubocop.gemfile")
