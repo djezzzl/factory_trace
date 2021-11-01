@@ -3,36 +3,36 @@
 module FactoryTrace
   module Processors
     class FindUnused
-      # Finds unused factories and traits
-      #
-      # @param [FactoryTrace::Structures::Collection] defined
-      # @param [FactoryTrace::Structures::Collection] used
-      #
-      # @return [Array<Hash>]
-      def self.call(defined, used)
-        mark_as_used(defined, used)
-
-        output = []
-
-        defined.factories.each do |factory|
-          output << append_definition_path({code: :unused, factory_names: factory.names}, factory) unless factory.status
-
-          factory.traits.each do |trait|
-            output << append_definition_path({code: :unused, factory_names: factory.names, trait_name: trait.name}, trait) unless trait.status
-          end
-        end
-
-        defined.traits.each do |trait|
-          output << append_definition_path({code: :unused, trait_name: trait.name}, trait) unless trait.status
-        end
-
-        output.unshift(code: :unused, value: output.size)
-        output.unshift(code: :used, value: defined.total - (output.size - 1))
-
-        output
-      end
-
       class << self
+        # Finds unused factories and traits
+        #
+        # @param [FactoryTrace::Structures::Collection] defined
+        # @param [FactoryTrace::Structures::Collection] used
+        #
+        # @return [Array<Hash>]
+        def call(defined, used)
+          mark_as_used(defined, used)
+
+          output = []
+
+          defined.factories.each do |factory|
+            output << append_definition_path({code: :unused, factory_names: factory.names}, factory) unless factory.status
+
+            factory.traits.each do |trait|
+              output << append_definition_path({code: :unused, factory_names: factory.names, trait_name: trait.name}, trait) unless trait.status
+            end
+          end
+
+          defined.traits.each do |trait|
+            output << append_definition_path({code: :unused, trait_name: trait.name}, trait) unless trait.status
+          end
+
+          output.unshift(code: :unused, value: output.size)
+          output.unshift(code: :used, value: defined.total - (output.size - 1))
+
+          output
+        end
+
         private
 
         # @param [FactoryTrace::Structures::Collection] defined
