@@ -7,6 +7,7 @@ inherit_gem:
   standard: config/base.yml
 
 AllCops:
+  NewCops: enable
   Exclude:
     - "rails-rspec-example/**/*"
   TargetRubyVersion: 2.5
