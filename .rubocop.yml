@@ -15,3 +15,8 @@ AllCops:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+
+############### RSpec ###############
+
+RSpec/ExampleLength:
+  Enabled: false
