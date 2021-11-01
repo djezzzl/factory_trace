@@ -19,8 +19,10 @@ RSpec.describe FactoryTrace::Structures::Collection do
       let(:element) { FactoryTrace::Structures::Factory.new(["name"], []) }
 
       specify do
-        expect(subject).to eq(element)
-        expect(collection.factories).to eq([element])
+        aggregate_failures do
+          expect(subject).to eq(element)
+          expect(collection.factories).to eq([element])
+        end
       end
     end
 
@@ -28,8 +30,10 @@ RSpec.describe FactoryTrace::Structures::Collection do
       let(:element) { FactoryTrace::Structures::Trait.new("name") }
 
       specify do
-        expect(subject).to eq(element)
-        expect(collection.traits).to eq([element])
+        aggregate_failures do
+          expect(subject).to eq(element)
+          expect(collection.traits).to eq([element])
+        end
       end
     end
   end
