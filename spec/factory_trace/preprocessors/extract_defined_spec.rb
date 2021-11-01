@@ -2,7 +2,7 @@
 
 RSpec.describe FactoryTrace::Preprocessors::ExtractDefined do
   describe ".call" do
-    subject { described_class.call }
+    subject(:structure) { described_class.call }
 
     specify do
       collection = FactoryTrace::Structures::Collection.new(
@@ -42,7 +42,7 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractDefined do
         ]
       )
 
-      expect(subject).to eq(collection)
+      expect(structure).to eq(collection)
     end
   end
 end

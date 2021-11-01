@@ -8,10 +8,10 @@ RSpec.describe FactoryTrace::Structures::Factory do
   let(:opts) { {} }
 
   describe "#to_h" do
-    subject { factory.to_h }
+    subject(:hash) { factory.to_h }
 
     specify do
-      expect(subject).to eq({
+      expect(hash).to eq({
         names: ["user", "person"],
         traits: [{name: "special", declaration_names: [], definition_path: nil}],
         parent_name: nil,

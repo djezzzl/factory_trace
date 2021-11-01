@@ -2,7 +2,7 @@
 
 RSpec.describe FactoryTrace::Preprocessors::ExtractUsed do
   describe ".call" do
-    subject { described_class.call({"admin" => Set.new(["with_address"])}) }
+    subject(:structure) { described_class.call({"admin" => Set.new(["with_address"])}) }
 
     specify do
       collection = FactoryTrace::Structures::Collection.new(
@@ -15,7 +15,7 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractUsed do
         []
       )
 
-      expect(subject).to eq(collection)
+      expect(structure).to eq(collection)
     end
   end
 end

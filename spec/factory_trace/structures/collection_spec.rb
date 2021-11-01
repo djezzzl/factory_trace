@@ -13,14 +13,14 @@ RSpec.describe FactoryTrace::Structures::Collection do
   end
 
   describe "#add" do
-    subject { collection.add(element) }
+    subject(:structure) { collection.add(element) }
 
     context "when element is a factory" do
       let(:element) { FactoryTrace::Structures::Factory.new(["name"], []) }
 
       specify do
         aggregate_failures do
-          expect(subject).to eq(element)
+          expect(structure).to eq(element)
           expect(collection.factories).to eq([element])
         end
       end
@@ -31,7 +31,7 @@ RSpec.describe FactoryTrace::Structures::Collection do
 
       specify do
         aggregate_failures do
-          expect(subject).to eq(element)
+          expect(structure).to eq(element)
           expect(collection.traits).to eq([element])
         end
       end
