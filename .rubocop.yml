@@ -20,3 +20,7 @@ Style/FrozenStringLiteralComment:
 
 RSpec/ExampleLength:
   Enabled: false
+
+RSpec/FilePath:
+  Exclude:
+    - spec/factory_trace/integration_tests/empty_spec.rb
