@@ -57,6 +57,23 @@ jobs:
       - store_test_results:
           path: test_results
 
+  rubocop:
+    executor:
+      name: ruby
+      tag: "2.5"
+    steps:
+      - attach_workspace:
+          at: ~/factory_trace
+      - run:
+          name: Use gemfiles/rubocop.gemfile as the Gemfile
+          command: bundle config --global gemfile gemfiles/rubocop.gemfile
+      - run:
+          name: Install the gems specified by the Gemfile
+          command: bundle install
+      - run:
+          name: Lint Ruby code with RuboCop
+          command: bundle exec rubocop --parallel
+
 workflows:
   version: 2
   default: &default
@@ -85,6 +102,9 @@ workflows:
                 "gemfiles/fb_6_2.gemfile"
               ]
           name: build-ruby-<< matrix.ruby-version >>/fb-<< matrix.gemfile >>
+      - rubocop:
+          requires:
+            - checkout
 
   nightly:
     triggers:

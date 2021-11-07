@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 RSpec.describe FactoryTrace::Writers::ReportWriter do
   subject(:printer) { described_class.new(output) }
 
-  describe '#print' do
+  describe "#print" do
     let(:output) { StringIO.new }
     let(:results) do
       [
@@ -13,7 +15,7 @@ RSpec.describe FactoryTrace::Writers::ReportWriter do
       ]
     end
 
-    it 'prints the result' do
+    it "prints the result" do
       printer.write(results)
 
       expect(output.string).to eq(<<~TEXT)

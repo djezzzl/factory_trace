@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FactoryTrace
   module Structures
     class Factory
@@ -39,14 +41,14 @@ module FactoryTrace
       end
 
       # @return [Boolean]
-      def ==(factory)
-        return false unless factory.is_a?(FactoryTrace::Structures::Factory)
+      def ==(other)
+        return false unless other.is_a?(FactoryTrace::Structures::Factory)
 
-        names == factory.names &&
-          traits == factory.traits &&
-          parent_name == factory.parent_name &&
-          declaration_names == factory.declaration_names &&
-          definition_path == factory.definition_path
+        names == other.names &&
+          traits == other.traits &&
+          parent_name == other.parent_name &&
+          declaration_names == other.declaration_names &&
+          definition_path == other.definition_path
       end
     end
   end

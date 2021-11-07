@@ -1,0 +1,27 @@
+require:
+  - standard/cop/block_single_line_braces
+  - rubocop-rake
+  - rubocop-rspec
+
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "rails-rspec-example/**/*"
+  TargetRubyVersion: 2.5
+
+############### Style ###############
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+############### RSpec ###############
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/FilePath:
+  Exclude:
+    - spec/factory_trace/integration_tests/empty_spec.rb

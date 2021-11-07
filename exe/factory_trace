@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 $LOAD_PATH.unshift("#{__dir__}/../lib")
-require 'factory_trace'
+require "factory_trace"
 
 fail "You should pass at least one file with traced information.\nYou can generate it using only_trace mode." if ARGV.empty?
 

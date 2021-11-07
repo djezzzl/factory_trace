@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FactoryTrace
   module Structures
     class Collection
@@ -69,10 +71,10 @@ module FactoryTrace
       end
 
       # @return [Boolean]
-      def ==(collection)
-        return false unless collection.is_a?(FactoryTrace::Structures::Collection)
+      def ==(other)
+        return false unless other.is_a?(FactoryTrace::Structures::Collection)
 
-        factories == collection.factories && traits == collection.traits
+        factories == other.factories && traits == other.traits
       end
     end
   end

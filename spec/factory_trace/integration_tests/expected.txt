@@ -1,14 +1,14 @@
 total number of unique used factories & traits: 0
 total number of unique unused factories & traits: 12
-unused factory user => spec/factories.rb:17
-unused trait with_phone of factory user => spec/factories.rb:20
-unused factory user_with_defaults => spec/factories.rb:24
-unused factory admin => spec/factories.rb:27
-unused trait with_email of factory admin => spec/factories.rb:28
-unused trait combination of factory admin => spec/factories.rb:32
-unused factory manager => spec/factories.rb:38
-unused factory company => spec/factories.rb:42
-unused trait with_manager of factory company => spec/factories.rb:43
-unused factory article, post => spec/factories.rb:48
-unused factory comment => spec/factories.rb:50
-unused global trait with_address => spec/factories.rb:54
+unused factory user => spec/factories.rb:19
+unused trait with_phone of factory user => spec/factories.rb:22
+unused factory user_with_defaults => spec/factories.rb:26
+unused factory admin => spec/factories.rb:29
+unused trait with_email of factory admin => spec/factories.rb:30
+unused trait combination of factory admin => spec/factories.rb:34
+unused factory manager => spec/factories.rb:40
+unused factory company => spec/factories.rb:44
+unused trait with_manager of factory company => spec/factories.rb:45
+unused factory article, post => spec/factories.rb:50
+unused factory comment => spec/factories.rb:52
+unused global trait with_address => spec/factories.rb:56

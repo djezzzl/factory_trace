@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module FactoryTrace
   class Configuration
     attr_accessor :path, :enabled, :color, :mode, :trace_definition
 
     def initialize
-      @enabled = ENV.key?('FB_TRACE') || ENV.key?('FB_TRACE_FILE')
-      @path = ENV['FB_TRACE_FILE']
+      @enabled = ENV.key?("FB_TRACE") || ENV.key?("FB_TRACE_FILE")
+      @path = ENV["FB_TRACE_FILE"]
       @color = path.nil?
-      @mode = extract_mode(ENV['FB_TRACE']) || :full
+      @mode = extract_mode(ENV["FB_TRACE"]) || :full
       @trace_definition = true
     end
 
@@ -15,9 +17,9 @@ module FactoryTrace
     end
 
     def out
-      return STDOUT unless path
+      return $stdout unless path
 
-      File.open(path, 'w')
+      File.open(path, "w")
     end
 
     def mode?(*args)
@@ -27,7 +29,7 @@ module FactoryTrace
     private
 
     def extract_mode(value)
-      matcher = value && value.match(/full|trace_only/)
+      matcher = value&.match(/full|trace_only/)
       matcher && matcher[0].to_sym
     end
   end
