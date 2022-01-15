@@ -101,7 +101,7 @@ workflows:
                 "gemfiles/fb_6_1.gemfile",
                 "gemfiles/fb_6_2.gemfile"
               ]
-          name: build-ruby-<< matrix.ruby-version >>/fb-<< matrix.gemfile >>
+          name: fb-<< matrix.gemfile >>-ruby-<< matrix.ruby-version >>
       - rubocop:
           requires:
             - checkout
