@@ -1,3 +1,7 @@
+### [1.0.0] - 2022/01/15
+
+An empty release to confirm that the gem version is production ready.
+
 ### [0.4.1] - 2019/10/06
 
 Features:
