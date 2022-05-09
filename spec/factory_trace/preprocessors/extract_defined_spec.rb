@@ -38,7 +38,11 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractDefined do
           FactoryTrace::Structures::Factory.new(["comment"], [], declaration_names: ["post"]),
           FactoryTrace::Structures::Factory.new(
             ["task"],
-            []
+            [
+              FactoryTrace::Structures::Trait.new("queued"),
+              FactoryTrace::Structures::Trait.new("started"),
+              FactoryTrace::Structures::Trait.new("finished")
+            ]
           )
         ],
         [
