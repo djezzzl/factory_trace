@@ -5,7 +5,7 @@ executors:
     description: The official CircleCI Ruby Docker image
     parameters:
       tag:
-        description: The circleci/ruby Docker image version tag
+        description: The cimg/ruby Docker image version tag
         type: string
         default: latest
     docker:
@@ -44,16 +44,15 @@ jobs:
           name: Install the gems specified by the Gemfile
           command: bundle install
       - run:
-          name: Run E2E
-          command: ruby spec/factory_trace/integration_tests/runner.rb
-      - run:
           name: Run RSpec
           command: |
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
                               --out test_results/rspec.xml \
-                              --format progress \
-                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+                              --format progress
+      - run:
+          name: Run E2E
+          command: ruby spec/factory_trace/integration_tests/runner.rb
       - store_test_results:
           path: test_results
 
