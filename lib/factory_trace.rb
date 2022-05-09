@@ -30,6 +30,7 @@ require "factory_trace/writers/trace_writer"
 require "factory_trace/monkey_patches/monkey_patches"
 require "factory_trace/monkey_patches/factory"
 require "factory_trace/monkey_patches/trait"
+require "factory_trace/monkey_patches/enum"
 require "factory_trace/monkey_patches/definition_proxy"
 require "factory_trace/monkey_patches/dsl"
 
@@ -47,9 +48,6 @@ module FactoryTrace
 
     def stop
       return unless configuration.enabled
-
-      # This is required to exclude parent traits from +defined_traits+
-      FactoryBot.reload
 
       if configuration.mode?(:full)
         Writers::ReportWriter.new(configuration.out, configuration).write(Processors::FindUnused.call(defined, used))
@@ -83,6 +81,7 @@ module FactoryTrace
     def trace_definitions!
       FactoryBot::Factory.prepend(FactoryTrace::MonkeyPatches::Factory)
       FactoryBot::Trait.prepend(FactoryTrace::MonkeyPatches::Trait)
+      FactoryBot::Enum.prepend(FactoryTrace::MonkeyPatches::Enum)
       FactoryBot::Syntax::Default::DSL.prepend(FactoryTrace::MonkeyPatches::Default::DSL)
       FactoryBot::DefinitionProxy.prepend(FactoryTrace::MonkeyPatches::DefinitionProxy)
     end

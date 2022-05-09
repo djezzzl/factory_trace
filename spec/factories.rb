@@ -15,6 +15,10 @@ class Comment
   attr_accessor :article
 end
 
+class Task
+  attr_accessor :status
+end
+
 FactoryBot.define do
   factory :user do
     name { "name" }
@@ -55,5 +59,9 @@ FactoryBot.define do
 
   trait :with_address do
     address { "address" }
+  end
+
+  factory :task do
+    traits_for_enum :status, {queued: 0, started: 1, finished: 2}
   end
 end
