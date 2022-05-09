@@ -62,6 +62,6 @@ FactoryBot.define do
   end
 
   factory :task do
-    traits_for_enum :status, {queued: 0, started: 1, finished: 2}
+    FactoryBot::VERSION >= "6.0.0" ? traits_for_enum(:status, {queued: 0, started: 1, finished: 2}) : trait(:queued) { status { 0 } } && trait(:started) { status { 1 } } && trait(:finished) { status { 2 } }
   end
 end

@@ -81,7 +81,7 @@ module FactoryTrace
     def trace_definitions!
       FactoryBot::Factory.prepend(FactoryTrace::MonkeyPatches::Factory)
       FactoryBot::Trait.prepend(FactoryTrace::MonkeyPatches::Trait)
-      FactoryBot::Enum.prepend(FactoryTrace::MonkeyPatches::Enum)
+      FactoryBot::Enum.prepend(FactoryTrace::MonkeyPatches::Enum) if FactoryBot::VERSION >= "6.0.0"
       FactoryBot::Syntax::Default::DSL.prepend(FactoryTrace::MonkeyPatches::Default::DSL)
       FactoryBot::DefinitionProxy.prepend(FactoryTrace::MonkeyPatches::DefinitionProxy)
     end
