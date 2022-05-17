@@ -5,11 +5,11 @@ executors:
     description: The official CircleCI Ruby Docker image
     parameters:
       tag:
-        description: The circleci/ruby Docker image version tag
+        description: The cimg/ruby Docker image version tag
         type: string
-        default: latest
+        default: "3.1"
     docker:
-      - image: circleci/ruby:<< parameters.tag >>
+      - image: cimg/ruby:<< parameters.tag >>
     environment:
       - BUNDLE_JOBS: 4
       - BUNDLE_RETRY: 3
@@ -89,7 +89,7 @@ workflows:
                 "2.6",
                 "2.7",
                 "3.0",
-                "latest"
+                "3.1"
               ]
               gemfile: [
                 "gemfiles/fb_4_10.gemfile",
