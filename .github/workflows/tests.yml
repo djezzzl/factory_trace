@@ -1,0 +1,42 @@
+name: RSpec tests
+
+on:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version:
+          - '2.6'
+          - '2.7'
+          - 'head'
+        gemfile:
+          - 'gemfiles/fb_4_11.gemfile'
+          - 'gemfiles/fb_5_2.gemfile'
+          - 'gemfiles/fb_6_2.gemfile'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+
+      - name: Use << parameters.gemfile >> as the Gemfile
+        run: bundle config --global gemfile ${{ matrix.gemfile }}
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run E2E
+        run: bundle exec ruby spec/factory_trace/integration_tests/runner.rb
+
+      - name: Run Core tests
+        run: bundle exec rspec
