@@ -9,8 +9,9 @@ inherit_gem:
 AllCops:
   NewCops: enable
   Exclude:
-    - "rails-rspec-example/**/*"
-  TargetRubyVersion: 2.5
+    - rails-rspec-example/**/*
+    - vendor/bundle/**/*
+  TargetRubyVersion: 2.6
 
 ############### Style ###############
 
