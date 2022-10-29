@@ -16,13 +16,8 @@ jobs:
           - '2.7'
           - 'head'
         gemfile:
-          - 'gemfiles/fb_4_10.gemfile'
           - 'gemfiles/fb_4_11.gemfile'
-          - 'gemfiles/fb_5_0.gemfile'
-          - 'gemfiles/fb_5_1.gemfile'
           - 'gemfiles/fb_5_2.gemfile'
-          - 'gemfiles/fb_6_0.gemfile'
-          - 'gemfiles/fb_6_1.gemfile'
           - 'gemfiles/fb_6_2.gemfile'
 
     steps:
