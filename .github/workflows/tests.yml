@@ -35,13 +35,13 @@ jobs:
           bundler-cache: true
 
       - name: Use << parameters.gemfile >> as the Gemfile
-        command: bundle config --global gemfile << matrix.gemfile >>
+        run: bundle config --global gemfile << matrix.gemfile >>
 
       - name: Install dependencies
         run: bundle install
 
       - name: Run E2E
-        command: bundle exec ruby spec/factory_trace/integration_tests/runner.rb
+        run: bundle exec ruby spec/factory_trace/integration_tests/runner.rb
 
       - name: Run Core tests
         run: bundle exec rspec
