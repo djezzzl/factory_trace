@@ -1,7 +1,8 @@
 # FactoryTrace
 
-[![CircleCI][1]][2]
 [![Gem Version][3]][4]
+![Tests][1]
+![Rubocop][2]
 [![][5]][6]
 
 The main goal of the project is to provide an easy way to maintain [FactoryBot](https://github.com/thoughtbot/factory_bot)
@@ -220,8 +221,8 @@ Everyone interacting in the *FactoryTrace* project’s codebases, issue trackers
 
 Copyright (c) Evgeniy Demin. See [LICENSE.txt](LICENSE.txt) for further details.
 
-[1]: https://circleci.com/gh/djezzzl/factory_trace/tree/master.svg?style=shield
-[2]: https://circleci.com/gh/djezzzl/factory_trace/tree/master
+[1]: https://github.com/djezzzl/factory_trace/actions/workflows/tests.yml/badge.svg
+[2]: https://github.com/djezzzl/factory_trace/actions/workflows/rubocop.yml/badge.svg
 [3]: https://badge.fury.io/rb/factory_trace.svg
 [4]: https://badge.fury.io/rb/factory_trace
 [5]: https://opencollective.com/factory_trace/tiers/badge.svg
