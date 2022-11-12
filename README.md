@@ -1,14 +1,15 @@
 # FactoryTrace
 
 [![Gem Version][3]][4]
-![Tests][1]
-![Rubocop][2]
+[![][1]][10]
+[![][2]][11]
 [![][5]][6]
 
 The main goal of the project is to provide an easy way to maintain [FactoryBot](https://github.com/thoughtbot/factory_bot)
 inside your project in a good shape.
 
-> [Toptal](https://www.toptal.com#snag-only-shrewd-web-development-experts) is hiring! [Join](https://www.toptal.com#snag-only-shrewd-web-development-experts) as Freelancer or [write me](mailto:lawliet.djez@gmail.com) if you want to join Core team.
+> If the project helps you or your organization, I would be very grateful if you [contribute][13] or [donate][14].  
+> Your support is an incredible motivation and the biggest reward for my hard work.
 
 ## What it does?
 
@@ -221,9 +222,13 @@ Everyone interacting in the *FactoryTrace* project’s codebases, issue trackers
 
 Copyright (c) Evgeniy Demin. See [LICENSE.txt](LICENSE.txt) for further details.
 
-[1]: https://github.com/djezzzl/factory_trace/actions/workflows/tests.yml/badge.svg
-[2]: https://github.com/djezzzl/factory_trace/actions/workflows/rubocop.yml/badge.svg
+[1]: https://github.com/djezzzl/factory_trace/actions/workflows/tests.yml/badge.svg?branch=master
+[2]: https://github.com/djezzzl/factory_trace/actions/workflows/rubocop.yml/badge.svg?branch=master
 [3]: https://badge.fury.io/rb/factory_trace.svg
 [4]: https://badge.fury.io/rb/factory_trace
 [5]: https://opencollective.com/factory_trace/tiers/badge.svg
 [6]: https://opencollective.com/factory_trace#support
+[10]: https://github.com/djezzzl/factory_trace/actions/workflows/tests.yml?query=event%3Aschedule
+[11]: https://github.com/djezzzl/factory_trace/actions/workflows/rubocop.yml?query=event%3Aschedule
+[13]: https://github.com/djezzzl/factory_trace#contributing
+[14]: https://opencollective.com/factory_trace#support
