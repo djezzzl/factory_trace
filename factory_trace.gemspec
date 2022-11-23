@@ -13,6 +13,9 @@ Gem::Specification.new do |spec|
   spec.summary = "Provide an easy way to maintain factories and traits from FactoryBot"
   spec.homepage = "https://github.com/djezzzl/factory_trace"
   spec.license = "MIT"
+  spec.metadata = {
+    "funding_uri" => "https://opencollective.com/factory_trace#support"
+  }
 
   spec.files = Dir["lib/**/*"]
   spec.bindir = "exe"

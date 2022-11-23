@@ -17,7 +17,7 @@ module FactoryTrace
 
       # @param [Array<Hash>] results
       def write(results)
-        total_color = results.any? { |result| result[:code] == :unused && !result.key?(:value) } ? :red : :green
+        total_color = (results.any? { |result| result[:code] == :unused && !result.key?(:value) }) ? :red : :green
 
         results.each do |result|
           io.puts(convert(result, total_color: total_color))
