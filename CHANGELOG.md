@@ -1,3 +1,7 @@
+### [1.0.1] - 2022/11/23
+
+Add fund metadata and fix CI.
+
 ### [1.0.0] - 2022/01/15
 
 An empty release to confirm that the gem version is production ready.
