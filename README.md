@@ -11,6 +11,12 @@ inside your project in a good shape.
 > If the project helps you or your organization, I would be very grateful if you [contribute][13] or [donate][14].  
 > Your support is an incredible motivation and the biggest reward for my hard work.
 
+Follow me and stay tuned for the updates:
+- [LinkedIn](https://www.linkedin.com/in/evgeniydemin/)
+- [Medium](https://evgeniydemin.medium.com/)
+- [Twitter](https://twitter.com/EvgeniyDemin/)
+- [GitHub](https://github.com/djezzzl)
+
 ## What it does?
 
 Currently, it helps to find unused `factories` and `traits`.
