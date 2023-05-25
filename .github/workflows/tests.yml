@@ -30,7 +30,7 @@ jobs:
           bundler-cache: true
 
       - name: Update bundler
-        run: gem update --system 3.2.3
+        run: gem update --system 3.3.3
 
       - name: Use << parameters.gemfile >> as the Gemfile
         run: bundle config --global gemfile ${{ matrix.gemfile }}
