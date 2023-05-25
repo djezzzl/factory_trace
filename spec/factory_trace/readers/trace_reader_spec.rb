@@ -4,7 +4,7 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
   subject(:reader) { described_class.new(input) }
 
   describe ".read_from_files" do
-    let(:input1) do
+    let(:first_input) do
       <<~TEXT
         {
           "defined": {
@@ -85,7 +85,7 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
       TEXT
     end
 
-    let(:input2) do
+    let(:second_input) do
       <<~TEXT
         {
           "defined": {
@@ -159,14 +159,14 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
       TEXT
     end
 
-    let(:file1) { Tempfile.new("file1.txt") }
-    let(:file2) { Tempfile.new("file2.txt") }
+    let(:first_file) { Tempfile.new("first_file.txt") }
+    let(:second_file) { Tempfile.new("second_file.txt") }
 
     before do
-      file1.write(input1)
-      file2.write(input2)
-      file1.rewind
-      file2.rewind
+      first_file.write(first_input)
+      second_file.write(second_input)
+      first_file.rewind
+      second_file.rewind
     end
 
     it "reads" do
@@ -207,7 +207,7 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
         )
       }
 
-      expect(described_class.read_from_files(file1, file2)).to eq(result)
+      expect(described_class.read_from_files(first_file, second_file)).to eq(result)
     end
   end
 
