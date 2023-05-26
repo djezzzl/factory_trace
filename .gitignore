@@ -22,3 +22,8 @@ Gemfile.local
 /rails-rspec-example/log
 /rails-rspec-example/tmp
 /rails-rspec-example/db/*.sqlite3
+
+# rails 7
+/rails7/log
+/rails7/tmp
+/rails7/db/*.sqlite3
