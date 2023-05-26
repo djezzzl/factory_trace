@@ -39,7 +39,7 @@ jobs:
         run: bundle install
 
       - name: Run E2E
-        run: bundle exec ruby spec/factory_trace/integration_tests/runner.rb
+        run: bundle exec ruby spec/integration_tests/runner.rb
 
       - name: Run Core tests
         run: bundle exec rspec

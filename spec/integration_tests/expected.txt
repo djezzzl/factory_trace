@@ -1,9 +1,7 @@
-total number of unique used factories & traits: 0
-total number of unique unused factories & traits: 12
-unused factory user => spec/factories.rb:19
+total number of unique used factories & traits: 2
+total number of unique unused factories & traits: 10
 unused trait with_phone of factory user => spec/factories.rb:22
 unused factory user_with_defaults => spec/factories.rb:26
-unused factory admin => spec/factories.rb:29
 unused trait with_email of factory admin => spec/factories.rb:30
 unused trait combination of factory admin => spec/factories.rb:34
 unused factory manager => spec/factories.rb:40
