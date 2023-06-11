@@ -1,3 +1,7 @@
+### [1.1.0] - 2023/06/11
+
+Ignore unrecognized factories/traits/enums during marking and still provide the feedback.
+
 ### [1.0.1] - 2022/11/23
 
 Add fund metadata and fix CI.
