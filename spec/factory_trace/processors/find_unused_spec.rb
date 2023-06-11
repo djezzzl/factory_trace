@@ -27,6 +27,29 @@ RSpec.describe FactoryTrace::Processors::FindUnused do
       end
     end
 
+    context "when only unknown factory was used" do
+      let(:data) { {"unknown" => Set.new(["unknown"])} }
+
+      specify do
+        expect(checker).to eq([
+          {code: :used, value: 0},
+          {code: :unused, value: 12},
+          {code: :unused, factory_names: ["user"]},
+          {code: :unused, factory_names: ["user"], trait_name: "with_phone"},
+          {code: :unused, factory_names: ["user_with_defaults"]},
+          {code: :unused, factory_names: ["admin"]},
+          {code: :unused, factory_names: ["admin"], trait_name: "with_email"},
+          {code: :unused, factory_names: ["admin"], trait_name: "combination"},
+          {code: :unused, factory_names: ["manager"]},
+          {code: :unused, factory_names: ["company"]},
+          {code: :unused, factory_names: ["company"], trait_name: "with_manager"},
+          {code: :unused, factory_names: ["article", "post"]},
+          {code: :unused, factory_names: ["comment"]},
+          {code: :unused, trait_name: "with_address"}
+        ])
+      end
+    end
+
     context "when a factory used through alias" do
       let(:data) { {"post" => Set.new} }
 

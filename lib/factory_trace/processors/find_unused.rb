@@ -69,11 +69,11 @@ module FactoryTrace
           [nil, defined.find_trait_by_name(trait_name)]
         end
 
-        # @param [FactoryTrace::Structures::Factory] factory
+        # @param [FactoryTrace::Structures::Factory, nil] factory
         # @param [FactoryTrace::Structures::Collection] collection
         # @param [Symbol] status
         def mark_factory(factory, collection, status:)
-          return if factory.has_prioritized_status?(status)
+          return if factory.nil? || factory.has_prioritized_status?(status)
 
           factory.status = status
           if (parent = collection.find_factory_by_names([factory.parent_name]))
@@ -82,12 +82,12 @@ module FactoryTrace
           mark_declarations(factory.declaration_names, factory, collection, status: :indirectly_used)
         end
 
-        # @param [FactoryTrace::Structures::Trait] trait
+        # @param [FactoryTrace::Structures::Trait, nil] trait
         # @param [FactoryTrace::Structures::Factory|nil] factory which trait belongs to
         # @param [FactoryTrace::Structures::Collection] collection
         # @param [Symbol] status
         def mark_trait(trait, factory, collection, status:)
-          return if trait.has_prioritized_status?(status)
+          return if trait.nil? || trait.has_prioritized_status?(status)
 
           trait.status = status
           mark_declarations(trait.declaration_names, factory, collection, status: :indirectly_used)
