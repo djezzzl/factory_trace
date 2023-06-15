@@ -1,3 +1,7 @@
+### [1.1.1] - 2023/06/15
+
+Ignore issues with lazy enums. Might be fixed better though.
+
 ### [1.1.0] - 2023/06/11
 
 Ignore unrecognized factories/traits/enums during marking and still provide the feedback.
