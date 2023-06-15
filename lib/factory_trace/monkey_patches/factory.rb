@@ -5,7 +5,7 @@ module FactoryTrace
     module Factory
       attr_reader :definition_path
 
-      def initialize(name, definition_path, options = {})
+      def initialize(name, definition_path = "", options = {})
         @definition_path = definition_path
         super(name, options)
       end

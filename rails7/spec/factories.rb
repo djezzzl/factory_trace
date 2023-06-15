@@ -2,6 +2,8 @@
 
 FactoryBot.define do
   factory :user do
+    traits_for_enum :visibility, [:public, :private]
+
     trait :with_phone do
       phone { "phone" }
     end
