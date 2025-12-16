@@ -2,7 +2,6 @@
 
 source "https://rubygems.org"
 
-gem "factory_bot", "~> 4.11.0"
-gem "observer"
+gem "factory_bot"
 
 gemspec path: "../"
