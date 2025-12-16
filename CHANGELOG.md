@@ -1,3 +1,7 @@
+### [1.1.2] - 2025/12/16
+
+Drop support of old Ruby and FactoryBot versions (though both might work just fine).
+
 ### [1.1.1] - 2023/06/15
 
 Ignore issues with lazy enums. Might be fixed better though.
