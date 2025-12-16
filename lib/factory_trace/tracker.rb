@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "active_support"
-
 module FactoryTrace
   class Tracker
     attr_reader :storage
