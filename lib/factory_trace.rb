@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # External dependencies
+require "active_support"
 require "factory_bot"
 require "json"
 require "set"

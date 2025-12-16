@@ -12,17 +12,11 @@ jobs:
     strategy:
       matrix:
         ruby-version:
-          - '2.6'
-          - '2.7'
-          - '3.0'
-          - '3.1'
           - '3.2'
           - 'head'
         gemfile:
-          - 'gemfiles/fb_4_11.gemfile'
-          - 'gemfiles/fb_5_2.gemfile'
-          - 'gemfiles/fb_6_2.gemfile'
           - 'gemfiles/fb_6_4.gemfile'
+          - 'gemfiles/fb_head.gemfile'
 
     steps:
       - uses: actions/checkout@v3

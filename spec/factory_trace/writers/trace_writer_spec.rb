@@ -48,16 +48,12 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
                 "traits": [
                   {
                     "name": "with_phone",
-                    "declaration_names": [
-        
-                    ],
+                    "declaration_names": [],
                     "definition_path": null
                   }
                 ],
                 "parent_name": null,
-                "declaration_names": [
-        
-                ],
+                "declaration_names": [],
                 "definition_path": null
               },
               {
@@ -67,9 +63,7 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
                 "traits": [
                   {
                     "name": "with_email",
-                    "declaration_names": [
-        
-                    ],
+                    "declaration_names": [],
                     "definition_path": null
                   },
                   {
@@ -82,29 +76,21 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
                   }
                 ],
                 "parent_name": "user",
-                "declaration_names": [
-        
-                ],
+                "declaration_names": [],
                 "definition_path": "path/to/file:10"
               }
             ],
             "traits": [
               {
                 "name": "with_address",
-                "declaration_names": [
-        
-                ],
+                "declaration_names": [],
                 "definition_path": null
               }
             ]
           },
           "used": {
-            "factories": [
-        
-            ],
-            "traits": [
-        
-            ]
+            "factories": [],
+            "traits": []
           }
         }
       TEXT
