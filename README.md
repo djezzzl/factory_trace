@@ -212,12 +212,6 @@ You're an organization that wants to support the project with a monthly donation
 This project is intended to be a safe, welcoming space for collaboration, and contributors are expected
 to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
-Please ensure that all tests and rubocop checks are green before submitting a pull request:
-```bash
-bundle exec rspec
-bundle exec rubocop
-```
-
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
