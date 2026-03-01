@@ -34,9 +34,6 @@ require "factory_trace/monkey_patches/trait"
 require "factory_trace/monkey_patches/definition_proxy"
 require "factory_trace/monkey_patches/dsl"
 
-# Integrations
-require "integrations/rspec" if defined?(RSpec::Core)
-
 module FactoryTrace
   class << self
     def start
@@ -89,3 +86,7 @@ module FactoryTrace
     end
   end
 end
+
+# Integrations
+require "integrations/rspec" if defined?(RSpec::Core)
+require "integrations/minitest" if defined?(Minitest)

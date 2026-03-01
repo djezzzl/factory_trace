@@ -39,5 +39,8 @@ jobs:
       - name: Run E2E
         run: bundle exec ruby spec/integration_tests/runner.rb
 
+      - name: Run Minitest E2E
+        run: bundle exec ruby spec/integration_tests/minitest_runner.rb
+
       - name: Run Core tests
         run: bundle exec rspec
