@@ -8,6 +8,7 @@
 /tmp/
 *.lock
 Gemfile.local
+/vendor/
 
 # Ruby
 .ruby-version
