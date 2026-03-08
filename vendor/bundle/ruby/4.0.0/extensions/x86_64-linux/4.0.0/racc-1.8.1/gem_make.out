@@ -1,0 +1,18 @@
+current directory: /home/runner/work/factory_trace/factory_trace/vendor/bundle/ruby/4.0.0/gems/racc-1.8.1/ext/racc/cparse
+/opt/hostedtoolcache/Ruby/4.0.1/x64/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/runner/work/factory_trace/factory_trace/vendor/bundle/ruby/4.0.0/gems/racc-1.8.1/ext/racc/cparse
+make -j4 DESTDIR\= sitearchdir\=./.gem.20260308-2417-pgq6gc sitelibdir\=./.gem.20260308-2417-pgq6gc clean
+
+current directory: /home/runner/work/factory_trace/factory_trace/vendor/bundle/ruby/4.0.0/gems/racc-1.8.1/ext/racc/cparse
+make -j4 DESTDIR\= sitearchdir\=./.gem.20260308-2417-pgq6gc sitelibdir\=./.gem.20260308-2417-pgq6gc
+compiling cparse.c
+linking shared-object racc/cparse.so
+
+current directory: /home/runner/work/factory_trace/factory_trace/vendor/bundle/ruby/4.0.0/gems/racc-1.8.1/ext/racc/cparse
+make -j4 DESTDIR\= sitearchdir\=./.gem.20260308-2417-pgq6gc sitelibdir\=./.gem.20260308-2417-pgq6gc install
+/usr/bin/install -c -m 0755 cparse.so ./.gem.20260308-2417-pgq6gc/racc
+
+current directory: /home/runner/work/factory_trace/factory_trace/vendor/bundle/ruby/4.0.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260308-2417-pgq6gc sitelibdir\=./.gem.20260308-2417-pgq6gc clean
