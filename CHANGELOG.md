@@ -1,3 +1,7 @@
+### [Unreleased]
+
+Add support for [Minitest](https://github.com/minitest/minitest). Thanks to [@kenzoak](https://github.com/kenzoak) for the [request](https://github.com/djezzzl/factory_trace/issues/41).
+
 ### [1.1.2] - 2025/12/16
 
 Drop support of old Ruby and FactoryBot versions (though both might work just fine).
