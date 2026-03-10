@@ -10,6 +10,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - rails-rspec-example/**/*
+    - rails7/**/*
     - vendor/bundle/**/*
   TargetRubyVersion: 2.6
 
@@ -23,6 +24,10 @@ Style/FrozenStringLiteralComment:
 RSpec/ExampleLength:
   Enabled: false
 
-RSpec/FilePath:
+RSpec/SpecFilePathFormat:
+  Exclude:
+    - spec/factory_trace/integration_tests/empty_spec.rb
+
+RSpec/SpecFilePathSuffix:
   Exclude:
     - spec/factory_trace/integration_tests/empty_spec.rb

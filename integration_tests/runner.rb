@@ -8,8 +8,10 @@ command, expected_file =
   case ARGV[0]
   when "rspec"
     ["bundle exec rspec integration_tests/rspec/ --default-path integration_tests/rspec/", "integration_tests/rspec/expected.txt"]
+  when "minitest"
+    ["bundle exec ruby integration_tests/minitest/test_test.rb", "integration_tests/minitest/expected.txt"]
   else
-    abort("Provide rspec or minitest as stdin")
+    abort("Provide rspec or minitest as argument")
   end
 
 result_tempfile = Tempfile.new("integration-test-results.txt")

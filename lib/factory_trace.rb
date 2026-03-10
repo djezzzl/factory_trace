@@ -36,6 +36,7 @@ require "factory_trace/monkey_patches/dsl"
 
 # Integrations
 require "integrations/rspec" if defined?(RSpec::Core)
+require "integrations/minitest" if defined?(Minitest)
 
 module FactoryTrace
   class << self
