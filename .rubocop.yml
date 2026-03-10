@@ -10,6 +10,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - rails-rspec-example/**/*
+    - rails7/**/*
     - vendor/bundle/**/*
   TargetRubyVersion: 2.6
 
@@ -17,12 +18,10 @@ AllCops:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+Style/OneClassPerFile:
+  Enabled: false
 
 ############### RSpec ###############
 
 RSpec/ExampleLength:
   Enabled: false
-
-RSpec/FilePath:
-  Exclude:
-    - spec/factory_trace/integration_tests/empty_spec.rb

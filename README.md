@@ -53,14 +53,19 @@ $ gem install factory_trace
 
 ## Usage
 
-For now, the gem supports [RSpec](https://github.com/rspec/rspec) out of the box.
-You don't need to add any hooks. Just run the specs, e.g.
+The gem supports [RSpec](https://github.com/rspec/rspec) and [Minitest](https://github.com/minitest/minitest) out of the box.
+You don't need to add any hooks. Just run the tests, e.g.
 
 ```bash
 # output to STDOUT
 FB_TRACE=1 rspec
 # OR output to any file
 FB_TRACE_FILE=log/factory_trace.txt rspec
+
+# Minitest works the same way
+FB_TRACE=1 ruby -Itest test/my_test.rb
+# OR output to any file
+FB_TRACE_FILE=log/factory_trace.txt ruby -Itest test/my_test.rb
 ```
 
 For any other case, add the following line where you want to start

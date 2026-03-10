@@ -1,6 +1,10 @@
-Please ensure that all tests and rubocop checks are green in every pull request:
+Please ensure that tests are successful
 
 ```bash
 bundle exec rspec
+```
+
+Please ensure that rubocop is successful
+```bash
 bundle exec rubocop
 ```
