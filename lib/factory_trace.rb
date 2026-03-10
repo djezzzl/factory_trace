@@ -13,6 +13,7 @@ require "factory_trace/helpers/converter"
 require "factory_trace/helpers/statusable"
 require "factory_trace/helpers/caller"
 require "factory_trace/tracker"
+require "factory_trace/fixture_tracker"
 
 require "factory_trace/structures/factory"
 require "factory_trace/structures/trait"
@@ -20,6 +21,7 @@ require "factory_trace/structures/collection"
 
 require "factory_trace/preprocessors/extract_defined"
 require "factory_trace/preprocessors/extract_used"
+require "factory_trace/preprocessors/extract_defined_fixtures"
 
 require "factory_trace/processors/find_unused"
 
@@ -45,6 +47,7 @@ module FactoryTrace
       trace_definitions! if configuration.trace_definition?
 
       tracker.track!
+      fixture_tracker.track!
     end
 
     def stop
@@ -54,7 +57,9 @@ module FactoryTrace
       FactoryBot.reload
 
       if configuration.mode?(:full)
-        Writers::ReportWriter.new(configuration.out, configuration).write(Processors::FindUnused.call(defined, used))
+        writer = Writers::ReportWriter.new(configuration.out, configuration)
+        writer.write(Processors::FindUnused.call(defined, used))
+        write_fixture_results(writer)
       elsif configuration.mode?(:trace_only)
         Writers::TraceWriter.new(configuration.out, configuration).write(defined, used)
       end
@@ -80,6 +85,24 @@ module FactoryTrace
 
     def tracker
       @tracker ||= Tracker.new
+    end
+
+    def fixture_tracker
+      @fixture_tracker ||= FixtureTracker.new
+    end
+
+    def defined_fixtures
+      @defined_fixtures ||= Preprocessors::ExtractDefinedFixtures.call(configuration.fixture_path)
+    end
+
+    def used_fixtures
+      @used_fixtures ||= Preprocessors::ExtractUsed.call(fixture_tracker.storage)
+    end
+
+    def write_fixture_results(writer)
+      return if defined_fixtures.total.zero?
+
+      writer.write(Processors::FindUnused.call(defined_fixtures, used_fixtures), kind: :fixture)
     end
 
     def trace_definitions!

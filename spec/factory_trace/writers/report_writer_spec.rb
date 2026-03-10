@@ -26,5 +26,27 @@ RSpec.describe FactoryTrace::Writers::ReportWriter do
         unused global trait \e[34mwith_address\e[0m
       TEXT
     end
+
+    context "when kind is :fixture" do
+      let(:fixture_results) do
+        [
+          {code: :used, value: 1},
+          {code: :unused, value: 2},
+          {code: :unused, factory_names: ["users"], trait_name: "one"},
+          {code: :unused, factory_names: ["companies"]}
+        ]
+      end
+
+      it "prints fixture-specific labels" do
+        printer.write(fixture_results, kind: :fixture)
+
+        expect(output.string).to eq(<<~TEXT)
+          \e[31mtotal number of unique used fixture sets & entries: 1\e[0m
+          \e[31mtotal number of unique unused fixture sets & entries: 2\e[0m
+          unused fixture entry \e[34mone\e[0m of fixture set \e[34musers\e[0m
+          unused fixture set \e[34mcompanies\e[0m
+        TEXT
+      end
+    end
   end
 end
