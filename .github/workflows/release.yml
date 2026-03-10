@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g. 2.1.4)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.actor == 'djezzzl'
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Validate version format
+        run: |
+          if ! echo "${{ github.event.inputs.version }}" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Invalid version format: ${{ github.event.inputs.version }}. Expected semver (e.g. 1.2.3)"
+            exit 1
+          fi
+
+      - name: Bump version
+        run: |
+          sed -i 's/VERSION = ".*"/VERSION = "${{ github.event.inputs.version }}"/' lib/factory_trace/version.rb
+
+      - name: Update changelog
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          DATE=$(date +%Y/%m/%d)
+          sed -i.bak -e "s|^### \[Unreleased\]|### [$VERSION] - $DATE|" CHANGELOG.md
+          rm -f CHANGELOG.md.bak
+
+      - name: Commit version bump
+        run: |
+          git config user.name "Evgenii Demin"
+          git config user.email "lawliet.djez@gmail.com"
+          git add lib/factory_trace/version.rb CHANGELOG.md
+          git commit -m "Release v${{ github.event.inputs.version }}"
+          git push origin HEAD
+
+      - name: Release gem
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: bundle exec rake release
