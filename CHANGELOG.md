@@ -1,4 +1,4 @@
-### [Unreleased]
+### [2.0.0] - 2026/03/10
 
 Add support for [Minitest](https://github.com/minitest/minitest). Thanks to [@kenzoak](https://github.com/kenzoak) for the [request](https://github.com/djezzzl/factory_trace/issues/41).
 
