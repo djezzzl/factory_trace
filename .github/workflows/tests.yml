@@ -36,8 +36,11 @@ jobs:
       - name: Install dependencies
         run: bundle install
 
-      - name: Run E2E
+      - name: Run RSpec + FactoryBot E2E
         run: bundle exec ruby integration_tests/runner.rb rspec
+
+      - name: Run MiniTest + FactoryBot E2E
+        run: bundle exec ruby integration_tests/runner.rb minitest
 
       - name: Run Core tests
         run: bundle exec rspec
