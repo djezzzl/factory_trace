@@ -30,4 +30,3 @@ if result != expected
 else
   puts "Tests passed!"
 end
-
