@@ -18,6 +18,8 @@ module FactoryTrace
       # @param [Array<Hash>] results
       # @param [Symbol] kind - :factory (default) or :fixture
       def write(results, kind: :factory)
+        io.puts("")
+
         total_color = (results.any? { |result| result[:code] == :unused && !result.key?(:value) }) ? :red : :green
 
         results.each do |result|

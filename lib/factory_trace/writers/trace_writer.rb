@@ -6,6 +6,7 @@ module FactoryTrace
       # @param [FactoryTrace::Structures::Collection] defined
       # @param [FactoryTrace::Structures::Collection] used
       def write(defined, used, kind:)
+        io.puts("")
         text =
           case kind
           when :factory_bot then "FactoryBot"
