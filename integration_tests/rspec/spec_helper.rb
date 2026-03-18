@@ -2,6 +2,7 @@
 
 require "bundler/setup"
 require "factory_trace"
+require "factory_bot"
 
 require "tempfile"
 
