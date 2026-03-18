@@ -13,5 +13,6 @@ else
 end
 
 gem "standard"
+gem "rubocop", "~> 1.85.0"
 gem "rubocop-rake"
 gem "rubocop-rspec"

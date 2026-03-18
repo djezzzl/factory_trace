@@ -22,6 +22,9 @@ AllCops:
 Style/FrozenStringLiteralComment:
   Enabled: true
 
+Style/OneClassPerFile:
+  Enabled: false
+
 ############### RSpec ###############
 
 RSpec/ExampleLength:
