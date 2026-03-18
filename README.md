@@ -33,12 +33,12 @@ unused trait with_address of factory admin => spec/factories.rb:11
 unused global trait with_email => spec/factories.rb:16
 ```
 
-Example output for Rails fixtures:
+Example output for Rails fixtures with Minitest (but can be with RSpec, too):
 
 ```bash
-$ FB_TRACE=1 rspec
+$ FB_TRACE=1 rails test
 total number of unique used fixture sets & entries: 2
-total number of unique unused fixture sets & entries: 3
+total number of unique unused fixture sets & entries: 2
 unused fixture entry two of fixture set users => test/fixtures/users.yml:7
 unused fixture set companies => test/fixtures/companies.yml:1
 ```
