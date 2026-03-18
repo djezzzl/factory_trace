@@ -2,6 +2,7 @@
 
 require "bundler/setup"
 require "factory_trace"
+require "factory_bot"
 
 require "tempfile"
 
@@ -31,6 +32,6 @@ RSpec.configure do |config|
   end
 
   def find_global_trait(name)
-    FactoryTrace::MonkeyPatches::REGISTER.traits[name.to_s]
+    FactoryTrace.factory_bot_register.traits[name.to_s]
   end
 end

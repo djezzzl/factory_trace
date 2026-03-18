@@ -6,6 +6,7 @@
 [![][5]][6]
 
 The main goal of the project is to provide an easy way to maintain [FactoryBot](https://github.com/thoughtbot/factory_bot)
+factories and [Rails fixtures](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html)
 inside your project in a good shape.
 
 > If the project helps you or your organization, I would be very grateful if you [contribute][13] or [donate][14].  
@@ -19,9 +20,9 @@ Follow me and stay tuned for the updates:
 
 ## What it does?
 
-Currently, it helps to find unused `factories` and `traits`.
+Currently, it helps to find unused `factories`, `traits`, and Rails `fixtures`.
 
-Example output (from [Rails RSpec Example](rails-rspec-example)):
+Example output for FactoryBot (from [Rails RSpec Example](rails-rspec-example)):
 
 ```bash
 $ FB_TRACE=1 rspec
@@ -30,6 +31,16 @@ total number of unique unused factories & traits: 3
 unused factory admin => spec/factories.rb:10
 unused trait with_address of factory admin => spec/factories.rb:11
 unused global trait with_email => spec/factories.rb:16
+```
+
+Example output for Rails fixtures with Minitest (but can be with RSpec, too):
+
+```bash
+$ FB_TRACE=1 rails test
+total number of unique used fixture sets & entries: 2
+total number of unique unused fixture sets & entries: 2
+unused fixture entry two of fixture set users => test/fixtures/users.yml:7
+unused fixture set companies => test/fixtures/companies.yml:1
 ```
 
 ## Installation
@@ -123,6 +134,11 @@ FactoryTrace.configure do |config|
   # default is true
   # can be true or false  
   config.trace_definition = true
+
+  # path (or array of paths) to the Rails fixtures directory
+  # default is 'test/fixtures'
+  # set to nil to disable fixture tracking
+  config.fixture_path = 'test/fixtures'
 end
 ```
 

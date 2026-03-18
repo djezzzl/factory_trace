@@ -1,5 +1,7 @@
 require:
   - standard/cop/block_single_line_braces
+
+plugins:
   - rubocop-rake
   - rubocop-rspec
 
@@ -7,17 +9,19 @@ inherit_gem:
   standard: config/base.yml
 
 AllCops:
+  SuggestExtensions: false
   NewCops: enable
   Exclude:
     - rails-rspec-example/**/*
     - rails7/**/*
     - vendor/bundle/**/*
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7.7
 
 ############### Style ###############
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+
 Style/OneClassPerFile:
   Enabled: false
 

@@ -5,7 +5,14 @@ module FactoryTrace
     class TraceWriter < Writer
       # @param [FactoryTrace::Structures::Collection] defined
       # @param [FactoryTrace::Structures::Collection] used
-      def write(defined, used)
+      def write(defined, used, kind:)
+        io.puts("")
+        text =
+          case kind
+          when :factory_bot then "FactoryBot"
+          when :fixtures then "Fixtures"
+          end
+        io.puts("#{text} definitions and usages:")
         io.puts(JSON.pretty_generate(defined: defined.to_h, used: used.to_h))
       end
     end

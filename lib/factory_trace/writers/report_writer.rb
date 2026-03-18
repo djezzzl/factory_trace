@@ -16,11 +16,14 @@ module FactoryTrace
       }.freeze
 
       # @param [Array<Hash>] results
-      def write(results)
+      # @param [Symbol] kind - :factory (default) or :fixture
+      def write(results, kind:)
+        io.puts("")
+
         total_color = (results.any? { |result| result[:code] == :unused && !result.key?(:value) }) ? :red : :green
 
         results.each do |result|
-          io.puts(convert(result, total_color: total_color))
+          io.puts(convert(result, total_color: total_color, kind: kind))
         end
       end
 
@@ -28,13 +31,23 @@ module FactoryTrace
 
       # @param [Hash<Symbol, Object>] result
       # @param [Symbol] total_color
-      def convert(result, total_color:)
+      # @param [Symbol] kind - :factory_bot or :fixtures
+      def convert(result, total_color:, kind:)
         if result[:value]
-          colorize(total_color, "total number of unique #{humanize_code(result[:code])} factories & traits: #{result[:value]}")
+          label = (kind == :fixtures) ? "fixture sets & entries" : "factories & traits"
+          colorize(total_color, "total number of unique #{humanize_code(result[:code])} #{label}: #{result[:value]}")
         elsif result[:factory_names] && result[:trait_name]
-          append_definition_path(result) { "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{list(result[:factory_names])}" }
+          if kind == :fixtures
+            append_definition_path(result) { "#{humanize_code(result[:code])} fixture entry #{colorize(:blue, result[:trait_name])} of fixture set #{list(result[:factory_names])}" }
+          else
+            append_definition_path(result) { "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{list(result[:factory_names])}" }
+          end
         elsif result[:factory_names]
-          append_definition_path(result) { "#{humanize_code(result[:code])} factory #{list(result[:factory_names])}" }
+          if kind == :fixtures
+            append_definition_path(result) { "#{humanize_code(result[:code])} fixture set #{list(result[:factory_names])}" }
+          else
+            append_definition_path(result) { "#{humanize_code(result[:code])} factory #{list(result[:factory_names])}" }
+          end
         else
           append_definition_path(result) { "#{humanize_code(result[:code])} global trait #{colorize(:blue, result[:trait_name])}" }
         end

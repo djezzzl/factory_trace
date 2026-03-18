@@ -10,7 +10,7 @@ module FactoryTrace
           proxy = FactoryBot::DefinitionProxy.new(factory.definition)
           proxy.instance_eval(&block) if block
 
-          REGISTER.register_factory(factory)
+          FactoryTrace.factory_bot_register.register_factory(factory)
 
           proxy.child_factories.each do |(child_name, child_caller_location, child_options, child_block)|
             parent_factory = child_options.delete(:parent) || name
@@ -19,7 +19,7 @@ module FactoryTrace
         end
 
         def trait(name, &block)
-          REGISTER.register_trait(FactoryBot::Trait.new(name, Helpers::Caller.location, &block))
+          FactoryTrace.factory_bot_register.register_trait(FactoryBot::Trait.new(name, Helpers::Caller.location, &block))
         end
       end
     end

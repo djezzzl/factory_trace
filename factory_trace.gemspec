@@ -22,7 +22,9 @@ Gem::Specification.new do |spec|
   spec.executables = ["factory_trace"]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "factory_bot", ">= 4.0"
+  # Now, it works with either ActiveRecord fixtures or FactoryBot factories, but it doesn't require them to be installed.
+  spec.add_development_dependency "factory_bot", ">= 4.0"
+  spec.add_development_dependency "activerecord", ">= 4.0"
 
   spec.add_development_dependency "bundler", ">= 1.17.0"
   spec.add_development_dependency "rake", "~> 10.0"

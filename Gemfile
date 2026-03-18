@@ -12,4 +12,7 @@ else
   gem "factory_bot", "~> 6.0"
 end
 
-eval_gemfile("gemfiles/rubocop.gemfile")
+gem "standard"
+gem "rubocop", "~> 1.85.0"
+gem "rubocop-rake"
+gem "rubocop-rspec"

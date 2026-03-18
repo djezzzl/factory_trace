@@ -1,3 +1,7 @@
+### [Unreleased]
+
+Add support for [Rails fixtures](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html). When running with `FB_TRACE=1`, FactoryTrace now also reports unused fixture sets and entries from your `test/fixtures` directory. The fixture path is configurable via `config.fixture_path`.
+
 ### [2.0.0] - 2026/03/10
 
 Add support for [Minitest](https://github.com/minitest/minitest). Thanks to [@kenzoak](https://github.com/kenzoak) for the [request](https://github.com/djezzzl/factory_trace/issues/41).
