@@ -2,6 +2,7 @@
 
 require "bundler/setup"
 require "minitest/autorun"
+require "active_support"
 require "factory_bot"
 require "factory_trace"
 
