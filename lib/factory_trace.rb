@@ -59,9 +59,11 @@ module FactoryTrace
       if configuration.mode?(:full)
         writer = Writers::ReportWriter.new(configuration.out, configuration)
         writer.write(Processors::FindUnused.call(defined, used))
-        write_fixture_results(writer)
+        writer.write(Processors::FindUnused.call(defined_fixtures, used_fixtures), kind: :fixture)
       elsif configuration.mode?(:trace_only)
-        Writers::TraceWriter.new(configuration.out, configuration).write(defined, used)
+        writer = Writers::TraceWriter.new(configuration.out, configuration)
+        writer.write(defined, used, kind: :factory_bot)
+        writer.write(defined_fixtures, used_fixtures, kind: :fixtures)
       end
     end
 
@@ -97,12 +99,6 @@ module FactoryTrace
 
     def used_fixtures
       @used_fixtures ||= Preprocessors::ExtractUsed.call(fixture_tracker.storage)
-    end
-
-    def write_fixture_results(writer)
-      return if defined_fixtures.total.zero?
-
-      writer.write(Processors::FindUnused.call(defined_fixtures, used_fixtures), kind: :fixture)
     end
 
     def trace_definitions!
