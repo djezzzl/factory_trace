@@ -16,9 +16,10 @@ RSpec.describe FactoryTrace::Writers::ReportWriter do
     end
 
     it "prints the result" do
-      printer.write(results)
+      printer.write(results, kind: :factory_bot)
 
       expect(output.string).to eq(<<~TEXT)
+
         \e[31mtotal number of unique used factories & traits: 1\e[0m
         \e[31mtotal number of unique unused factories & traits: 3\e[0m
         unused trait \e[34mwith_email\e[0m of factory \e[34madmin\e[0m
@@ -38,9 +39,10 @@ RSpec.describe FactoryTrace::Writers::ReportWriter do
       end
 
       it "prints fixture-specific labels" do
-        printer.write(fixture_results, kind: :fixture)
+        printer.write(fixture_results, kind: :fixtures)
 
         expect(output.string).to eq(<<~TEXT)
+
           \e[31mtotal number of unique used fixture sets & entries: 1\e[0m
           \e[31mtotal number of unique unused fixture sets & entries: 2\e[0m
           unused fixture entry \e[34mone\e[0m of fixture set \e[34musers\e[0m

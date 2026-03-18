@@ -9,11 +9,9 @@ module FactoryTrace
     end
 
     def track!
-      return unless defined?(ActiveRecord::FixtureSet)
-
       tracker_storage = @storage
 
-      ActiveRecord::FixtureSet.prepend(Module.new do
+      ::ActiveRecord::FixtureSet.prepend(Module.new do
         define_method(:[]) do |fixture_name|
           if fixture_name
             tracker_storage[name] ||= Set.new

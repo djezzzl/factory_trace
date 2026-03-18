@@ -38,6 +38,7 @@ RSpec.describe FactoryTrace::Writers::TraceWriter do
       printer.write(defined, used, kind: :factory_bot)
 
       expect(output.string).to eq(<<~TEXT)
+
         FactoryBot definitions and usages:
         {
           "defined": {

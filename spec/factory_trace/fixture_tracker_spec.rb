@@ -4,17 +4,6 @@ RSpec.describe FactoryTrace::FixtureTracker do
   subject(:tracker) { described_class.new }
 
   describe "#track!" do
-    context "when ActiveRecord::FixtureSet is not defined" do
-      before do
-        hide_const("ActiveRecord::FixtureSet") if defined?(ActiveRecord::FixtureSet)
-        tracker.track!
-      end
-
-      it "does not raise an error" do
-        expect(tracker.storage).to eq({})
-      end
-    end
-
     context "when ActiveRecord::FixtureSet is defined" do
       let(:fixture_set_class) do
         Class.new do

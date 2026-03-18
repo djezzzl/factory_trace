@@ -2,9 +2,9 @@
 
 RSpec.describe FactoryTrace::Preprocessors::ExtractDefinedFixtures do
   describe ".call" do
-    let(:fixture_path) { File.join(File.dirname(__FILE__), "../../fixtures") }
-
     subject(:collection) { described_class.call(fixture_path) }
+
+    let(:fixture_path) { File.join(File.dirname(__FILE__), "../../fixtures") }
 
     context "when fixture files exist" do
       it "extracts fixture sets and entries from all YAML files" do
@@ -31,7 +31,7 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractDefinedFixtures do
     context "when the fixture path does not exist" do
       let(:fixture_path) { "/nonexistent/path" }
 
-      it "returns an empty collection" do
+      it "returns an empty collection" do # rubocop:disable RSpec/MultipleExpectations
         expect(collection.factories).to eq([])
         expect(collection.traits).to eq([])
       end
@@ -40,7 +40,7 @@ RSpec.describe FactoryTrace::Preprocessors::ExtractDefinedFixtures do
     context "when given nil as fixture path" do
       let(:fixture_path) { nil }
 
-      it "returns an empty collection" do
+      it "returns an empty collection" do # rubocop:disable RSpec/MultipleExpectations
         expect(collection.factories).to eq([])
         expect(collection.traits).to eq([])
       end

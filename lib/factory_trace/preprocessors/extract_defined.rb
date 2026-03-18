@@ -7,7 +7,7 @@ module FactoryTrace
       def self.call
         collection = FactoryTrace::Structures::Collection.new
 
-        MonkeyPatches::REGISTER.traits.each do |trait|
+        FactoryTrace.factory_bot_register.traits.each do |trait|
           collection.add(FactoryTrace::Helpers::Converter.trait(trait))
         end
 

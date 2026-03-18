@@ -17,7 +17,7 @@ module FactoryTrace
 
       # @param [Array<Hash>] results
       # @param [Symbol] kind - :factory (default) or :fixture
-      def write(results, kind: :factory)
+      def write(results, kind:)
         io.puts("")
 
         total_color = (results.any? { |result| result[:code] == :unused && !result.key?(:value) }) ? :red : :green
@@ -31,19 +31,19 @@ module FactoryTrace
 
       # @param [Hash<Symbol, Object>] result
       # @param [Symbol] total_color
-      # @param [Symbol] kind - :factory or :fixture
-      def convert(result, total_color:, kind: :factory)
+      # @param [Symbol] kind - :factory_bot or :fixtures
+      def convert(result, total_color:, kind:)
         if result[:value]
-          label = (kind == :fixture) ? "fixture sets & entries" : "factories & traits"
+          label = (kind == :fixtures) ? "fixture sets & entries" : "factories & traits"
           colorize(total_color, "total number of unique #{humanize_code(result[:code])} #{label}: #{result[:value]}")
         elsif result[:factory_names] && result[:trait_name]
-          if kind == :fixture
+          if kind == :fixtures
             append_definition_path(result) { "#{humanize_code(result[:code])} fixture entry #{colorize(:blue, result[:trait_name])} of fixture set #{list(result[:factory_names])}" }
           else
             append_definition_path(result) { "#{humanize_code(result[:code])} trait #{colorize(:blue, result[:trait_name])} of factory #{list(result[:factory_names])}" }
           end
         elsif result[:factory_names]
-          if kind == :fixture
+          if kind == :fixtures
             append_definition_path(result) { "#{humanize_code(result[:code])} fixture set #{list(result[:factory_names])}" }
           else
             append_definition_path(result) { "#{humanize_code(result[:code])} factory #{list(result[:factory_names])}" }
