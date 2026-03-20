@@ -1,4 +1,3 @@
-
 total number of unique used factories & traits: 2
 total number of unique unused factories & traits: 10
 unused trait with_phone of factory user => spec/factories.rb:22

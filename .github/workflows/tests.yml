@@ -38,10 +38,16 @@ jobs:
         run: bundle install
 
       - name: Run RSpec + FactoryBot E2E
-        run: bundle exec ruby integration_tests/runner.rb rspec
+        run: bundle exec ruby integration_tests/single-step-runner.rb rspec
 
       - name: Run MiniTest + FactoryBot E2E
-        run: bundle exec ruby integration_tests/runner.rb minitest
+        run: bundle exec ruby integration_tests/single-step-runner.rb minitest
+
+      - name: Run Multi Step RSpec + FactoryBot E2E
+        run: bundle exec ruby integration_tests/multi-step-runner.rb rspec
+
+      - name: Run Multi Step Minitest + FactoryBot E2E
+        run: bundle exec ruby integration_tests/multi-step-runner.rb minitest
 
       - name: Run Core tests
         run: bundle exec rspec

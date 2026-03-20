@@ -1,4 +1,3 @@
-
 total number of unique used factories & traits: 2
 total number of unique unused factories & traits: 10
 unused trait with_phone of factory user => spec/factories.rb:22
@@ -11,3 +10,5 @@ unused trait with_manager of factory company => spec/factories.rb:45
 unused factory article, post => spec/factories.rb:50
 unused factory comment => spec/factories.rb:52
 unused global trait with_address => spec/factories.rb:56
+total number of unique used fixture sets & entries: 0
+total number of unique unused fixture sets & entries: 0

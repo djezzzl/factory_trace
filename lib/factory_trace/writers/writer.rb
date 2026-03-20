@@ -9,6 +9,10 @@ module FactoryTrace
         @io = io
         @configuration = configuration
       end
+
+      def file?
+        io.is_a?(File)
+      end
     end
   end
 end
