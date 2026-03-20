@@ -1,85 +1,89 @@
 # frozen_string_literal: true
 
 RSpec.describe FactoryTrace::Readers::TraceReader do
-  subject(:reader) { described_class.new(input) }
+  subject(:reader) { described_class.new(:factory_bot, input) }
 
   describe ".read_from_files" do
     let(:first_input) do
       <<~TEXT
         {
           "defined": {
-            "factories": [
-              {
-                "names": [
-                  "user"
-                ],
-                "traits": [
-                  {
-                    "name": "with_phone",
-                    "declaration_names": []
-                  }
-                ],
-                "parent_name": null,
-                "declaration_names": []
-              },
-              {
-                "names": [
-                  "admin"
-                ],
-                "traits": [
-                  {
-                    "name": "with_email",
-                    "declaration_names": []
-                  },
-                  {
-                    "name": "combination",
-                    "declaration_names": [
-                      "with_email",
-                      "with_phone"
-                    ]
-                  }
-                ],
-                "parent_name": "user",
-                "declaration_names": []
-              }
-            ],
-            "traits": [
-              {
-                "name": "with_address",
-                "declaration_names": []
-              }
-            ]
+            "factory_bot": {
+              "factories": [
+                {
+                  "names": [
+                    "user"
+                  ],
+                  "traits": [
+                    {
+                      "name": "with_phone",
+                      "declaration_names": []
+                    }
+                  ],
+                  "parent_name": null,
+                  "declaration_names": []
+                },
+                {
+                  "names": [
+                    "admin"
+                  ],
+                  "traits": [
+                    {
+                      "name": "with_email",
+                      "declaration_names": []
+                    },
+                    {
+                      "name": "combination",
+                      "declaration_names": [
+                        "with_email",
+                        "with_phone"
+                      ]
+                    }
+                  ],
+                  "parent_name": "user",
+                  "declaration_names": []
+                }
+              ],
+              "traits": [
+                {
+                  "name": "with_address",
+                  "declaration_names": []
+                }
+              ]
+            }
           },
           "used": {
-            "factories": [
-              {
-                "names": [
-                  "user"
-                ],
-                "traits": [
-                  {
-                    "name": "with_phone",
-                    "declaration_names": []
-                  }
-                ],
-                "parent_name": null,
-                "declaration_names": []
-              },
-              {
-                "names": [
-                  "admin"
-                ],
-                "traits": [
-                  {
-                    "name": "with_email",
-                    "declaration_names": []
-                  }
-                ],
-                "parent_name": null,
-                "declaration_names": []
-              }
-            ],
-            "traits": []
+            "factory_bot": {
+              "factories": [
+                {
+                  "names": [
+                    "user"
+                  ],
+                  "traits": [
+                    {
+                      "name": "with_phone",
+                      "declaration_names": []
+                    }
+                  ],
+                  "parent_name": null,
+                  "declaration_names": []
+                },
+                {
+                  "names": [
+                    "admin"
+                  ],
+                  "traits": [
+                    {
+                      "name": "with_email",
+                      "declaration_names": []
+                    }
+                  ],
+                  "parent_name": null,
+                  "declaration_names": []
+                }
+              ],
+              "traits": []
+            }
           }
         }
       TEXT
@@ -89,71 +93,75 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
       <<~TEXT
         {
           "defined": {
-            "factories": [
-              {
-                "names": [
-                  "user"
-                ],
-                "traits": [
-                  {
-                    "name": "with_phone",
-                    "declaration_names": []
-                  }
-                ],
-                "parent_name": null,
-                "declaration_names": []
-              },
-              {
-                "names": [
-                  "admin"
-                ],
-                "traits": [
-                  {
-                    "name": "with_email",
-                    "declaration_names": []
-                  },
-                  {
-                    "name": "combination",
-                    "declaration_names": [
-                      "with_email",
-                      "with_phone"
-                    ]
-                  }
-                ],
-                "parent_name": "user",
-                "declaration_names": []
-              }
-            ],
-            "traits": [
-              {
-                "name": "with_address",
-                "declaration_names": []
-              }
-            ]
+            "factory_bot": {
+              "factories": [
+                {
+                  "names": [
+                    "user"
+                  ],
+                  "traits": [
+                    {
+                      "name": "with_phone",
+                      "declaration_names": []
+                    }
+                  ],
+                  "parent_name": null,
+                  "declaration_names": []
+                },
+                {
+                  "names": [
+                    "admin"
+                  ],
+                  "traits": [
+                    {
+                      "name": "with_email",
+                      "declaration_names": []
+                    },
+                    {
+                      "name": "combination",
+                      "declaration_names": [
+                        "with_email",
+                        "with_phone"
+                      ]
+                    }
+                  ],
+                  "parent_name": "user",
+                  "declaration_names": []
+                }
+              ],
+              "traits": [
+                {
+                  "name": "with_address",
+                  "declaration_names": []
+                }
+              ]
+            }
           },
           "used": {
-            "factories": [
-              {
-                "names": [
-                  "user"
-                ],
-                "traits": [
-                  {
-                    "name": "with_address",
-                    "declaration_names": []
-                  }
-                ],
-                "parent_name": null,
-                "declaration_names": []
-              },
-              {
-                "names": ["admin"],
-                "traits": [],
-                "parent_name": null,
-                "declaration_names": []
-              }
-            ],
-            "traits": []
+            "factory_bot": {
+              "factories": [
+                {
+                  "names": [
+                    "user"
+                  ],
+                  "traits": [
+                    {
+                      "name": "with_address",
+                      "declaration_names": []
+                    }
+                  ],
+                  "parent_name": null,
+                  "declaration_names": []
+                },
+                {
+                  "names": ["admin"],
+                  "traits": [],
+                  "parent_name": null,
+                  "declaration_names": []
+                }
+              ],
+              "traits": []
+            }
           }
         }
       TEXT
@@ -207,7 +215,7 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
         )
       }
 
-      expect(described_class.read_from_files(first_file, second_file)).to eq(result)
+      expect(described_class.read_from_files(:factory_bot, first_file, second_file)).to eq(result)
     end
   end
 
@@ -216,36 +224,40 @@ RSpec.describe FactoryTrace::Readers::TraceReader do
       StringIO.new <<~TEXT
         {
           "defined": {
-            "factories": [
-              {
-                "names": ["user"],
-                "traits": [
-                  {
-                    "name": "with_phone",
-                    "declaration_names": []
-                  },
-                  {
-                    "name": "combination",
-                    "declaration_names": [
-                      "with_email",
-                      "with_phone"
-                    ]
-                  }
-                ],
-                "parent_name": null,
-                "declaration_names": []
-              }
-            ],
-            "traits": [
-              {
-                "name": "with_address",
-                "declaration_names": []
-              }
-            ]
+            "factory_bot": {
+              "factories": [
+                {
+                  "names": ["user"],
+                  "traits": [
+                    {
+                      "name": "with_phone",
+                      "declaration_names": []
+                    },
+                    {
+                      "name": "combination",
+                      "declaration_names": [
+                        "with_email",
+                        "with_phone"
+                      ]
+                    }
+                  ],
+                  "parent_name": null,
+                  "declaration_names": []
+                }
+              ],
+              "traits": [
+                {
+                  "name": "with_address",
+                  "declaration_names": []
+                }
+              ]
+            }
           },
           "used": {
-            "factories": [],
-            "traits": []
+            "factory_bot": {
+              "factories": [],
+              "traits": []
+            }
           }
         }
       TEXT

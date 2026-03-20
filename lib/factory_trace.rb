@@ -61,8 +61,14 @@ module FactoryTrace
         writer.write(Processors::FindUnused.call(defined_fixtures, used_fixtures), kind: :fixtures) if fixtures?
       elsif configuration.mode?(:trace_only)
         writer = Writers::TraceWriter.new(configuration.out, configuration)
-        writer.write(defined, used, kind: :factory_bot) if factory_bot?
-        writer.write(defined_fixtures, used_fixtures, kind: :fixtures) if fixtures?
+        writer.write(mix(defined_fixtures, defined), mix(used_fixtures, used))
+      end
+    end
+
+    def mix(fixtures, factory_bot)
+      {}.tap do |result|
+        result[:fixtures] = fixtures.to_h if fixtures?
+        result[:factory_bot] = factory_bot.to_h if factory_bot?
       end
     end
 

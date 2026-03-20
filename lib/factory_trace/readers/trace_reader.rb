@@ -3,20 +3,20 @@
 module FactoryTrace
   module Readers
     class TraceReader
-      attr_reader :io, :configuration
+      attr_reader :io, :configuration, :kind
 
       # Read the data from files and merge it
       #
       # @return [Hash<Symbol, FactoryTrace::Structures::Collection>]
-      def self.read_from_files(*file_names, configuration: Configuration.new)
+      def self.read_from_files(kind, *file_names, configuration: Configuration.new)
         result = {defined: FactoryTrace::Structures::Collection.new, used: FactoryTrace::Structures::Collection.new}
 
         file_names.each do |file_name|
           File.open(file_name, "r") do |file|
-            data = new(file, configuration: configuration).read
+            data = new(kind, file, configuration: configuration).read
 
             [:defined, :used].each do |key|
-              result[key].merge!(data[key])
+              result[key].merge!(data[key]) unless data.empty?
             end
           end
         end
@@ -24,7 +24,8 @@ module FactoryTrace
         result
       end
 
-      def initialize(io, configuration: Configuration.new)
+      def initialize(kind, io, configuration: Configuration.new)
+        @kind = kind
         @io = io
         @configuration = configuration
       end
@@ -35,9 +36,14 @@ module FactoryTrace
       def read
         hash = JSON.parse(io.read)
 
+        defined = hash["defined"][kind.to_s]
+        used = hash["used"][kind.to_s]
+
+        return {} if defined.nil? || used.nil?
+
         {
-          defined: parse_collection(hash["defined"]),
-          used: parse_collection(hash["used"])
+          defined: parse_collection(defined),
+          used: parse_collection(used)
         }
       end
 
