@@ -1,3 +1,7 @@
+### [3.0.1] - 2026/03/20
+
+Fix multistep flow (trace first, then analyze). Thanks [Dmitry Polushkin](https://github.com/dmitry) for reporting this!
+
 ### [3.0.0] - 2026/03/18
 
 Add support for [Rails fixtures](https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html). When running with `FB_TRACE=1`, FactoryTrace now also reports unused fixture sets and entries from your `test/fixtures` directory. The fixture path is configurable via `config.fixture_path`.
