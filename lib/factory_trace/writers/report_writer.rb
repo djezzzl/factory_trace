@@ -18,7 +18,7 @@ module FactoryTrace
       # @param [Array<Hash>] results
       # @param [Symbol] kind - :factory (default) or :fixture
       def write(results, kind:)
-        io.puts("")
+        io.puts("") unless file?
 
         total_color = (results.any? { |result| result[:code] == :unused && !result.key?(:value) }) ? :red : :green
 
